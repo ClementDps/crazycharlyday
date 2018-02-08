@@ -4,11 +4,6 @@ namespace garagesolidaire\vue;
 use \garagesolidaire\vue\VueGeneral;
 use \garagesolidaire\models\Item;
 use \garagesolidaire\models\User;
-<<<<<<< HEAD
-
-=======
-use \garagesolidaire\models\Commentaire;
->>>>>>> f1da99e64c570bef951b276ccce7deb63e17d1bc
 
 class VueClient{
 
@@ -23,11 +18,10 @@ class VueClient{
 	  $nom=$this->infos['nom'];
 	  $desc=$this->infos['description'];
 	  $img=$this->infos['img'];
-	  $app=\Slim\Slim::getInstance();
-    $root = $app->request->getRootUri();
+
 	  $code="<p>Nom : ".$nom." <br> Description : ".$desc."<p>";
 	  if($img!==""){
-		$code=$code."<img src=\"$root/img/item/".$img.'" width = "150" height="150"></img><br>';
+		$code=$code.'<img src="../../img/item/'.$img.'" width = "150" height="150"></img><br>';
 	  }
 		//liens des boutons bidons
 		$buttonlisteres=<<<END
@@ -48,38 +42,9 @@ $buttonformulaireres=<<<END
 </form>
 END;
 		$code=$code.$buttonlisteres.$buttonplanning.$buttonformulaireres;
-<<<<<<< HEAD
 
 
 
-=======
-
-
-		if(isset($_SESSION['userid'])){
-		$route3=$app->urlFor('ajouter-commentaire',['id'=>$id]);
-		$code= $code.<<<END
-	<form id = "f1" method="post" action = "$route3">
-	<label for "f1_message">Commenter:</label>
-	<input type="text" id="f1_message" name="message" >
-	<button type="submit" name="valider_message" value="valid_f2">Commenter</button>
-	</form>
-END;
-		}
-
-
-
-		$messages = Commentaire::where('idItem','=',$id)->get();
-		if (isset($messages[0])){
-			$code = $code."<br><br>Commentaires :<br><br>";
-			foreach($messages as $message){
-				$user=User::find($message['idUser']);
-				$code = $code.$user->nom." : ".$message->message." ".$message->dateMess."<br><br>";
-			}
-		}
-
-
-
->>>>>>> f1da99e64c570bef951b276ccce7deb63e17d1bc
 		return $code;
   }
 
@@ -110,54 +75,6 @@ END;
 
 		return $code;
 	}
-<<<<<<< HEAD
-=======
-
-	public function afficherListeUtilisateurs(){
-		$code= "<section><ul>";
-		foreach($this->infos as $key=>$value){
-			$code=$code." <li><a href='afficheritemscategorie/".$value['id']."'>".$value['nom']." ".$value["prenom"]."</a> </li>";
-			$code = $code."<img src=\"../img/user/".$value['img'].".jpg\" width=\"50\" height=\"50\"><br><br>";
-		}
-		$code=$code."</ul></section>";
-
-		return $code;
-	}
-
-	public function afficherPlanningReservationItem(){
-		$code ="";
-		foreach($this->infos as $key=>$value){
-			$reservateur  = User::find($value["idUser"])["nom"];
-			$date = "";
-			$heured = $value["heureDeb"];
-			$heuref = $value["heureFin"];
-			$jour="";
-			switch($value["jourDeb"]){
-				case 1 :{
-					$jour = "Lundi";
-					break;}
-				case 2 :{
-					$jour = "Mardi";
-					break;}
-				case 3 :{
-					$jour = "Mercredi";
-					break;}
-				case 4 :{
-					$jour = "Jeudi";
-					break;}
-				case 5 :{
-					$jour = "Vendredi";
-				}
-			}
-			$code.="<p>Reservé par ".$reservateur." le ".$jour." de ".$heured."h à ".$heuref."h.<br>";
-
-		}
-		if($code == ""){
-			$code = "<p>Cet item n'a pas été reservé";
-		}
-		return $code;
-	}
->>>>>>> f1da99e64c570bef951b276ccce7deb63e17d1bc
 
   public function afficherFormulaireReservation(){
     $jours=array('Lundi','Mardi','Mercredi','Jeudi','Vendredi');
@@ -248,44 +165,6 @@ END;
     }
     return $code;
   }
-<<<<<<< HEAD
-=======
-
-  public function afficherPlanningUser(){
-	  $code="";
-	  if(isset($this->infos)){
-		  foreach($this->infos as $key=>$value){
-			$reservateur  = User::find($value["idUser"])["nom"];
-			$date = "";
-			$heured = $value["heureDeb"];
-			$heuref = $value["heureFin"];
-			$jour="";
-			switch($value["jourDeb"]){
-				case 1 :{
-					$jour = "Lundi";
-					break;}
-				case 2 :{
-					$jour = "Mardi";
-					break;}
-				case 3 :{
-					$jour = "Mercredi";
-					break;}
-				case 4 :{
-					$jour = "Jeudi";
-					break;}
-				case 5 :{
-					$jour = "Vendredi";
-				}
-			}
-			$code.="<p>Reservé par ".$reservateur." le ".$jour." de ".$heured."h à ".$heuref."h.<br>";
-
-		}
-	  }else{
-		  $code="pas de réservation";
-	  }
-	  return $code;
-  }
->>>>>>> f1da99e64c570bef951b276ccce7deb63e17d1bc
 
   public function afficherReservation(){
     $nom=Item::find($this->infos->idItem)->nom;
@@ -335,28 +214,14 @@ END;
     $code.=$this->afficherMesReservations();
     break;
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> f1da99e64c570bef951b276ccce7deb63e17d1bc
   case 6:{
     $code=VueGeneral::genererHeader("demarrage");
     $code.=$this->afficherReservation();
     break;
   }
-<<<<<<< HEAD
-=======
-
-  case 9:{
-		$code=VueGeneral::genererHeader("demarrage");
-		$code.=$this->afficherPlanningUser();
-    break;
->>>>>>> f1da99e64c570bef951b276ccce7deb63e17d1bc
   }
 
-  }
   $code.=VueGeneral::genererFooter();
   echo $code;
-  }
-
+}
 }
