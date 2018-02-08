@@ -1,13 +1,13 @@
 <?php
 require_once 'vendor/autoload.php' ;
 use \garagesolidaire\controleur\ControleurClient;
+use \garagesolidaire\controleur\ControleurAdministrateur;
 use \Illuminate\Database\Capsule\Manager as DB;
 
 
 use \Slim\Slim;
 use garagesolidaire\controleur\GestionAccueil;
 use garagesolidaire\controleur\GestionCompte;
-use garagesolidaire\controleur\ControleurAdministrateur;
 
 
 $db=new DB();
@@ -109,8 +109,6 @@ $app->post('/inscription', function () {
   $c -> ajouterUtilisateur();
 });
 
-
-
 $app->get('/user/delete', function () {
     $c = new GestionCompte();
     $c->supprimerCompte();
@@ -164,6 +162,12 @@ $app->post('/ajoutercommentaire/:id',function($id){
 	$control->ajouterCommentaire($id,$_POST['message']);
 })->name("ajouter-commentaire");
 
+$app->get('/afficheritems',function(){
+	$control=new ControleurAdministrateur();
+	$control->items();
+})->name("afficherItems");
+
+
 
 $app->get('/list/reservation/' , function () {
   $c = new ControleurAdministrateur();
@@ -180,11 +184,11 @@ $app->post('/list/reservation/decline/:id' , function ($id) {
   $c->declineReservation($id);
 })->name("reservation-decline");
 
+
 $app->get('/afficherplanningreservationuser/:id',function($id){
 	$control=new ControleurClient();
 	$control->afficherPlanningUser($id);
 })->name("reservation-user");
-
 
 $app->get('/moduleadministrateur',function(){
   $control=new ControleurAdministrateur();
@@ -200,6 +204,17 @@ $app->get('/afficherajoutecateg',function(){
   $control=new ControleurAdministrateur();
   $control->afficherAjoutCateg();
 })->name("afficher-ajoutCateg");
+
+$app->get('/modifierItem/:id',function($id){
+	$control=new ControleurAdministrateur();
+	$control->modifierItem($id);
+})->name("modifierItem");
+
+$app->post('/validationModificationItem/:id',function($id){
+	$control=new ControleurAdministrateur();
+	$control->validationModificationItem($_POST['nom'],$_POST['desc'],$_POST['categorie'],$id);
+})->name("validermodifitem");
+
 
 $app->post('/annulerreservation/:id',function($id){
 	$control=new ControleurClient();

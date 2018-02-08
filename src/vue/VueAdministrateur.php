@@ -2,8 +2,11 @@
 
 namespace garagesolidaire\vue;
 
+
+use garagesolidaire\models\Categorie;
 use \garagesolidaire\models\User;
 use \garagesolidaire\models\Item;
+
 
 class VueAdministrateur{
 
@@ -19,6 +22,7 @@ class VueAdministrateur{
   public function __construct($tab){
     $this->infos=$tab;
   }
+
 
   public function afficherModuleAdmin(){
     $app=\Slim\Slim::getInstance();
@@ -65,6 +69,53 @@ $code=<<<END
 END;
   return $code;
   }
+
+  public function afficherItems(){
+	  $code = "";
+	  $app = \Slim\Slim::getInstance();
+
+
+	  foreach($this->infos as $key=>$value){
+		$route = $app->urlFor("modifierItem", ['id' => $value['id']]);
+		$code = $code."<li><a href='$route'>".$value['nom']."</a> </li><br>";
+	  }
+	  return $code;
+  }
+
+  public function modifierItem(){
+
+		$name=$this->infos['nom'];
+		$desc = $this->infos['description'];
+		$categorie = Categorie::find($this->infos['id'])['nom'];
+		$app = \Slim\Slim::getInstance();
+		$route = $app->urlFor("validermodifitem", ['id' => $this->infos['id']]);
+		$categ = Categorie::get();
+		$code=<<<END
+<form id="crea" method= "post" action = "$route">
+<table>
+<tr><th><label for="f1_nom"> Nom :</label></th>
+<th><input type = "text" id="f5_nom" name="nom" value="$name" placeholder="<Nom>" required></th></tr>
+
+<tr><th><label for="f1_nom"> Description :</label></th>
+<th><input type = "text" id="f1_desc" name="desc" value="$desc" placeholder="<Description>" required></th></tr>
+
+<tr><th><label for="f1_nom"> Categorie :</label></th>
+<th> <select id="f1_categ" name="categorie" required>
+END;
+
+foreach($categ as $key=>$value){
+	$code=$code."<option value=\"".$value['id']."\">".$value['nom']."</option>";
+}
+
+$code.=<<<END
+</th></tr><tr><th><button type="submit" name="valider_modifUser"  value="valid_f5">Valider</button></th></tr></table>
+</form>
+END;
+	return $code;
+  }
+
+
+
 
   public function render($int){
     $code = "";
@@ -173,6 +224,20 @@ END;
 
       break;
     }
+
+	case 10 : {
+		$code = \garagesolidaire\vue\VueGeneral::genererHeader("menu");
+		$code.=$this->afficherItems();
+		break;
+
+	}
+	case 11:{
+		$code = \garagesolidaire\vue\VueGeneral::genererHeader("menu");
+		$code .= $this->modifierItem();
+		break;
+	}
+
+
     case VueAdministrateur::AFF_RESERV : {
       $code = \garagesolidaire\vue\VueGeneral::genererHeader("menu");
       if (count($this->infos)>0) { //Affichage des items
@@ -279,6 +344,7 @@ END;
 END;
     }
 
+<<<<<<< HEAD
 
   case 16:{
   $code.=$this->afficherAjoutItem();
@@ -288,6 +354,9 @@ case 17:{
 $code.=$this->afficherAjoutCateg();
 break;
 }
+=======
+  }
+>>>>>>> 544db93790fc9cab8634f2a3af7d0224931b5d16
   $code .= \garagesolidaire\vue\VueGeneral::genererFooter();
   echo $code;
 }
