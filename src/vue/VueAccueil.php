@@ -34,7 +34,7 @@ public function render(){
   <h1>Bienvenue sur le site du <strong>Garage Solidaire</strong> !</h1>
   <h3> Le Garage Solidaire est un site qui permet de réserver un garage afin de réparer sa voiture seul ou avec un de
   nos nombreux professionnels. Chaque client peut aussi louer un de nos véhicules.</h3>
-  <p> Développé par : Briand Lucas | Claisse Julien | Combe-Deschaumes Sarah | Domps Clément | Millotte Baptiste </p>
+  <p> Développé par : Briand Lucas | Claisse Julien | Combe Deschaumes Sarah | Domps Clément | Millotte Baptiste </p>
 END;
     break;
 
@@ -44,7 +44,7 @@ END;
     <h1>À propos de nous</h1>
     <h3>Qui sommes-nous ?</h3>
     <p>Nous sommes 5 étudiants en deuxième année de DUT Informatique à Nancy.<BR>
-      Groupe : Briand Lucas | Claisse Julien | Combe-Deschaumes Sarah | Domps Clément | Millotte Baptiste </p>
+      Notre équipe : Briand Lucas | Claisse Julien | Combe Deschaumes Sarah | Domps Clément | Millotte Baptiste </p>
     <h3>Pourquoi ?</h3>
     <p>Ce site internet est un des projets que nous avons à faire au cours de
       notre année d'étude. <BR>Il nous a été demandé de faire un site permettant la

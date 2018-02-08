@@ -75,7 +75,7 @@ $app->get('/afficher/creation/reservation/:id',function($id){
 $app->get('/afficherlisteutilisateurs',function(){
 	$control=new ControleurClient();
 	$control->afficherListeUtilisateurs();
-});
+})->name("afficher-utilisateurs");
 
 //-----------------------------Formulaire-de-connexion-et-deconnexion-compte----------//
 $app->get('/connexion', function () {
@@ -138,7 +138,6 @@ $app->get('/mesreservations', function () {
 })->name("mes-reservations");
 
 $app->get('/afficherplanningreservationitem/:id',function($id){
-
 	$control=new ControleurClient();
 	$control->afficherPlanningReservationItem($id);
 })->name("reservationitem");
@@ -156,11 +155,16 @@ $app->post('/ajoutercommentaire/:id',function($id){
 })->name("ajouter-commentaire");
 
 
-$app->get('/list/reservation' , function () {
+$app->get('/list/reservation/' , function () {
   $c = new ControleurAdministrateur();
   $c->afficherReservation();
-
 })->name("reservation-list");
+
+$app->get('/afficherplanningreservationuser/:id',function($id){
+	$control=new ControleurClient();
+	$control->afficherPlanningUser($id);
+})->name("reservation-user");
+
 
 
 

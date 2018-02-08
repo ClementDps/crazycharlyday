@@ -158,14 +158,13 @@ public function mesReservations(){
 }
 
 
-
-
 public function afficherReservation($id){
 	$r=Reservation::find($id);
 	$vue=new VueClient($r);
 	$vue->render(6);
 }
 /**
+
 public function afficherPlanningUser($idUser){
 	if(isset($_SESSION['userid'])){
 		$r=Reservation::where('idUser','=',$idUser)->get();

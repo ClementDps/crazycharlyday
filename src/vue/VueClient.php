@@ -75,7 +75,6 @@ END;
 		}
 
 
-
 		return $code;
   }
 
@@ -356,6 +355,7 @@ END;
 	  return $code;
   }*/
 
+
   public function afficherReservation(){
     $nom=Item::find($this->infos->idItem)->nom;
     $jours=array();
@@ -415,12 +415,12 @@ END;
 		break;
 	}
 	case 10:{
-		$code=VueGeneral::genererHeader("client");
+		$code=VueGeneral::genererHeader("demarrage");
 		$code.=$this->afficherListeUtilisateurs();
 		break;
 	}
 	case 11:{
-		$code=VueGeneral::genererHeader("client");
+		$code=VueGeneral::genererHeader("demarrage");
 		$code.=$this->afficherPlanningReservationItem();
 		break;
 	}
