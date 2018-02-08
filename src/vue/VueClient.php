@@ -4,6 +4,11 @@ namespace garagesolidaire\vue;
 
 class VueClient{
 
+  private $infos;
+
+  public function __construct($tab){
+    $this->infos=$tab;
+  }
 
   public function render($int){
   switch($int){
