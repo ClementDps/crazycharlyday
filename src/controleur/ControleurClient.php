@@ -128,6 +128,12 @@ public function testerValidite($jdebB,$jfinB,$hdebB,$hfinB, $jdebA,$jfinA,$hdebA
 
 }
 
+public function mesReservations(){
+	$r=Reservation::where('idUser','=',$_SESSION['userid'])->get();
+	$vue=new VueClient($r->toArray());
+	$vue->render(5);
+}
+
 
 
 
