@@ -15,7 +15,8 @@ class User extends \Illuminate\Database\Eloquent\Model{
 		$u->prenom=$prenom;
 		$u->email=$email;
 		$u->mdp=$hash;
-    $u->rang=0;
+		$u->img=0;
+    $u->rang=$rang;
 		$u->save();
 	}
 

@@ -82,17 +82,9 @@ $app->get('/inscription', function () {
 
 $app->post('/inscription', function () {
 
-  if( isset($_POST['valider-insc']) && $_POST['valider-insc'] == 'S\'inscrire'){
-
     $c = new GestionCompte();
+    $c->ajouterUtilisateur();
 
-    $valueFiltred = $c->filtrerInscription($_POST);
-
-    if( !empty($valueFiltred) ){
-      $c->ajouterUtilisateur($valueFiltred);
-    }
-
-  }
 });
 
 

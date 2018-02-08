@@ -11,7 +11,7 @@ class Authentication{
 		return 0;
 	}
 	else{
-		User::insert($n,$p,$e,$mdp);
+		User::insert($n,$p,$e,$mdp,0);
 		Authentication::authenticate($e,$mdp);
 		return 1;
 	}

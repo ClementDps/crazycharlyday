@@ -59,19 +59,19 @@ END;
         $email = "";
         $errorMdp = "";
         $errorEmail = "";
-        if(isset($this->param)){ // Gestion de l'affichage de l'erreur
-          if ($this->param["error"] === "mdpDiff"){
+        if(isset($this->infos)){ // Gestion de l'affichage de l'erreur
+          if ($this->infos["error"] === "mdpDiff"){
             $errorMdp = "<p>***Mot de passe invalide !***</p>";
-          }else if ($this->param["error"] === "email"){
+          }else if ($this->infos["error"] === "email"){
             $errorEmail = "<p>***Email invalide !***</p>";
-          }else if ($this->param["error"] === "mdpShort"){
+          }else if ($this->infos["error"] === "mdpShort"){
             $errorMdp = "<p>***Mot de passe trop court !***</p>";
-          }else if ($this->param["error"] === "emailExist"){
+          }else if ($this->infos["error"] === "emailExist"){
             $errorEmail = "<p>***Email existe déjà dans la base !***</p> ";
           }
-          $nom = "value=\"".$this->param["nom"]."\""; //Affichage pré-rempli du formulaire en cas d'erreur
-          $prenom = "value=\"".$this->param["prenom"]."\"";
-          $email = "value=\"".$this->param["email"]."\"";
+          $nom = "value=\"".$this->infos["nom"]."\""; //Affichage pré-rempli du formulaire en cas d'erreur
+          $prenom = "value=\"".$this->infos["prenom"]."\"";
+          $email = "value=\"".$this->infos["email"]."\"";
         }
 //----------------------------------------------
         $code = \garagesolidaire\vue\VueGeneral::genererHeader("formulaire");

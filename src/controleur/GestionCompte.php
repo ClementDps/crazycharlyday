@@ -171,6 +171,44 @@ namespace garagesolidaire\controleur;
       }
 
       /**
+      * Ajoute un utlisateur dans la base de données
+      */
+      public function ajouterUtilisateur(){
+        $app = \Slim\Slim::getInstance();
+        if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['email']) && isset($_POST['mdp']) && isset($_POST['mdp-conf'])){
+          $valueFiltred = $this->filterVar($_POST);
+          if($valueFiltred['mdp'] != $valueFiltred['mdp-conf']){
+            $valueFiltred['error'] = 'mdpDiff';
+            $vue = new VueAdministrateur($valueFiltred);
+            $vue->render(VueAdministrateur::AFF_INSC);
+          }else{
+            $res = Authentification::createUser($valueFiltred['nom'], $valueFiltred['prenom'],$valueFiltred['email'], $valueFiltred['mdp'] );
+            if($res == 0){
+              $valueFiltred['error'] = "emailExist";
+              $vue = new VueAdministrateur($valueFiltred);
+              $vue->render(VueAdministrateur::AFF_INSC);
+            }
+            else
+            $app->redirect( $app->urlFor("accueil"));
+          }
+        }else
+          $app->redirect( $app->urlFor("accueil"));
+      }
+
+      /**
+       *  Fonction permettant de filtrer les données venant d'un formulaire
+       *  @return tab avec ses valeurs filtrée
+       */
+      public function filterVar($tab){
+          $res = [];
+          foreach ($tab as $key => $value) {
+            $res[$key] = filter_var( $value , FILTER_SANITIZE_STRING);
+          }
+
+          return $res;
+      }
+
+      /**
        * Supprime définitivement un compte utilisateur
        * Et toute ses données entrées dans la base (reservation , items + image , listes)
        */
@@ -209,32 +247,7 @@ namespace garagesolidaire\controleur;
           $this->deconnecter();
       }
 
-      /**
-       *  Fonction permettant de filtrer les données venant du formulaire
-       *  @return tab avec ses valeurs filtrées | tab est vide si l'email ou le mot de passe est invalide
-       */
-      public function filtrerInscription($tab){
-          $tab['nom'] = filter_var($tab['nom'] , FILTER_SANITIZE_STRING);
-          $tab['prenom'] = filter_var($tab['prenom'] , FILTER_SANITIZE_STRING);
-          $tab['naissance'] = filter_var($tab['naissance'] , FILTER_SANITIZE_STRING) ;
 
-          if (!filter_var( $tab['email'] , FILTER_VALIDATE_EMAIL)){
-            $tab["error"] = "email";
-            $vue = new VueAdministrateur($tab, VueAdministrateur::AFF_INSC );
-            $vue->render();
-            return [];
-          }
-
-          if($tab['mdp'] !== $tab['mdp-conf']){
-            $tab["error"] = "mdpDiff";
-            $vue = new VueAdministrateur($tab, VueAdministrateur::AFF_INSC );
-            $vue->render();
-            return [];
-        }
-
-
-        return $tab;
-    }
     /**
      * Déconnecte l'utilisateur
      */
@@ -273,49 +286,4 @@ namespace garagesolidaire\controleur;
       }
 
     }
-    /**
-     * Ajoute un utlisateur dans la base de données
-     */
-    public function ajouterUtilisateur($param){
-
-      $user = UserInfo::where("email", "=", $param["email"])->first();
-      if( $user == null){
-
-        //Preparation des variables
-            $nomUser = $param['nom'];
-            $prenomUser = $param['prenom'];
-            $dateNaissUser = $param['naissance'];
-
-            $email = $param['email'];
-            $mdp = $param['mdp'];
-
-       //Ajout des dernieres valeurs
-            $newUser = new UserInfo() ;
-            $newUser->nom = $nomUser;
-            $newUser->prenom = $prenomUser;
-            $newUser->email = $email;
-            if($dateNaissUser != '' && $dateNaissUser != null )
-              $newUser->datenaiss = $dateNaissUser;
-            $newUser->save();
-        //Ajout de l'email et du mot de passe sécurisé
-        try{
-            Authentification::createUser($newUser->uid,$mdp);
-            Authentification::loadProfile($newUser->uid); //Chargement des données utilisateurs
-        //Redirection Page des listes
-            $app = \Slim\Slim::getInstance();
-            $app->redirect( $app->urlFor("liste") ) ;
-        } catch ( \garagesolidaire\models\AuthException $ae ){ //Si le mot de passe ne respect pas la politique
-          $newUser->delete(); //Retrait des données enregistré
-          $param["error"] = "mdpShort";
-          $vue = new VueAdministrateur($param, VueAdministrateur::AFF_INSC ); //Charge la page d'inscription avec erreur et donnée pré-remplies
-          $vue->render();
-        }
-
-      } else {
-        $param["error"] = "emailExist";
-        $vue = new VueAdministrateur($param, VueAdministrateur::AFF_INSC ); //Charge la page d'inscription avec erreur et donnée pré-remplies
-        $vue->render();
-      }
-
-      }
-  }
+}
