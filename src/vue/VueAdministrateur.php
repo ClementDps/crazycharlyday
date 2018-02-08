@@ -18,6 +18,39 @@ class VueAdministrateur{
     $this->infos=$tab;
   }
 
+  public function afficherModuleAdmin(){
+    $app=\Slim\Slim::getInstance();
+    $routeitem=$app->urlFor('afficher-ajoutItem');
+    $routecateg=$app->urlFor('afficher-ajoutCateg');
+    $code=<<<END
+<form id="afficherAjoutItem" method= "post" action ="$routeitem">
+<button type="submit" name="valider_allerversitem"  value="valid_versitem">Ajouter un item</button>
+</form>
+
+<form id="afficherAjoutCateg" method= "post" action ="$routecateg">
+<button type="submit" name="valider_allerverscateg"  value="valid_versitem">Ajouter une catégorie</button>
+</form>
+END;
+  return $code;
+  }
+
+  public function afficherAjoutItem(){
+$code=<<<END
+
+
+
+END;
+return $code;
+  }
+
+  public function afficherAjoutCateg(){
+    $code=<<<END
+
+
+
+END;
+    return $code;
+  }
 
   public function render($int){
     $code = "";
@@ -187,10 +220,21 @@ END;
     $code.= "<p>Aucune Reservations...</p>";
   }
       break;
-    }
+    }case 15:{
+    $code.=$this->afficherModuleAdmin();
+    break;
   }
+  case 16:{
+  $code.=$this->afficherAjoutItem();
+  break;
+}
+case 17:{
+$code.=$this->afficherAjoutCateg();
+break;
+}
   $code .= \garagesolidaire\vue\VueGeneral::genererFooter();
   echo $code;
 }
 
+}
 }

@@ -427,5 +427,6 @@ END;
   }
   $code.=VueGeneral::genererFooter();
   echo $code;
+
 }
 }
