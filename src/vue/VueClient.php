@@ -15,7 +15,9 @@ class VueClient{
 	  $desc=$this->infos['description'];
 	  $img=$this->infos['img'];
 	  
-	  
+	  $code="Nom : ".$nom." <br> Description : ".$desc;
+		$code=$code.'<img src="../../../img/'.$img.'" width = "150" height="150"></img><br>';
+		return $code;	  
   }
   
    public function afficherItemsCateg(){
