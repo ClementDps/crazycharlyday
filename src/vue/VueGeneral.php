@@ -15,13 +15,13 @@ namespace garagesolidaire\vue;
    public static function genererHeader($fichierCss = ""){
      $app = \Slim\Slim::getInstance();
      // $routeListe = $app->urlFor('liste');
-     // $routeInsc = $app->urlFor('inscription');
-     // $routeConnexion = $app->urlFor('connexion');
+     $routeInsc = $app->urlFor('inscription');
+     $routeConnexion = $app->urlFor('connexion');
      $routeAcc = $app->urlFor('accueil');
      // $routeUser = $app->urlFor('aff-user');
      $root = $app->request->getRootUri();
 
-     $profileHTML = "<li><a href=\""."\">Connexion</a></li><li><a href=\""."\">Inscription</a></li>";
+     $profileHTML = "<li><a href=\"".$routeConnexion."\">Connexion</a></li><li><a href=\"".$routeInsc."\">Inscription</a></li>";
      // if(isset($_SESSION['profile'])){
      //   $routeDeconnexion = $app->urlFor('deconnexion');
      //
@@ -44,7 +44,7 @@ namespace garagesolidaire\vue;
   <div id="top-zone">
     <div id="left">
       <ul>
-      <li><a href="#">Accueil</a></li><li><a href="#">Garage Solidaire</a></li>
+      <li><a href="$root">Accueil</a></li><li><a href="#">Garage Solidaire</a></li>
       </ul>
     </div>
     <div id="right">
