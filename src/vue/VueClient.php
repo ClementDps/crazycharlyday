@@ -24,7 +24,7 @@ class VueClient{
 	  $img=$this->infos['img'];
 
 	  $code="<p>Nom : ".$nom." <br> Description : ".$desc."<p>";
-	  
+
 	  $res=Reservation::where('idItem','=',$id)->get();
 	  if(isset($res[0])){
 		  $moy=0;
@@ -39,9 +39,9 @@ class VueClient{
 	  else{
 		  $code.="Note moyenne : 0";
 	  }
-	  
-	  
-	  
+
+
+
 	  if($img!==""){
 		$code=$code.'<img src="../../img/item/'.$img.'" width = "150" height="150"></img><br>';
 	  }

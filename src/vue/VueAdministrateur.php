@@ -18,8 +18,8 @@ class VueAdministrateur{
   const AFF_RESERV = 6;
   const AFF_CMDP = 7;
   const AFF_MODIF_COMPTE = 8;
-  const AFF_NO_CO = 9;
-  const AFF_NO_ACCES = 10;
+  const AFF_NO_CO = 90;
+  const AFF_NO_ACCES = 100;
 
   public function __construct($tab){
     $this->infos=$tab;
@@ -88,8 +88,8 @@ END;
 
 
 	  foreach($this->infos as $key=>$value){
-		$route = $app->urlFor("modifierItem", ['id' => $value['id']]);
-		$code = $code."<li><a href='$route'>".$value['nom']."</a> </li><br>";
+		    $route = $app->urlFor("modifierItem", ['id' => $value['id']]);
+		      $code = $code."<li><a href='$route'>".$value['nom']."</a> </li><br>";
 	  }
 	  return $code;
   }
@@ -355,6 +355,7 @@ END;
           <input id="submit" type="submit" name="valider-insc" value="Modifier">
         </form>
 END;
+break;
     }
     case VueAdministrateur::AFF_NO_CO :  //-----------------------------------------------------------------------Erreur-Non-conecté
     $app = \Slim\Slim::getInstance();

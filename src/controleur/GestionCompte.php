@@ -208,7 +208,7 @@ namespace garagesolidaire\controleur;
     public static function checkAdmin(){
       $app = \Slim\Slim::getInstance();
       //Redirection si l'utilisateur n'est pas connecté
-       if(!isset($_SESSION["rang"]) && $_SESSION["rang"] == 0){
+       if(!isset($_SESSION["rang"]) || $_SESSION["rang"] == 0){
          $app->redirect( $app->urlFor("forbidden")  ) ;
        }
     }
