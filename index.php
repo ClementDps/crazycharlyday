@@ -149,7 +149,8 @@ $app->post('/ajoutercommentaire/:id',function($id){
 
 
 $app->get('/reservation/' , function () {
-
+  $c = new ControleurAdministrateur();
+  $c->afficherReservation();
 
 })->name("reservation");
 
