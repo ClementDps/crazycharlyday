@@ -52,9 +52,11 @@ END;
     $i=$this->infos['i'];
     $c=$c[0];
     $code="Catégorie :".$c['nom']."<br>"."Description :".$c['description']."<br>";
+    $root = $app->request->getRootUri();
     foreach($i as $key=>$value){
-      $code=$code."<img src=\"/img/".$value['img']."\" width=\"50\" height=\"50\">";
-      $code=$code."Nom de l'item :"."<A HREF=\"../afficheritem/".$value['id']."\">".$value['nom']."</A>"."<br> Description :".$value['description']."<br>";
+      $route = $app->urlFor("item", ['id' => $value['id']]);
+      $code=$code."<img src=\"$root/img/item/".$value['img']."\" width=\"50\" height=\"50\">";
+      $code=$code."Nom de l'item :"."<A HREF=\"$route\">".$value['nom']."</A>"."<br> Description :".$value['description']."<br>";
     }
     return $code;
 }
