@@ -2,7 +2,7 @@
 
 namespace garagesolidaire\controleur;
 
-class ControleurClient{
+class ControleurAdministrateur{
 
 
 

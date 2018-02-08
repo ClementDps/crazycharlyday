@@ -1,6 +1,7 @@
 <?php
 
 namespace garagesolidaire\vue;
+use \garagesolidaire\vue\VueGeneral;
 
 class VueClient{
 
@@ -16,7 +17,7 @@ class VueClient{
 	  $desc=$this->infos['description'];
 	  $img=$this->infos['img'];
 	  
-	  $code="Nom : ".$nom." <br> Description : ".$desc;
+	  $code="<p>Nom : ".$nom." <br> Description : ".$desc."<p>";
 	  if($img!==""){
 		$code=$code.'<img src="../../img/item/'.$img.'" width = "150" height="150"></img><br>';
 	  }
@@ -55,36 +56,26 @@ END;
 		
 	}
 
+	//mettre les bons css
   public function render($int){
   switch($int){
     case 1:{
-      $content=$this->afficherAccueil();
+		
       break;
     }
   case 2:{
-		$content=$this->afficherItem();
+	  $code=VueGeneral::genererHeader("demarrage");
+		$code.=$this->afficherItem();
       break;
     }
 	case 3:{
-		$content=$this->afficherCategories();
+		$code=VueGeneral::genererHeader("demarrage");
+		$code.=$this->afficherCategories();
 		break;
 	}
   }
-  $code= <<<END
-  <!DOCTYPE html>
-  <html>
-      <head>
-          <title>GarageSolidaire</title>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <link rel="stylesheet" href="../style.css" />
-      </head>
-      <body>
-		$content
-      </body>
-  </html>
 
-END;
+  $code.=VueGeneral::genererFooter();
   echo $code;
 }
 }
