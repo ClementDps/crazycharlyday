@@ -134,6 +134,11 @@ $app->get('/afficherplanningreservationitem/:num',function($num){
 	$control->afficherPlanningReservationItem($num);
 })->name("reservationitem");
 
+$app->post('/ajoutercommentaire/:id',function($id){
+	$control=new ControleurClient();
+	$control->ajouterCommentaire($id,$_POST['message']);
+})->name("ajouter-commentaire");
+
 
 
 $app->run();

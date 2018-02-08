@@ -3,6 +3,7 @@
 namespace garagesolidaire\vue;
 use \garagesolidaire\vue\VueGeneral;
 use \garagesolidaire\models\User;
+use \garagesolidaire\models\Commentaire;
 
 class VueClient{
 
@@ -44,8 +45,31 @@ $buttonformulaireres=<<<END
 </form>
 END;
 		$code=$code.$buttonlisteres.$buttonplanning.$buttonformulaireres;
+		
+		
+		if(isset($_SESSION['userid'])){
+		$route3=$app->urlFor('ajouter-commentaire',['id'=>$id]);
+		$code= $code.<<<END
+	<form id = "f1" method="post" action = "$route3">
+	<label for "f1_message">Commenter:</label>
+	<input type="text" id="f1_message" name="message" >
+	<button type="submit" name="valider_message" value="valid_f2">Commenter</button>
+	</form>
+END;
+		}
 
 
+
+		$messages = Commentaire::where('idItem','=',$id)->get();
+		if (isset($messages[0])){
+			$code = $code."<br><br>Commentaires :<br><br>";
+			foreach($messages as $message){
+				$user=User::find($message['idUser']);
+				$code = $code.$user->nom." : ".$message->message." ".$message->dateMess."<br><br>";
+			}
+		}
+
+	
 
 		return $code;
   }

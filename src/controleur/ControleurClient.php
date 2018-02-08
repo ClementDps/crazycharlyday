@@ -5,6 +5,7 @@ use \garagesolidaire\models\Item;
 use \garagesolidaire\models\Categorie;
 use \garagesolidaire\vue\VueClient;
 use \garagesolidaire\models\User;
+use \garagesolidaire\models\Commentaire;
 use garagesolidaire\models\Reservation;
 
 
@@ -140,6 +141,16 @@ public function testerValidite($jdebB,$jfinB,$hdebB,$hfinB, $jdebA,$jfinA,$hdebA
 	}
 
 }
+
+	public function ajouterCommentaire($id,$com){
+		if(isset($_SESSION['userid']) && isset($_POST['valider_message']) && $_POST['valider_message']=='valid_f2'){
+			$com=filter_var($com,FILTER_SANITIZE_STRING);
+			Commentaire::insert($_SESSION['userid'],$id,$com);
+		}
+		$i=Item::find($id);
+		$vue=new VueClient($i);
+		$vue->render(2);
+	}
 
 
 }

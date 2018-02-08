@@ -8,7 +8,7 @@ class Commentaire extends \Illuminate\Database\Eloquent\Model{
 	protected $primaryKey='id';
 	public $timestamps=false;
 
-  public function insert($user,$item,$message){
+  public static function insert($user,$item,$message){
     $c=new Commentaire();
 	$c->idUser=$user;
 	$c->idItem=$item;
