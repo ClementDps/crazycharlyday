@@ -159,8 +159,17 @@ $app->post('/ajoutercommentaire/:id',function($id){
 $app->get('/list/reservation' , function () {
   $c = new ControleurAdministrateur();
   $c->afficherReservation();
-
 })->name("reservation-list");
+
+$app->post('/list/reservation/accept/:id' , function ($id) {
+  $c = new ControleurAdministrateur();
+  $c->acceptReservation($id);
+})->name("reservation-accept");
+
+$app->post('/list/reservation/decline/:id' , function ($id) {
+  $c = new ControleurAdministrateur();
+  $c->declineReservation($id);
+})->name("reservation-decline");
 
 $app->get('/afficherplanningreservationuser/:id',function($id){
 
