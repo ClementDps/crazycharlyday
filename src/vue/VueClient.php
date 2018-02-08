@@ -381,6 +381,18 @@ END;
 END;
 $code.=$button;
 	}
+	if($this->infos->etat=="confirmer"){
+		$app=\Slim\Slim::getInstance();
+	$route=$app->urlFor("payer-reservation",['id'=>$this->infos->id]);
+	$button=<<<END
+<form id="payer" method="post" action ="$route">
+ <label for="f1_payer">Montant : </label>
+ <input type = "number" id="f1_payer" name="montant" placeholder="<Montant>" required></br>
+<button type="submit" name="valider_payer" value="valid_payer">Payer</button>
+</form>
+END;
+$code.=$button;
+	}
     return $code;
   }
 
