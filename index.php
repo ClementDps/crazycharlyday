@@ -1,7 +1,7 @@
 <?php
 require_once 'vendor/autoload.php' ;
 use \garagesolidaire\controleur\ControleurClient;
-
+use \Illuminate\Database\Capsule\Manager as DB;
 
 
 use \Slim\Slim;
