@@ -16,7 +16,6 @@ class VueClient{
 	  $nom=$this->infos['nom'];
 	  $desc=$this->infos['description'];
 	  $img=$this->infos['img'];
-
 	  
 	  $code="<p>Nom : ".$nom." <br> Description : ".$desc."<p>";
 	  if($img!==""){
@@ -75,7 +74,8 @@ END;
   public function render($int){
   switch($int){
     case 1:{
-      $content=$this->afficherCategories();
+		 $code=VueGeneral::genererHeader("demarrage");
+      $code.=$this->afficherCategories();
       break;
     }
   case 2:{
@@ -91,7 +91,7 @@ END;
 	}
   }
 
-  $code=VueGeneral::genererFooter();
+  $code.=VueGeneral::genererFooter();
   echo $code;
 }
 }
