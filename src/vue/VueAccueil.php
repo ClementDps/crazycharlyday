@@ -42,7 +42,7 @@ END;
     <h1>A propos de nous</h1>
     <h3>Qui sommes-nous ?</h3>
     <p>Nous sommes 5 étudiants en deuxième année de DUT Informatique à Nancy.<BR>
-      Groupe B : Claisse Julien | Grebot Lucas | Savouroux Florian | Mercier Clément | Parisel Guillaume</p>
+      Groupe B : Briand Lucas | Claisse Julien | Combe-Deschaumes Sarah | Domps Clément | Millotte Baptiste </p>
     <h3>Pourquoi ?</h3>
     <p>Ce site internet est un des projets que nous avons à faire au cours de
       notre année d'étude. <BR>Il nous a été demandé de faire un site permettant la

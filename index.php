@@ -27,10 +27,20 @@ $app->get('/afficheritemscategorie/:num',function($num){
 	$control->afficheritemscategorie($num);
 });
 
+$app->get('/afficherplanninggraph/:num',function($num){
+	$control=new ControleurClient();
+	$control->afficherPlanningGraphique($num);
+});
+
 $app->get('/contact', function () {
   $c = new GestionAccueil();
   $c -> afficheContact();
 })->name("contact");
+
+$app->get('/connexion', function () {
+  $c = new ControleurClient();
+  $c ->afficherConnexion();
+})->name("connexion");
 
 $app->get('/about', function () {
   $c = new GestionAccueil();
