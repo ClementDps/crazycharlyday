@@ -40,6 +40,17 @@ class ControleurClient{
 	public function afficherPlanningGraphique($num){
 		$r=Reservation::where('idItem','=',$num)->get();
 		$vue=new VueClient($r);
-		$vue->render(4);
+		$vue->render();
 	}
+
+public function afficherCreationReservation($id){
+	//if(isset($_SESSION['userid'])){
+		$vue=new VueClient($id);
+		$vue->render(4);
+	//}
+}
+
+
+
+
 }

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.7.1
+-- version 4.1.14.8
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Jeu 08 Février 2018 à 09:46
--- Version du serveur :  5.6.20-log
--- Version de PHP :  5.5.15
+-- Généré le :  Jeu 08 Février 2018 à 14:04
+-- Version du serveur :  5.1.73
+-- Version de PHP :  7.0.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,24 +17,44 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de données :  `garagesolidaire`
+-- Base de données :  `combedes2u`
 --
 
 -- --------------------------------------------------------
 
+--
+-- Structure de la table `categorie`
+--
+
+CREATE TABLE IF NOT EXISTS `categorie` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(30) CHARACTER SET utf8 NOT NULL,
+  `description` text CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Contenu de la table `categorie`
+--
+
+INSERT INTO `categorie` (`id`, `nom`, `description`) VALUES
+(1, 'Vehicule', 'Tous les véhicules à emprunter !!!'),
+(2, 'Atelier', 'Des ateliers réservables pour moult réparations.');
 
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `item`
 --
-DROP TABLE IF EXISTS `item`;
+
 CREATE TABLE IF NOT EXISTS `item` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(30) CHARACTER SET utf8 NOT NULL,
   `description` text CHARACTER SET utf8 NOT NULL,
   `id_categ` int(11) NOT NULL,
-  `img` varchar(200) NOT NULL
+  `img` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_categ` (`id_categ`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
 
 --
@@ -42,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `item` (
 --
 
 INSERT INTO `item` (`id`, `nom`, `description`, `id_categ`, `img`) VALUES
-(1, 'Atelier en bois', 'Cet atelier en bois est l''idéal pour réparer votre voiture tout en respirant la belle essence de Cyprès.', 2, ''),
+(1, 'Atelier en bois', 'Cet atelier en bois est l''idéal pour réparer votre voiture tout en respirant la belle essence de Cyprès.', 2, '1.jpg'),
 (2, 'Atelier BX023 en brique', 'Rustique, simple et fonctionnel, ce box vous permet de réparer votre véhicule sans vous perturber par son décorum. Un must pour les travaux difficiles !', 2, ''),
 (3, 'Batcave', 'L''atelier qu''il vous faut pour réparer secrètement votre batmobile (fourni sans Albert ni Bruce Wayne). ', 2, ''),
 (4, 'Atelier BX045', 'Sans lumière mais disposant d''ouvertures au plafond, ce box est à réserver aux opérations les plus simples. Une lampe torche est fournie à l''entrée pour que vous puissiez retrouver les pièces perdues.', 2, ''),
@@ -68,17 +88,40 @@ INSERT INTO `item` (`id`, `nom`, `description`, `id_categ`, `img`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `Reservation`
+--
+
+CREATE TABLE IF NOT EXISTS `Reservation` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idUser` int(11) NOT NULL,
+  `idItem` int(11) NOT NULL,
+  `etat` varchar(20) NOT NULL,
+  `dateCreation` date NOT NULL,
+  `dateDerniereModif` date NOT NULL,
+  `note` int(11) NOT NULL,
+  `prix` int(11) NOT NULL,
+  `heureDeb` int(11) NOT NULL,
+  `jourDeb` int(11) NOT NULL,
+  `heureFin` int(11) NOT NULL,
+  `jourFin` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `user`
 --
-DROP TABLE IF EXISTS `user`;
+
 CREATE TABLE IF NOT EXISTS `user` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(30) CHARACTER SET utf8 NOT NULL,
   `prenom` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `mdp` varchar(256) NOT NULL,
   `rang` int(11) NOT NULL,
-  `img` int(11) NOT NULL
+  `img` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
@@ -99,67 +142,6 @@ INSERT INTO `user` (`id`, `nom`, `prenom`, `email`, `mdp`, `rang`, `img`) VALUES
 (11, 'Ariane', '', '', '', 0, 0),
 (12, 'Lois', '', '', '', 0, 0);
 
-
---
--- Structure de la table `categorie`
---
-DROP TABLE IF EXISTS `categorie`;
-CREATE TABLE IF NOT EXISTS `categorie` (
-`id` int(11) NOT NULL,
-  `nom` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `description` text CHARACTER SET utf8 NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Contenu de la table `categorie`
---
-
-INSERT INTO `categorie` (`id`, `nom`, `description`) VALUES
-(1, 'Vehicule', 'Tous les véhicules à emprunter !!!'),
-(2, 'Atelier', 'Des ateliers réservables pour moult réparations.');
-
-
---
--- Index pour les tables exportées
---
-
---
--- Index pour la table `categorie`
---
-ALTER TABLE `categorie`
- ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `item`
---
-ALTER TABLE `item`
- ADD PRIMARY KEY (`id`), ADD KEY `id_categ` (`id_categ`);
-
---
--- Index pour la table `user`
---
-ALTER TABLE `user`
- ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT pour les tables exportées
---
-
---
--- AUTO_INCREMENT pour la table `categorie`
---
-ALTER TABLE `categorie`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT pour la table `item`
---
-ALTER TABLE `item`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
---
--- AUTO_INCREMENT pour la table `user`
---
-ALTER TABLE `user`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- Contraintes pour les tables exportées
 --
@@ -168,7 +150,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 -- Contraintes pour la table `item`
 --
 ALTER TABLE `item`
-ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`id_categ`) REFERENCES `categorie` (`id`);
+  ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`id_categ`) REFERENCES `categorie` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

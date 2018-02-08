@@ -1,6 +1,7 @@
 <?php
 
 namespace garagesolidaire\vue;
+use \garagesolidaire\vue\VueGeneral;
 
 class VueClient{
 
@@ -16,8 +17,8 @@ class VueClient{
 	  $desc=$this->infos['description'];
 	  $img=$this->infos['img'];
 
-	  $code="Nom : ".$nom." <br> Description : ".$desc;
-    if($img!==""){
+	  $code="<p>Nom : ".$nom." <br> Description : ".$desc."<p>";
+	  if($img!==""){
 		$code=$code.'<img src="../../img/item/'.$img.'" width = "150" height="150"></img><br>';
 	  }
 		//liens des boutons bidons
@@ -61,13 +62,64 @@ END;
   public function afficherCategories(){
 		$code= "<section><ul>";
 		foreach($this->infos as $key=>$value){
-			$code=$code." <li><a href='affichercatergorie/".$value['id']."'>".$value['nom']."</a> </li><br>";
+			$code=$code." <li><a href='afficheritemscategorie/".$value['id']."'>".$value['nom']."</a> </li><br>";
 		}
 		$code=$code."</ul></section>";
 
 		return $code;
 	}
 
+  public function afficherFormulaireReservation(){
+    $jours=array('Lundi','Mardi','Mercredi','Jeudi','Vendredi');
+    $heuresDeb=array(8,10,14,16);
+    $heuresFin=array(10,12,16,18);
+    $code=<<<END
+    <form id="reservation" method="post" action="validerReservation">
+    <label for="f1_jourdeb">Jour de départ</label>
+    <select id="f1_jourdeb" name="jourdeb" required>
+END;
+  $i=0;
+  while(i<5){
+    $y=$i+1;
+    $code.="<option value=\"".$y."\">".$jours[$i]."</option>";
+    $i=$i+1;
+  }
+  $code=$code."</select><br>";
+  $code.=<<<END
+  <label for="f1_heuredeb">Heure de départ</label>
+  <select id="f1_heuredeb" name="heuredeb" required>
+END;
+  $i=0;
+  while(i<4){
+    $code.="<option value=\"".$heuresDeb[$i]."\">".$heuresDeb[$i]."</option>";
+    $i=$i+1;
+  }
+  $code=$code."</select><br>";
+  $code.=<<<END
+  <label for="f1_jourfin">Jour de Fin</label>
+  <select id="f1_jourfin" name="jourfin" required>
+END;
+$i=0;
+while(i<5){
+  $y=$i+1;
+  $code.="<option value=\"".$y."\">".$jours[$i]."</option>";
+  $i=$i+1;
+}
+$code=$code."</select><br>";
+  $code.=<<<END
+  <label for="f1_heurefin">Heure de fin</label>
+  <select id="f1_heurefin" name="heurefin" required>
+END;
+  $i=0;
+  while(i<4){
+  $code.="<option value=\"".$heuresFin[$i]."\">".$heuresFin[$i]."</option>";
+  $i=$i+1;
+  }
+  $code=$code."</select><br>";
+  $code.="<button type=\"submit\" name=\"valider_reservation\" value=\"valid_reservation\">Valider</button></form>";
+  return $code;
+  }
+  /**
   public function afficherPlanningGraphique(){
     $code="<table><tr><th>Jour</th><th>8h-10h</th><th>10h-12h</th><th>12h-14h</th><th>14h-16h</th><th>16h-18h</th></tr>";
     $tab=array();
@@ -79,48 +131,37 @@ END;
     $i=0;
     foreach($this->infos as $key=>$value){
       $code=$code+"<tr><td>".$tab[i]."</td>";
-      if(){
-        
-      }
+      $i++;
     }
-    $code=$code+"</table>"
-
+    $code=$code+"</table>";
   }
+  */
 
   public function render($int){
   switch($int){
     case 1:{
-      $content=$this->afficherCategories();
+		 $code=VueGeneral::genererHeader("demarrage");
+      $code.=$this->afficherCategories();
       break;
     }
   case 2:{
-		$content=$this->afficherItem();
+	  $code=VueGeneral::genererHeader("demarrage");
+		$code.=$this->afficherItem();
       break;
     }
-  case 3:{
-    $content=$this->afficherItemsCateg();
-    break;
-    }
-    case 4:{
-      $content=$this->afficherPlanningGraphique();
-      break;
-      }
+	case 3:{
+		$code=VueGeneral::genererHeader("demarrage");
+		$code.=$this->afficherItemsCateg();
+		break;
+	}
+  case 4:{
+  		$code=VueGeneral::genererHeader("demarrage");
+  		$code.=$this->afficherFormulaireReservation();
+  		break;
+  	}
   }
-  $code= <<<END
-  <!DOCTYPE html>
-  <html>
-      <head>
-          <title>GarageSolidaire</title>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <link rel="stylesheet" href="../../client.css" />
-      </head>
-      <body>
-		$content
-      </body>
-  </html>
 
-END;
+  $code.=VueGeneral::genererFooter();
   echo $code;
 }
 }

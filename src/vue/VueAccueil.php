@@ -13,6 +13,7 @@ class VueAccueil{
   const AFF_ABOUT = 1;
   const AFF_CONTACT = 2;
   const AFF_HELP = 3;
+  const AFF_ERROR_404 = 4;
 
 
   public function __construct($select = -1){
@@ -62,6 +63,17 @@ END;
 END;
     break;
 
+    case VueAccueil::AFF_ERROR_404:
+    $html = \garagesolidaire\vue\VueGeneral::genererHeader("erreur404");
+$html .= <<<END
+<h1>Oupss on a pas trouv&eacute; votre page</h1>
+<section class="error-container">
+  <span>4</span>
+  <span><span class="screen-reader-text">0</span></span>
+  <span>4</span>
+</section>
+END;
+    break;
     }
 
 

@@ -53,9 +53,10 @@ $app->get('/help', function () {
 })->name("help");
 
 // Redirection Erreur 404
-// $app->notFound(function () use ($app) {
-//   $app->redirect($app->urlFor('list-not-found'));
-// });
+$app->notFound(function () use ($app) {
+  $c = new GestionAccueil();
+  $c -> error404();
+});
 
 $app->get('/afficheritem/:id',function($id){
 	$control = new ControleurClient();
@@ -65,6 +66,11 @@ $app->get('/afficheritem/:id',function($id){
 $app->get('/affichercategories',function(){
 	$control=new ControleurClient();
 	$control->afficherCategories();
+});
+
+$app->get('/affichercreationreservation/:id',function($id){
+	$control=new ControleurClient();
+	$control->afficherCreationReservation($id);
 });
 
 $app->run();
