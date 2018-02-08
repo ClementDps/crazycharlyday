@@ -17,6 +17,15 @@ class VueClient{
 	  
 	  
   }
+  
+   public function afficherItemsCateg(){
+    $code="";
+    $c=$this->infos['c'];
+    $i=$this->infos['i'];
+    echo $c;
+    echo $i;
+    return $code;
+  }
 
   public function render($int){
   switch($int){
@@ -27,6 +36,10 @@ class VueClient{
   case 2:{
 		$content=$this->afficherItem();
       break;
+    }
+  case 3:{
+    $content=$this->afficherItemsCateg();
+    break;
     }
   }
   $code= <<<END
