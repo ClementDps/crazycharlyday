@@ -129,9 +129,9 @@ $app->post('/validerreservation/:id', function($id) {
     $c->validerReservation($_POST['jourdeb'],$_POST['jourfin'],$_POST['heuredeb'],$_POST['heurefin'],$id);
 })->name("valid-reserv");
 
-$app->get('/afficherplanningreservationitem/:num',function($num){
+$app->get('/afficherplanningreservationitem/:id',function($id){
 	$control=new ControleurClient();
-	$control->afficherPlanningReservationItem($num);
+	$control->afficherPlanningReservationItem($id);
 })->name("reservationitem");
 
 
