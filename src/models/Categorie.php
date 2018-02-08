@@ -8,17 +8,17 @@ class Categorie extends \Illuminate\Database\Eloquent\Model{
 	protected $primaryKey='id';
 	public $timestamps=false;
 
-  public insert($nom,$desc){
+  public function insert($nom,$desc){
     $c=new Item();
     $c->nom=$nom;
     $c->description=$desc;
     $c->save();
   }
 
-  public update($id,$nom,$desc){
+  /*public function update($id,$nom,$desc){
     $c=Item::find($id);
     $c->nom=$nom;
     $c->description=$desc;
     $c->save();
-  }
+  }*/
 }
