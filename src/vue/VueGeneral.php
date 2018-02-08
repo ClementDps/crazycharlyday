@@ -14,19 +14,19 @@ namespace garagesolidaire\vue;
    */
    public static function genererHeader($fichierCss = ""){
      $app = \Slim\Slim::getInstance();
-     // $routeListe = $app->urlFor('liste');
+     $routeCategorie = $app->urlFor('aff-categorie');
      $routeInsc = $app->urlFor('inscription');
      $routeConnexion = $app->urlFor('connexion');
      $routeAcc = $app->urlFor('accueil');
-     // $routeUser = $app->urlFor('aff-user');
+     $routeUser = "#";//$app->urlFor('aff-user');
      $root = $app->request->getRootUri();
 
      $profileHTML = "<li><a href=\"".$routeConnexion."\">Connexion</a></li><li><a href=\"".$routeInsc."\">Inscription</a></li>";
-     // if(isset($_SESSION['profile'])){
-     //   $routeDeconnexion = $app->urlFor('deconnexion');
-     //
-     //   $profileHTML = "<li><a href=\"$routeUser\">".$_SESSION["profile"]["prenom"]."</a></li><li><a href=\"$routeDeconnexion\">Déconnexion</a></li>";
-     // }
+     if(isset($_SESSION['userid'])){
+       $routeDeconnexion = $app->urlFor('deconnexion');
+
+       $profileHTML = "<li><a href=\"$routeUser\">".$_SESSION["usernickname"]."</a></li><li><a href=\"$routeDeconnexion\">Déconnexion</a></li>";
+     }
 
       $html =
       <<<END
@@ -44,7 +44,7 @@ namespace garagesolidaire\vue;
   <div id="top-zone">
     <div id="left">
       <ul>
-      <li><a href="$root">Accueil</a></li><li><a href="#">Garage Solidaire</a></li>
+      <li><a href="$root">Accueil</a></li><li><a href="$routeCategorie">Garage Solidaire</a></li>
       </ul>
     </div>
     <div id="right">

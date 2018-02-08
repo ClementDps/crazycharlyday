@@ -7,3 +7,6 @@ composer.phar
 
 #fichier config
 /conf/
+.htaccess
+
+Thumbs.db

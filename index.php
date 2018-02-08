@@ -22,12 +22,12 @@ $app->get('/', function () {
   $c -> afficheAccueil();
 })->name("accueil");
 
-$app->get('/afficheritemscategorie/:num',function($num){
+$app->get('/afficher/items/categorie/:num',function($num){
 	$control=new ControleurClient();
 	$control->afficheritemscategorie($num);
-});
+})->name("afficher-item");
 
-$app->get('/afficherplanninggraph/:num',function($num){
+$app->get('/afficher/planning/graph/:num',function($num){
 	$control=new ControleurClient();
 	$control->afficherPlanningGraphique($num);
 });
@@ -53,23 +53,30 @@ $app->notFound(function () use ($app) {
   $c -> error404();
 });
 
-$app->get('/afficheritem/:id',function($id){
+$app->get('/afficher/item/:id',function($id){
 	$control = new ControleurClient();
 	$control->afficherItem($id);
 })->name('item');
 
-$app->get('/affichercategories',function(){
+$app->get('/afficher/categories',function(){
 	$control=new ControleurClient();
 	$control->afficherCategories();
-});
+})->name("aff-categorie");
 
+<<<<<<< HEAD
 
 $app->get('/affichercreationreservation/:id',function($id){
+=======
+$app->get('/afficher/creation/reservation/:id',function($id){
+>>>>>>> 8af4ab5a1e662ca3e2cfefc9c4b9549b6e7341a0
 	$control=new ControleurClient();
 	$control->afficherCreationReservation($id);
-});
+})->name("creation-reservation");
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8af4ab5a1e662ca3e2cfefc9c4b9549b6e7341a0
 //-----------------------------Formulaire-de-connexion-et-deconnexion-compte----------//
 $app->get('/connexion', function () {
   $c = new GestionCompte();
@@ -78,7 +85,7 @@ $app->get('/connexion', function () {
 
 $app->post('/connexion', function () {
     $c = new GestionCompte();
-    $c->etablirConnection($_POST);
+    $c->etablirConnection();
 });
 
 $app->get('/deconnexion', function () {
@@ -94,19 +101,12 @@ $app->get('/inscription', function () {
 
 $app->post('/inscription', function () {
 
-  if( isset($_POST['valider-insc']) && $_POST['valider-insc'] == 'S\'inscrire'){
-
     $c = new GestionCompte();
+    $c->ajouterUtilisateur();
 
-    $valueFiltred = $c->filtrerInscription($_POST);
-
-    if( !empty($valueFiltred) ){
-      $c->ajouterUtilisateur($valueFiltred);
-    }
-
-  }
 });
 
+<<<<<<< HEAD
 $app->post('/validerreservation/:id', function($id) {
     $c = new ControleurClient();
     $c->validerReservation($_POST['jourdeb'],$_POST['jourfin'],$_POST['heuredeb'],$_POST['heurefin'],$id);
@@ -114,4 +114,6 @@ $app->post('/validerreservation/:id', function($id) {
 
 
 
+=======
+>>>>>>> 8af4ab5a1e662ca3e2cfefc9c4b9549b6e7341a0
 $app->run();
