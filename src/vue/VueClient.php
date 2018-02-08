@@ -2,6 +2,7 @@
 
 namespace garagesolidaire\vue;
 use \garagesolidaire\vue\VueGeneral;
+use \garagesolidaire\models\User;
 
 class VueClient{
 
@@ -16,23 +17,26 @@ class VueClient{
 	  $nom=$this->infos['nom'];
 	  $desc=$this->infos['description'];
 	  $img=$this->infos['img'];
+	  $app=\Slim\Slim::getInstance();
 
 	  $code="<p>Nom : ".$nom." <br> Description : ".$desc."<p>";
 	  if($img!==""){
 		$code=$code.'<img src="../../img/item/'.$img.'" width = "150" height="150"></img><br>';
 	  }
 		//liens des boutons bidons
+		$route2=$app->urlFor('reservationitem',['id'=>$id]);
 		$buttonlisteres=<<<END
-<form id="listeres" method="get" action ="afficherlisteres/$id">
+<form id="listeres" method="get" action ="$route2">
 <button type="submit" name="valider_affichage_liste_res" value="valid_affichage_liste_res">Afficher la liste des réservations</button>
 </form>
 END;
+
 $buttonplanning=<<<END
-<form id="planninggraph" method="get" action ="afficherplanninggraph/$id">
+<form id="planninggraph" method="get" action ="reservationitem/$id">
 <button type="submit" name="valider_affichage_planning_graph" value="valid_affichage_planning_graph">Planning graphique</button>
 </form>
 END;
-$app=\Slim\Slim::getInstance();
+
 $route=$app->urlFor('creation-reservation',['id'=>$id]);
 $buttonformulaireres=<<<END
 <form id="formulaireres" method="get" action ="$route">
@@ -47,7 +51,7 @@ END;
   }
 
    public function afficherItemsCateg(){
-     $app=\Slim\Slim::getInstance();
+    $app=\Slim\Slim::getInstance();
     $code="";
     $c=$this->infos['c'];
     $i=$this->infos['i'];
@@ -72,6 +76,52 @@ END;
 		$code=$code."</ul></section>";
 
 		return $code;
+	}
+	
+	public function afficherListeUtilisateurs(){
+		$code= "<section><ul>";
+		foreach($this->infos as $key=>$value){
+			$code=$code." <li><a href='afficheritemscategorie/".$value['id']."'>".$value['nom']." ".$value["prenom"]."</a> </li>";
+			$code = $code."<img src=\"../img/user/".$value['img'].".jpg\" width=\"50\" height=\"50\"><br><br>";
+		}
+		$code=$code."</ul></section>";
+
+		return $code;
+	}
+	
+	public function afficherPlanningReservationItem(){
+		$code ="";
+		if(!isset($this->infos)){
+			$code = "Il n'y a aucune reservation";
+		}else{
+			foreach($this->infos as $key=>$value){
+				$reservateur  = User::find($value["idUser"])["nom"];
+				$date = "";
+				$heured = $value["heureDeb"];
+				$heuref = $value["heureFin"];
+				$jour="";
+				switch($value["jourDeb"]){
+					case 1 :{
+						$jour = "Lundi";
+						break;}
+					case 2 :{
+						$jour = "Mardi";
+						break;}
+					case 3 :{
+						$jour = "Mercredi";
+						break;}
+					case 4 :{
+						$jour = "Jeudi";
+						break;}
+					case 5 :{
+						$jour = "Vendredi";
+					}	
+				}
+				$code = $code."Reserver par ".$reservateur." le ".$jour." de ".$heured."h à ".$heuref."h.<br>";
+			}
+		}
+		
+	return $code;
 	}
 
   public function afficherFormulaireReservation(){
@@ -147,11 +197,11 @@ END;
   public function render($int){
   switch($int){
     case 1:{
-		 $code=VueGeneral::genererHeader("demarrage");
+		$code=VueGeneral::genererHeader("demarrage");
       $code.=$this->afficherCategories();
       break;
     }
-  case 2:{
+	case 2:{
 	  $code=VueGeneral::genererHeader("demarrage");
 		$code.=$this->afficherItem();
       break;
@@ -161,13 +211,22 @@ END;
 		$code.=$this->afficherItemsCateg();
 		break;
 	}
+	case 10:{
+		$code=VueGeneral::genererHeader("demarrage");
+		$code.=$this->afficherListeUtilisateurs();
+		break;
+	}
+	case 11:{
+		$code=VueGeneral::genererHeader("demarrage");
+		$code.=$this->afficherPlanningReservationItem();
+		break;
+	}
   case 4:{
   		$code=VueGeneral::genererHeader("formulaire");
   		$code.=$this->afficherFormulaireReservation();
   		break;
   	}
   }
-
   $code.=VueGeneral::genererFooter();
   echo $code;
 }
