@@ -101,7 +101,7 @@ $app->post('/inscription', function () {
 $app->post('/validerreservation/:id', function($id) {
     $c = new ControleurClient();
     $c->validerReservation($_POST['jourdeb'],$_POST['jourfin'],$_POST['heuredeb'],$_POST['heurefin'],$id);
-});
+})->name("valid-reserv");
 
 
 

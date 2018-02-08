@@ -4,6 +4,7 @@ namespace garagesolidaire\controleur;
 use \garagesolidaire\models\Item;
 use \garagesolidaire\models\Categorie;
 use \garagesolidaire\vue\VueClient;
+use \garagesolidaire\models\Reservation;
 
 class ControleurClient{
 
@@ -54,25 +55,25 @@ public function validerReservation($jdeb,$jfin,$hdeb,$hfin,$id){
 	if(isset($_SESSION['userid']) && isset($_POST['valider_reservation']) && $_POST['valider_reservation']=='valid_reservation'){
 	if($jdeb<$jfin || ($jdeb==$jfin && $hdeb<$hfin)){
 		//verifier que les plages horaires sont libres
-		$res=Reservation::where('idItem','=',$id);
+		$res=Reservation::where('idItem','=',$id)->get();
 		if(isset($res)){
-			$res=$res->toArray();
+			//$res=$res->toArray();
 			$g=0;
 			foreach($res as $key=>$value){
-				$g=$g+testerValidite($value['jourDeb'],$value['jourFin'],$value['heureDeb'],$value['heureFin'],$hdeb,$jdeb,$hfin,$jfin);
-				$g=$g+testerValidite($hdeb,$jdeb,$hfin,$jfin,$value['jourDeb'],$value['jourFin'],$value['heureDeb'],$value['heureFin']);
+				$g=$g+$this->testerValidite($value['jourDeb'],$value['jourFin'],$value['heureDeb'],$value['heureFin'],$jdeb,$jfin,$hdeb,$hfin);
+				$g=$g+$this->testerValidite($jdeb,$jfin,$hdeb,$hfin,$value['jourDeb'],$value['jourFin'],$value['heureDeb'],$value['heureFin']);
 			}
 			if($g==0){
-				Reservation::insert($_SESSION['user_id'],$id,$hdeb,$jdeb,$hfin,$jfin);
+				Reservation::insert($_SESSION['userid'],$id,$hdeb,$jdeb,$hfin,$jfin);
 			}
 		}else{
-			Reservation::insert($_SESSION['user_id'],$id,$hdeb,$jdeb,$hfin,$jfin);
+			Reservation::insert($_SESSION['userid'],$id,$hdeb,$jdeb,$hfin,$jfin);
 		}
 
 	}
 	}
 	$vue=new VueClient([]);
-	$vue->render(1)
+	$vue->render(1);
 }
 
 public function testerValidite($jdebB,$jfinB,$hdebB,$hfinB, $jdebA,$jfinA,$hdebA,$hfinA){

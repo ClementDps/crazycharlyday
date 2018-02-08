@@ -32,9 +32,10 @@ $buttonplanning=<<<END
 <button type="submit" name="valider_affichage_planning_graph" value="valid_affichage_planning_graph">Planning graphique</button>
 </form>
 END;
-
+$app=\Slim\Slim::getInstance();
+$route=$app->urlFor('creation-reservation',['id'=>$id]);
 $buttonformulaireres=<<<END
-<form id="formulaireres" method="get" action ="afficherformulaireres/$id">
+<form id="formulaireres" method="get" action ="$route">
 <button type="submit" name="valider_affichage_formulaire_res" value="valid_affichage_formulaire_res">Réserver</button>
 </form>
 END;
@@ -77,8 +78,10 @@ END;
     $jours=array('Lundi','Mardi','Mercredi','Jeudi','Vendredi');
     $heuresDeb=array(8,10,14,16);
     $heuresFin=array(10,12,16,18);
+    $app = \Slim\Slim::getInstance();
+    $route=$app->urlFor("valid-reserv", ['id' => $this->infos]);
     $code=<<<END
-    <form id="reservation" method="post" action="validerreservation/$this->infos">
+    <form id="reservation" method="post" action="$route">
     <label for="f1_jourdeb">Jour de départ</label>
     <select id="f1_jourdeb" name="jourdeb" required>
 END;
@@ -159,7 +162,7 @@ END;
 		break;
 	}
   case 4:{
-  		$code=VueGeneral::genererHeader("demarrage");
+  		$code=VueGeneral::genererHeader("formulaire");
   		$code.=$this->afficherFormulaireReservation();
   		break;
   	}
