@@ -22,23 +22,6 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
---
--- Structure de la table `categorie`
---
-DROP TABLE IF EXISTS `categorie`;
-CREATE TABLE IF NOT EXISTS `categorie` (
-`id` int(11) NOT NULL,
-  `nom` varchar(30) CHARACTER SET utf8 NOT NULL,
-  `description` text CHARACTER SET utf8 NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Contenu de la table `categorie`
---
-
-INSERT INTO `categorie` (`id`, `nom`, `description`) VALUES
-(1, 'Vehicule', 'Tous les véhicules à emprunter !!!'),
-(2, 'Atelier', 'Des ateliers réservables pour moult réparations.');
 
 -- --------------------------------------------------------
 
@@ -113,6 +96,26 @@ INSERT INTO `user` (`id`, `nom`, `prenom`, `email`, `mdp`, `rang`) VALUES
 (10, 'Pénélope', '', '', '', 0),
 (11, 'Ariane', '', '', '', 0),
 (12, 'Lois', '', '', '', 0);
+
+
+--
+-- Structure de la table `categorie`
+--
+DROP TABLE IF EXISTS `categorie`;
+CREATE TABLE IF NOT EXISTS `categorie` (
+`id` int(11) NOT NULL,
+  `nom` varchar(30) CHARACTER SET utf8 NOT NULL,
+  `description` text CHARACTER SET utf8 NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Contenu de la table `categorie`
+--
+
+INSERT INTO `categorie` (`id`, `nom`, `description`) VALUES
+(1, 'Vehicule', 'Tous les véhicules à emprunter !!!'),
+(2, 'Atelier', 'Des ateliers réservables pour moult réparations.');
+
 
 --
 -- Index pour les tables exportées
