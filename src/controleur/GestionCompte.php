@@ -18,6 +18,23 @@ namespace garagesolidaire\controleur;
         $vue->render(VueAdministrateur::AFF_USER);
       }
 
+      public function supprimerCompte(){
+        $c = Model\Commentaire::where("idUser","=",$_SESSION['userid'])->get();
+        $r = Model\Reservation::where("idUser","=",$_SESSION['userid'])->get();
+
+        foreach ($c as $value) {
+          $value->delete();
+        }
+        foreach ($r as $value) {
+          $value->delete();
+        }
+        $u = Model\User::where("id","=",$_SESSION['userid'])->first()->delete();
+        $this->deconnecter();
+        $app = \Slim\Slim::getInstance();
+        $app->redirect( $app->urlFor("accueil") ) ; //Redirection à ses listes
+
+      }
+
       public function afficherChangerMotDePasse(){
         $vue = new VueAdministrateur(null);
         $vue->render(VueAdministrateur::AFF_CMDP);
@@ -34,7 +51,7 @@ namespace garagesolidaire\controleur;
 
         $valueFiltred = $this->filterVar($_POST);
         Model\User::mettreAjour($valueFiltred['nom'],$valueFiltred['prenom']);
-        
+
         $app->redirect( $app->urlFor("aff-user") ) ; //Redirection à ses listes
 
       }
