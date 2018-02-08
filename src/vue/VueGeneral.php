@@ -33,13 +33,10 @@ namespace garagesolidaire\vue;
      if(isset($_SESSION['userid']) && isset($_SESSION['rang']) && $_SESSION['rang']==0){
        $menuReservation="<li><a href=".$mesReservations.">Mes Réservations</a></li>";
      }else{
-<<<<<<< HEAD
+
        if(isset($_SESSION['userid']) && $_SESSION['rang']>0){
          $menuReservation="<li><a href=\"$reservationAdmin\">Les Réservations</a></li>";
-=======
-       if(isset($_SESSION['userid']) && isset($_SESSION['rang']) && $_SESSION['rang']>0){
-         $menuReservation="<li><a href=\"acompleter\">Les Réservations</a></li>";
->>>>>>> c446cfd8e9bec5739806780f5ce3e7c9d3761b78
+
        }
      }
 
