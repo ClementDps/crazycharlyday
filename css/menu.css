@@ -291,7 +291,7 @@ body {
 }
 
 header {
-  background-color: #A0CCCC;
+  background-color: #495769;
   font-size: 25px;
   color: white;
 }
@@ -301,11 +301,8 @@ header {
 }
 
 #bouton a {
-  margin-left: 2em;
-  margin-right: 2em;
-  margin-top: 10%;
-  margin-bottom: 2%;
-  background-color:#006575;
+  margin : 0;
+  background-color:#495769;
   border-radius:10px;
   display:inline-block;
   cursor:pointer;

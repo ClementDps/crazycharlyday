@@ -157,6 +157,7 @@ public function mesReservations(){
 	$vue->render(5);
 }
 
+<<<<<<< HEAD
 
 public function afficherReservation($id){
 	$r=Reservation::find($id);
@@ -164,6 +165,8 @@ public function afficherReservation($id){
 	$vue->render(6);
 }
 
+=======
+>>>>>>> f1da99e64c570bef951b276ccce7deb63e17d1bc
 public function afficherPlanningUser($idUser){
 	if(isset($_SESSION['userid'])){
 		$r=Reservation::where('idUser','=',$idUser)->get();
