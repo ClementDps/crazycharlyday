@@ -22,6 +22,8 @@ class VueClient{
 	  $nom=$this->infos['nom'];
 	  $desc=$this->infos['description'];
 	  $img=$this->infos['img'];
+	  $app=\Slim\Slim::getInstance();
+		$root=$app->request->getRootUri();
 
 	  $code="<p>Nom : ".$nom." <br> Description : ".$desc."<p>";
 	  
@@ -43,7 +45,7 @@ class VueClient{
 	  
 	  
 	  if($img!==""){
-		$code=$code.'<img src="../../img/item/'.$img.'" width = "150" height="150"></img><br>';
+		$code=$code."<img src=\"$root/img/item/".$img.'" width = "150" height="150"></img><br>';
 	  }
 	  $app=\Slim\Slim::getInstance();
 		$route3=$app->urlFor("reservationitem",['id'=>$id]);
