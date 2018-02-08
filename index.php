@@ -8,6 +8,7 @@ use \Slim\Slim;
 use garagesolidaire\controleur\GestionAccueil;
 use garagesolidaire\controleur\GestionCompte;
 
+
 $db=new DB();
 $db->addConnection(parse_ini_file('./conf/conf.ini'));
 $db->setAsGlobal();
@@ -69,6 +70,12 @@ $app->get('/afficher/creation/reservation/:id',function($id){
 	$control->afficherCreationReservation($id);
 })->name("creation-reservation");
 
+
+$app->get('/afficherlisteutilisateurs',function(){
+	$control=new ControleurClient();
+	$control->afficherListeUtilisateurs();
+});
+
 //-----------------------------Formulaire-de-connexion-et-deconnexion-compte----------//
 $app->get('/connexion', function () {
   $c = new GestionCompte();
@@ -96,6 +103,12 @@ $app->get('/inscription', function () {
   $c -> afficheInscription();
 })->name("inscription");
 
+$app->post('/inscription', function () {
+  $c = new GestionCompte();
+  $c -> ajouterUtilisateur();
+});
+
+
 
 $app->get('/user/delete', function () {
     $c = new GestionCompte();
@@ -117,9 +130,20 @@ $app->post('/validerreservation/:id', function($id) {
     $c->validerReservation($_POST['jourdeb'],$_POST['jourfin'],$_POST['heuredeb'],$_POST['heurefin'],$id);
 })->name("valid-reserv");
 
+<<<<<<< HEAD
 $app->get('/mesreservations', function () {
     $c = new ControleurClient();
     $c->mesReservations();
 })->name("mes-reservations");
+=======
+$app->get('/afficherplanningreservationitem/:num',function($num){
+	$control=new ControleurClient();
+	$control->afficherPlanningReservationItem($num);
+})->name("reservationitem");
+
+$app->get('/reservation/' , function () {
+
+})->name("reservation");
+>>>>>>> 9ff0fef0658a3b6dfbd68bddbdf455a31834010d
 
 $app->run();
