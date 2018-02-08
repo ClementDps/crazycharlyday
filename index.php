@@ -154,11 +154,11 @@ $app->get('/reservation/' , function () {
 
 })->name("reservation");
 
+/**
 $app->get('/afficherplanningreservationuser/:id',function($id){
 
 	$control=new ControleurClient();
-	$control->afficherPlanningUser($id);
-})->name("reservation-user");
+	$control->afficherPlanningUse*/
 
 
 $app->run();
