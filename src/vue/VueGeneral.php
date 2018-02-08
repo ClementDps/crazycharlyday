@@ -29,10 +29,10 @@ namespace garagesolidaire\vue;
        $profileHTML = "<li><a href=\"$routeUser\">".$_SESSION["usernickname"]."</a></li><li><a href=\"$routeDeconnexion\">Déconnexion</a></li>";
      }
 
-     if(isset($_SESSION['userid']) && $_SESSION['rang']==0){
+     if(isset($_SESSION['userid']) && isset($_SESSION['rang']) && $_SESSION['rang']==0){
        $menuReservation="<li><a href=".$mesReservations.">Mes Réservations</a></li>";
      }else{
-       if(isset($_SESSION['userid']) && $_SESSION['rang']>0){
+       if(isset($_SESSION['userid']) && isset($_SESSION['rang']) && $_SESSION['rang']>0){
          $menuReservation="<li><a href=\"acompleter\">Les Réservations</a></li>";
        }
      }
