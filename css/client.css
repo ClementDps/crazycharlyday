@@ -1,12 +1,32 @@
 table, th, td {
-    border: 1px solid black;
+    border: 2px solid #495769;
     border-collapse: collapse;
+    margin : 50px;
+    font-size:22px;
+    text-align:center;
 }
 
-td#reserve{
-  background-color=#00FF00;
+td{
+	color:#495769;
 }
 
-td#libre{
-  background-color=#6A5B2C;
+#libre{
+	color:#00FF00;
+
+}
+
+#reserve{
+	color:red;
+}
+
+#libre:hover{
+	background-color:#00FF00;
+	color:white;
+	border: 3px solid #00FF00;
+}
+
+#reserve:hover{
+	background-color red;
+	color:white;
+	border: 3px solid red;
 }
