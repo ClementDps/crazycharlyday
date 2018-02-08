@@ -7,6 +7,7 @@ use \garagesolidaire\models\Item;
 use \garagesolidaire\models\User;
 use \garagesolidaire\models\Commentaire;
 
+
 class VueClient{
 
   private $infos;
@@ -20,11 +21,10 @@ class VueClient{
 	  $nom=$this->infos['nom'];
 	  $desc=$this->infos['description'];
 	  $img=$this->infos['img'];
-	  $app=\Slim\Slim::getInstance();
-    $root = $app->request->getRootUri();
+
 	  $code="<p>Nom : ".$nom." <br> Description : ".$desc."<p>";
 	  if($img!==""){
-		$code=$code."<img src=\"$root/img/item/".$img.'" width = "150" height="150"></img><br>';
+		$code=$code.'<img src="../../img/item/'.$img.'" width = "150" height="150"></img><br>';
 	  }
 	  $app=\Slim\Slim::getInstance();
 		//liens des boutons bidons
@@ -62,9 +62,6 @@ END;
 	</form>
 END;
 		}
-
-
-
 		$messages = Commentaire::where('idItem','=',$id)->get();
 		if (isset($messages[0])){
 			$code = $code."<br><br>Commentaires :<br><br>";
@@ -73,8 +70,6 @@ END;
 				$code = $code.$user->nom." : ".$message->message." ".$message->dateMess."<br><br>";
 			}
 		}
-
-
 		return $code;
   }
 
@@ -106,7 +101,8 @@ END;
 		return $code;
 	}
 
-	
+
+
 	public function afficherListeUtilisateurs(){
 		$code= "<section><ul>";
 		foreach($this->infos as $key=>$value){
@@ -204,7 +200,7 @@ END;
   $code.="<button type=\"submit\" name=\"valider_reservation\" value=\"valid_reservation\">Valider</button></form>";
   return $code;
   }
-  
+
   public function afficherPlanningGraphique(){
     $code="<table><tr><th>Jour</th><th>8h-10h</th><th>10h-12h</th><th>14h-16h</th><th>16h-18h</th></tr>";
     $tab=array();
@@ -216,7 +212,7 @@ END;
 	$y=1;
 	$i=0;
 	while($y<6){
-		
+
 		$code=$code."<tr><td>".$tab[$i]."</td>";
 		$estReserve=0;
 		foreach($this->infos as $key=>$value){
@@ -230,7 +226,7 @@ END;
 			$resultat="reserve";
 		}
 		$code.="<td id=\"$resultat\">$resultat</<td>";
-		
+
 		$estReserve=0;
 		foreach($this->infos as $key=>$value){
 			$res=ControleurClient::testerValidite($y,$y,10,12,$value['jourDeb'],$value['jourFin'],$value['heureDeb'],$value['heureFin']);
@@ -243,7 +239,7 @@ END;
 			$resultat="reserve";
 		}
 		$code.="<td id=\"$resultat\">$resultat</<td>";
-		
+
 		$estReserve=0;
 		foreach($this->infos as $key=>$value){
 			$res=ControleurClient::testerValidite($y,$y,14,16,$value['jourDeb'],$value['jourFin'],$value['heureDeb'],$value['heureFin']);
@@ -256,7 +252,7 @@ END;
 			$resultat="reserve";
 		}
 		$code.="<td id=\"$resultat\">$resultat</<td>";
-		
+
 		$estReserve=0;
 		foreach($this->infos as $key=>$value){
 			$res=ControleurClient::testerValidite($y,$y,16,18,$value['jourDeb'],$value['jourFin'],$value['heureDeb'],$value['heureFin']);
@@ -270,15 +266,15 @@ END;
 		}
 		$code.="<td id=\"$resultat\">$resultat</<td>";
 		$code.="</tr>";
-		
-		
+
+
 		$i++;
 		$y=$y+1;
 	}
    $code=$code."</table>";
    return $code;
   }
-  
+
 
   /**
   *public function afficherPlanningGraphique(){
@@ -317,7 +313,8 @@ END;
     return $code;
   }
 
-  
+
+
   /**
 
   public function afficherPlanningUser(){
@@ -353,7 +350,8 @@ END;
 		  $code="pas de réservation";
 	  }
 	  return $code;
-  }*/
+  }
+  */
 
 
   public function afficherReservation(){
@@ -409,6 +407,7 @@ END;
     $code.=$this->afficherReservation();
     break;
   }
+
 	case 9:{
 		$code=VueGeneral::genererHeader("client");
 		$code.=$this->afficherPlanningGraphique();
@@ -428,6 +427,5 @@ END;
   }
   $code.=VueGeneral::genererFooter();
   echo $code;
-  }
-
+}
 }

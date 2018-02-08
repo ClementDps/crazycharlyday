@@ -163,7 +163,7 @@ public function afficherReservation($id){
 	$vue=new VueClient($r);
 	$vue->render(6);
 }
-/**
+
 
 public function afficherPlanningUser($idUser){
 	if(isset($_SESSION['userid'])){
@@ -174,7 +174,7 @@ public function afficherPlanningUser($idUser){
 		$vue=new VueClient($r);
 		$vue->render(9);
 	}
-}*/
+}
 
 
 
