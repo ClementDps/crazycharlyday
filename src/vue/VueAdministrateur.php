@@ -8,6 +8,7 @@ class VueAdministrateur{
 
   const AFF_CO = 3;
   const AFF_INSC = 4;
+  const AFF_USER = 5;
 
   public function __construct($tab){
     $this->infos=$tab;
@@ -86,6 +87,39 @@ END;
     <input id="submit" type="submit" name="valider-insc" value="S'inscrire"  placeholder="Mot de passe">
   </form>
 END;
+      break;
+    }
+
+    case VueAdministrateur::AFF_USER : {
+      $cheminDelete = $app->urlFor('supprimer-compte');
+      $cheminCompteInfo = $app->urlFor('modifier-compte');
+      $cheminModifMdp = $app->urlFor('modifier-mdp');
+      $code = \garagesolidaire\vue\VueGeneral::genererHeader("menu");
+      $code .= <<<END
+<div id="bouton">
+  <a href="$cheminCompteInfo">Modifier son compte</a>
+  <a href="$cheminModifMdp">Changer de mot de passe</a>
+  <a href="#sup-compte">Supprimer son compte</a>
+</div>
+<div id="sup-compte" class="modal">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <header class="container">
+      <a href="#" class="closebtn">×</a>
+        <h4>Supprimer son compte</h4>
+      </header>
+      <div class="container">
+        <p> Voulez-vous réellement supprimer votre compte ? </p><br>
+        <form class="reservation" method="GET" action="$cheminDelete">
+            <button class="suppr" type="submit" name="valid-reserv" value="valid_reserv">Supprimer</button>
+            <a href="#">Annuler</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+END;
+
       break;
     }
   }

@@ -11,6 +11,13 @@ namespace garagesolidaire\controleur;
    * (formulaire de création de compte)
    */
   class GestionCompte{
+
+      public function afficherPanel(){
+
+        $vue = new VueAdministrateur(null);
+        $vue->render(VueAdministrateur::AFF_USER);
+      }
+
       /**
        * Affichage formulaire inscription
        */
