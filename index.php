@@ -175,6 +175,10 @@ $app->get('/afficherplanningreservationuser/:id',function($id){
 	$control->afficherPlanningUser($id);
 })->name("reservation-user");
 
+$app->post('/annulerreservation/:id',function($id){
+	$control=new ControleurClient();
+	$control->annulerReservation($id);
+})->name("annuler-reservation");
 
 
 
