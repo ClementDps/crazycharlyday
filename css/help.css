@@ -1,5 +1,5 @@
 body {
-	background: #ADD8E6;
+	background:  #fbfaed;
 }
 
 h1 {
@@ -7,14 +7,14 @@ h1 {
   margin-left : 3em;
   margin-bottom: 3em;
   margin-top: 3em;
-	color : #006575;
+	color : #495769;
 }
 
 h3 {
   font: 600 18px/24px 'Open Sans', sans-serif;
   width: 75%;
   margin : 1em 12.5%;
-	color : #006575;
+	color : #495769;
 }
 
 p {
@@ -22,5 +22,5 @@ p {
   width: 75%;
   margin : 0em 15%;
   margin-bottom: 2em;
-  color : #129894;
+  color : #0F0C40;
 }
