@@ -176,6 +176,13 @@ public function afficherPlanningUser($idUser){
 	}
 }
 
+public function annulerReservation($id){
+	if (isset($_POST['valider_annuler_res']) && $_POST['valider_annuler_res']=='valid_annuler_res' ){
+		Reservation::changerEtat($id,"annuler");
+	}
+	$this->afficherReservation($id);
+}
+
 
 
 

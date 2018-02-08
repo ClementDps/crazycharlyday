@@ -29,4 +29,11 @@ class Reservation extends \Illuminate\Database\Eloquent\Model{
 		$r->dateDerniereModif=date("Y-m-d H:i:s",time());
 		$r->save();
 	}
+	
+	public static function changerEtat($id,$etat){
+		$r = Reservation::find($id);
+		$r->etat=$etat;
+		$r->dateDerniereModif=date("Y-m-d H:i:s",time());
+		$r->save();
+	}
 }
