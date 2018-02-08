@@ -1,7 +1,9 @@
 #fichiers composer
 composer.lock
 composer.phar
-vendor/
+/vendor/
+.lock
+
 
 #fichier config
 /conf/
