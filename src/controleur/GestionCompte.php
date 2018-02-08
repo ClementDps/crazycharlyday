@@ -18,6 +18,36 @@ namespace garagesolidaire\controleur;
         $vue->render(VueAdministrateur::AFF_USER);
       }
 
+      public function afficherChangerMotDePasse(){
+        $vue = new VueAdministrateur(null);
+        $vue->render(VueAdministrateur::AFF_CMDP);
+      }
+
+      public function changerMotDePasse(){
+        $app = \Slim\Slim::getInstance();
+        //Redirection si l'utilisateur n'est pas connecté
+        // if(!isset($_SESSION["profile"])){
+          // $app->redirect( $app->urlFor("no-connection")  ) ;
+        // }
+
+        $user = Model\User::where('id','=',$_SESSION['userid'])->first();
+
+        //Test de l'authentification utilisateur
+
+          $res = Authentification::authenticate($user->email,$_POST['old-pass']); // Authentification
+          if($_POST['new-pass'] != $_POST['conf-pass']){
+              $res = 2 ;
+          }
+          if($res == 0){
+            //Mettre a jour user
+            Model\User::mettreAjour($user->nom,$user->prenom,$_POST['old-pass'],$_POST['new-pass']);
+            $app->redirect( $app->urlFor("aff-user") ) ; //Redirection à ses listes
+          } else { //Si faux
+            $report = 'error';
+            $vue = new VueAdministrateur($report); //Charge la page de connexion avec l'erreur correspondant
+            $vue->render(VueAdministrateur::AFF_CMDP);
+          }
+      }
       /**
        * Affichage formulaire inscription
        */
