@@ -1,0 +1,44 @@
+
+
+/*footer*/
+
+html, body {
+	height: 100%;
+}
+
+body {
+	display : table;
+	width: 100%;
+  margin: 0em;
+}
+
+footer li{
+  display: inline;
+	height : 4em;
+}
+
+footer {
+	display : table-row;
+	height: 4em;
+  background-color: grey;
+}
+
+footer ul{
+	font: 300 16px/17px 'Open Sans', sans-serif;
+  text-align: center;
+	margin : 0;
+}
+
+
+footer a {
+	display: inline-block;
+  text-decoration: none;
+  color: #dddddd;
+	padding:  1em 1em;
+	padding-top:  1.5em;
+}
+
+footer a:hover {
+  text-decoration: none;
+  color: white;
+}
