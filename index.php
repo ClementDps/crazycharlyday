@@ -43,6 +43,6 @@ $app->get('/help', function () {
 $app->get('/afficheritem/:id',function($id){
 	$control = new ControleurClient();
 	$control->afficherItem($id);
-});->name('item');
+})->name('item');
 
 $app->run();
