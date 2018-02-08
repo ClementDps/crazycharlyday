@@ -63,11 +63,11 @@ $app->get('/afficher/categories',function(){
 	$control->afficherCategories();
 })->name("aff-categorie");
 
+
 $app->get('/afficher/creation/reservation/:id',function($id){
 	$control=new ControleurClient();
 	$control->afficherCreationReservation($id);
 })->name("creation-reservation");
-
 
 //-----------------------------Formulaire-de-connexion-et-deconnexion-compte----------//
 $app->get('/connexion', function () {
@@ -85,24 +85,37 @@ $app->get('/deconnexion', function () {
   $c -> deconnecter();
 })->name("deconnexion");
 
+$app->get('/user',function () {
+  $c = new GestionCompte();
+  $c->afficherPanel();
+})->name( 'aff-user' );
+
 //----------------------Formulaire-Inscription-Compte------//
 $app->get('/inscription', function () {
   $c = new GestionCompte();
   $c -> afficheInscription();
 })->name("inscription");
 
-$app->post('/inscription', function () {
 
+$app->get('/user/delete', function () {
     $c = new GestionCompte();
-    $c->ajouterUtilisateur();
+    $c->supprimerCompte();
+})->name('supprimer-compte');
 
-});
+$app->post('/user/modifier-compte', function () {
+    $c = new GestionCompte();
+    $c->afficherModifierCompte();
+})->name('modifier-compte');
+
+$app->get('/user/change-mdp', function () {
+    $c = new GestionCompte();
+    $c->afficherChangerMotDePasse();
+})->name("modifier-mdp");
 
 $app->post('/validerreservation/:id', function($id) {
     $c = new ControleurClient();
     $c->validerReservation($_POST['jourdeb'],$_POST['jourfin'],$_POST['heuredeb'],$_POST['heurefin'],$id);
 })->name("valid-reserv");
-
 
 
 $app->run();

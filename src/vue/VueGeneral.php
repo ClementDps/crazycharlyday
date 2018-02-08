@@ -18,7 +18,7 @@ namespace garagesolidaire\vue;
      $routeInsc = $app->urlFor('inscription');
      $routeConnexion = $app->urlFor('connexion');
      $routeAcc = $app->urlFor('accueil');
-     $routeUser = "#";//$app->urlFor('aff-user');
+     $routeUser = $app->urlFor('aff-user');
      $root = $app->request->getRootUri();
 
      $profileHTML = "<li><a href=\"".$routeConnexion."\">Connexion</a></li><li><a href=\"".$routeInsc."\">Inscription</a></li>";
