@@ -69,7 +69,19 @@ $buttonformulaireres=<<<END
 <button type="submit" name="valider_affichage_formulaire_res" value="valid_affichage_formulaire_res">Réserver</button>
 </form>
 END;
-		$code=$code.$buttonlisteres.$buttonplanning.$buttonformulaireres;
+$code=$code.$buttonlisteres.$buttonplanning.$buttonformulaireres;
+
+if( isset($_SESSION['userid']) && isset($_SESSION['rang']) && $_SESSION['rang']>0){
+
+$route=$app->urlFor('modifierItem',['id'=>$id]);
+$button=<<<END
+<form id="modifItem" method="get" action ="$route">
+<button type="submit" name="valider_modif" value="valid_modif">Modifier l'item</button>
+</form>
+END;
+$code.=$button;
+}
+		
 
 
 		if(isset($_SESSION['userid'])){
