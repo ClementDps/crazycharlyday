@@ -65,7 +65,6 @@ $app->get('/afficher/categories',function(){
 
 
 $app->get('/afficher/creation/reservation/:id',function($id){
->>>>>>> 8af4ab5a1e662ca3e2cfefc9c4b9549b6e7341a0
 	$control=new ControleurClient();
 	$control->afficherCreationReservation($id);
 })->name("creation-reservation");
