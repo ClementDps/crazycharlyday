@@ -35,140 +35,6 @@ namespace garagesolidaire\controleur;
         // $vue->render();
       }
 
-      /**
-       *  Affiche le panneaux de configuration de l'utilisateur
-       */
-      public function afficheUser(){
-        $app = \Slim\Slim::getInstance();
-          //Redirection si l'utilisateur n'est pas connecté
-          if(!isset($_SESSION["profile"])){
-            $app->redirect( $app->urlFor("no-connection")  ) ;
-          }
-
-          $vue = new VueAdministrateur(null, VueAdministrateur::AFF_USER);
-          $vue->render();
-      }
-
-      /**
-      * Modifie les informations du compte
-      */
-      public function afficheModifierInfoCompte(){
-        $app = \Slim\Slim::getInstance();
-        //Redirection si l'utilisateur n'est pas connecté
-        if(!isset($_SESSION["profile"])){
-          $app->redirect( $app->urlFor("no-connection")  ) ;
-        }
-        $vue = new VueAdministrateur(null, VueAdministrateur::AFF_MODIF_COMPTE);
-        $vue->render();
-      }
-
-      /**
-       * Fontion permettant de modifier les données principales du créateur
-       */
-      public function modifierInfoCompte($tab){
-        $app = \Slim\Slim::getInstance();
-        //Redirection si l'utilisateur n'est pas connecté
-        if(!isset($_SESSION["profile"])){
-          $app->redirect( $app->urlFor("no-connection")  ) ;
-        }
-
-        //Filtration des données
-        $tab['nom'] = filter_var($tab['nom'] , FILTER_SANITIZE_STRING);
-        $tab['prenom'] = filter_var($tab['prenom'] , FILTER_SANITIZE_STRING);
-        $tab['naissance'] = filter_var($tab['naissance'] , FILTER_SANITIZE_STRING);
-
-        //Si email non valide retour sur le formulaire avec l'affichage de l'erreur
-        if (!filter_var( $tab['email'] , FILTER_VALIDATE_EMAIL)){
-          $vue = new VueAdministrateur("emailError", VueAdministrateur::AFF_MODIF_COMPTE );
-          $vue->render();
-
-        }else{
-          //Sinon on accepte les modifications des valeurs
-          $userInfo = Model\UserInfo::where('uid',"=",$_SESSION['profile']['uid'])->first();
-          if($userInfo != null){
-            if($tab['nom'] != null)
-              $userInfo->nom = $tab['nom'];
-            if($tab['prenom'] != null)
-              $userInfo->prenom = $tab['prenom'];
-            if($tab['naissance'] != null)
-              $userInfo->datenaiss = $tab['naissance'];
-
-            //Test de la modification et de la validation de l'email
-            $trouve = 0;
-            if($tab['email'] != null){
-              $emailBase = Model\UserInfo::select( 'email' )->get();
-
-              foreach ($emailBase as $value) {
-                if($value->email == $tab['email'] && $value->email != $_SESSION['profile']['email'])
-                  $trouve = 1;
-              }
-              if ($trouve == 0)
-                $userInfo->email = $tab['email'];
-            }
-            //enregistrement des données
-            $userInfo->save();
-          }
-
-          //Chargement du nouveau profile
-          Authentification::loadProfile($_SESSION['profile']['uid']);
-
-          if($trouve == 0)
-            $app->redirect( $app->urlFor('aff-user')); //Redirection à la page utilisateur
-          else {
-            //Affichage de l'erreur
-            $vue = new VueAdministrateur("emailExist", VueAdministrateur::AFF_MODIF_COMPTE);
-            $vue->render();
-          }
-        }
-      }
-
-      /**
-       * Affiche le formulaire permettant de modifier un mot de passe
-       */
-      public function afficheModifierMdp(){
-        $app = \Slim\Slim::getInstance();
-        //Redirection si l'utilisateur n'est pas connecté
-        if(!isset($_SESSION["profile"])){
-          $app->redirect( $app->urlFor("no-connection")  ) ;
-        }
-
-        $vue = new VueAdministrateur(null, VueAdministrateur::AFF_MODIF_MDP);
-        $vue->render();
-      }
-
-      /**
-       * Vérifie et modifie le mot de passe du compte créateur
-       */
-      public function modifierMdp($old, $new, $conf){
-        $app = \Slim\Slim::getInstance();
-        //Redirection si l'utilisateur n'est pas connecté
-        if(!isset($_SESSION["profile"])){
-          $app->redirect( $app->urlFor("no-connection")  ) ;
-        }
-
-        $user = Model\UserPass::where('uid','=',$_SESSION['profile']['uid']);
-
-        //Test de l'authentification utilisateur
-        try {
-        if($user == null) //Test si l'utilisateur est présent dans la base ou non
-            throw new \garagesolidaire\models\AuthException("User not exist");
-
-          Authentification::authenticate($_SESSION['profile']['uid'],$old); // Authentification
-          if($new != $conf)
-            throw new \garagesolidaire\models\AuthException("Mdp diff");
-
-          Authentification::createUser($_SESSION['profile']['uid'],$new);
-
-          $app->redirect( $app->urlFor("aff-user") ) ; //Redirection à ses listes
-
-        } catch (  \garagesolidaire\models\AuthException $ae ) { //Si faux
-          $report = 'error';
-          $vue = new VueAdministrateur($report, VueAdministrateur::AFF_MODIF_MDP); //Charge la page de connexion avec l'erreur correspondant
-          $vue->render();
-        }
-
-
-      }
 
       /**
       * Ajoute un utlisateur dans la base de données
@@ -176,7 +42,13 @@ namespace garagesolidaire\controleur;
       public function ajouterUtilisateur(){
         $app = \Slim\Slim::getInstance();
         if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['email']) && isset($_POST['mdp']) && isset($_POST['mdp-conf'])){
-          $valueFiltred = $this->filterVar($_POST);
+          if (!filter_var( $tab['email'] , FILTER_VALIDATE_EMAIL)){
+            $valueFiltred = $this->filterVar($_POST);
+            $valueFiltred['error'] = "email";
+            $vue = new VueAdministrateur( $valueFiltred);
+            $vue->render(VueCreateur::AFF_INSC);
+
+        }
           if($valueFiltred['mdp'] != $valueFiltred['mdp-conf']){
             $valueFiltred['error'] = 'mdpDiff';
             $vue = new VueAdministrateur($valueFiltred);
@@ -262,7 +134,7 @@ namespace garagesolidaire\controleur;
     /**
      * Connecte l'utilisateur
      */
-    public function etablirConnection($param){
+    public function etablirConnection(){
       $app = \Slim\Slim::getInstance();
 
       //Filtrage du mail
