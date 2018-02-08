@@ -6,6 +6,7 @@ use \garagesolidaire\controleur\ControleurClient;
 use \garagesolidaire\models\Item;
 use \garagesolidaire\models\User;
 use \garagesolidaire\models\Commentaire;
+use \garagesolidaire\models\Reservation;
 
 
 class VueClient{
@@ -23,6 +24,24 @@ class VueClient{
 	  $img=$this->infos['img'];
 
 	  $code="<p>Nom : ".$nom." <br> Description : ".$desc."<p>";
+	  
+	  $res=Reservation::where('idItem','=',$id)->get();
+	  if(isset($res[0])){
+		  $moy=0;
+		  $comp=0;
+		  $res=$res->toArray();
+		  foreach($res as $key=>$value){
+			  $moy+=$value['note'];
+			  $comp=$comp+1;
+		  }
+		  $code.="Note moyenne :".$moy/$comp;
+	  }
+	  else{
+		  $code.="Note moyenne : 0";
+	  }
+	  
+	  
+	  
 	  if($img!==""){
 		$code=$code.'<img src="../../img/item/'.$img.'" width = "150" height="150"></img><br>';
 	  }
