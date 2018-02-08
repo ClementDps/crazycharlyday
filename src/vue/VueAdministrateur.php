@@ -344,7 +344,7 @@ END;
 END;
     }
 
-<<<<<<< HEAD
+
 
   case 16:{
   $code.=$this->afficherAjoutItem();
@@ -354,9 +354,9 @@ case 17:{
 $code.=$this->afficherAjoutCateg();
 break;
 }
-=======
+
   }
->>>>>>> 544db93790fc9cab8634f2a3af7d0224931b5d16
+
   $code .= \garagesolidaire\vue\VueGeneral::genererFooter();
   echo $code;
 }
