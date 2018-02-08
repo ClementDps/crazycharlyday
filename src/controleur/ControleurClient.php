@@ -54,15 +54,15 @@ class ControleurClient{
 
 	public function afficherPlanningGraphique($num){
 		$r=Reservation::where('idItem','=',$num)->get();
-		$vue=new VueClient($r);
-		$vue->render();
+		$vue=new VueClient($r->toArray());
+		$vue->render(9);
 	}
 
 public function afficherCreationReservation($id){
-	//if(isset($_SESSION['userid'])){
+	if(isset($_SESSION['userid'])){
 		$vue=new VueClient($id);
 		$vue->render(4);
-	//}
+	}
 }
 
 public function validerReservation($jdeb,$jfin,$hdeb,$hfin,$id){
@@ -74,8 +74,8 @@ public function validerReservation($jdeb,$jfin,$hdeb,$hfin,$id){
 			//$res=$res->toArray();
 			$g=0;
 			foreach($res as $key=>$value){
-				$g=$g+$this->testerValidite($value['jourDeb'],$value['jourFin'],$value['heureDeb'],$value['heureFin'],$jdeb,$jfin,$hdeb,$hfin);
-				$g=$g+$this->testerValidite($jdeb,$jfin,$hdeb,$hfin,$value['jourDeb'],$value['jourFin'],$value['heureDeb'],$value['heureFin']);
+				$g=$g+ControleurClient::testerValidite($value['jourDeb'],$value['jourFin'],$value['heureDeb'],$value['heureFin'],$jdeb,$jfin,$hdeb,$hfin);
+				$g=$g+ControleurClient::testerValidite($jdeb,$jfin,$hdeb,$hfin,$value['jourDeb'],$value['jourFin'],$value['heureDeb'],$value['heureFin']);
 			}
 			if($g==0){
 				Reservation::insert($_SESSION['userid'],$id,$hdeb,$jdeb,$hfin,$jfin);
@@ -89,7 +89,7 @@ public function validerReservation($jdeb,$jfin,$hdeb,$hfin,$id){
 	\Slim\Slim::getInstance()->redirect(\Slim\Slim::getInstance()->urlFor("aff-categorie"));
 }
 
-public function testerValidite($jdebB,$jfinB,$hdebB,$hfinB, $jdebA,$jfinA,$hdebA,$hfinA){
+public static function testerValidite($jdebB,$jfinB,$hdebB,$hfinB, $jdebA,$jfinA,$hdebA,$hfinA){
 	if($jdebA<$jdebB){
 		if($jfinA<$jdebB){
 			return 0;
@@ -150,12 +150,20 @@ public function testerValidite($jdebB,$jfinB,$hdebB,$hfinB, $jdebA,$jfinA,$hdebA
 		$vue=new VueClient($i);
 		$vue->render(2);
 	}
-	
+
 public function mesReservations(){
 	$r=Reservation::where('idUser','=',$_SESSION['userid'])->get();
 	$vue=new VueClient($r->toArray());
 	$vue->render(5);
 }
+
+
+public function afficherReservation($id){
+	$r=Reservation::find($id);
+	$vue=new VueClient($r);
+	$vue->render(6);
+}
+
 
 public function afficherPlanningUser($idUser){
 	if(isset($_SESSION['userid'])){
@@ -167,6 +175,15 @@ public function afficherPlanningUser($idUser){
 		$vue->render(9);
 	}
 }
+
+public function annulerReservation($id){
+	if (isset($_POST['valider_annuler_res']) && $_POST['valider_annuler_res']=='valid_annuler_res' ){
+		Reservation::changerEtat($id,"annuler");
+	}
+	$this->afficherReservation($id);
+}
+
+
 
 
 }

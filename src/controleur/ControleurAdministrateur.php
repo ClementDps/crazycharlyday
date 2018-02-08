@@ -11,6 +11,7 @@ use garagesolidaire\models\Item;
 
 class ControleurAdministrateur{
 
+
   public function afficherReservations(){
     $reservs = Model\Reservation::where("etat","=","")->get();
     $vue = new VueAdministrateur(null);
@@ -36,6 +37,34 @@ class ControleurAdministrateur{
 		Item::mettreAjour($id,$n,$d,$c);
 		$this->items();
 	}
+
+  public function afficherReservation(){
+
+    $reservs = Model\Reservation::where("etat","=","reserve")->get();
+    $vue = new VueAdministrateur($reservs->toArray());
+    $vue->render(VueAdministrateur::AFF_RESERV);
+  }
+
+  public function acceptReservation($id){
+
+      $reserv = Model\Reservation::where("id","=",$id)->first();
+      $reserv->etat = "confirmer";
+      $reserv->save();
+
+      $app = \Slim\Slim::getInstance();
+      $app->redirect($app->urlFor("reservation-list"));
+    
+  }
+
+  public function declineReservation($id){
+    $reserv = Model\Reservation::where("id","=",$id)->first();
+    $reserv->etat = "annuler";
+    $reserv->save();
+
+    $app = \Slim\Slim::getInstance();
+    $app->redirect($app->urlFor("reservation-list"));
+  }
+
 }
 	
 

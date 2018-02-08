@@ -2,9 +2,11 @@
 
 namespace garagesolidaire\vue;
 use \garagesolidaire\vue\VueGeneral;
+use \garagesolidaire\controleur\ControleurClient;
 use \garagesolidaire\models\Item;
 use \garagesolidaire\models\User;
 use \garagesolidaire\models\Commentaire;
+
 
 class VueClient{
 
@@ -19,22 +21,23 @@ class VueClient{
 	  $nom=$this->infos['nom'];
 	  $desc=$this->infos['description'];
 	  $img=$this->infos['img'];
-	  $app=\Slim\Slim::getInstance();
 
 	  $code="<p>Nom : ".$nom." <br> Description : ".$desc."<p>";
 	  if($img!==""){
 		$code=$code.'<img src="../../img/item/'.$img.'" width = "150" height="150"></img><br>';
 	  }
-		//liens des boutons bidons
-		$route2=$app->urlFor('reservationitem',['id'=>$id]);
+	  $app=\Slim\Slim::getInstance();
+		$route3=$app->urlFor("reservationitem",['id'=>$id]);
 		$buttonlisteres=<<<END
-<form id="listeres" method="get" action ="$route2">
+<form id="listeres" method="get" action ="$route3">
 <button type="submit" name="valider_affichage_liste_res" value="valid_affichage_liste_res">Afficher la liste des réservations</button>
 </form>
 END;
 
+
+$route2=$app->urlFor("afficher-palanning-graph",['num'=>$id]);
 $buttonplanning=<<<END
-<form id="planninggraph" method="get" action ="reservationitem/$id">
+<form id="planninggraph" method="get" action ="$route2">
 <button type="submit" name="valider_affichage_planning_graph" value="valid_affichage_planning_graph">Planning graphique</button>
 </form>
 END;
@@ -46,8 +49,8 @@ $buttonformulaireres=<<<END
 </form>
 END;
 		$code=$code.$buttonlisteres.$buttonplanning.$buttonformulaireres;
-		
-		
+
+
 		if(isset($_SESSION['userid'])){
 		$route3=$app->urlFor('ajouter-commentaire',['id'=>$id]);
 		$code= $code.<<<END
@@ -67,14 +70,11 @@ END;
 				$code = $code.$user->nom." : ".$message->message." ".$message->dateMess."<br><br>";
 			}
 		}
-
-	
-
 		return $code;
   }
 
    public function afficherItemsCateg(){
-    $app=\Slim\Slim::getInstance();
+     $app=\Slim\Slim::getInstance();
     $code="";
     $c=$this->infos['c'];
     $i=$this->infos['i'];
@@ -100,7 +100,9 @@ END;
 
 		return $code;
 	}
-	
+
+
+
 	public function afficherListeUtilisateurs(){
 		$code= "<section><ul>";
 		foreach($this->infos as $key=>$value){
@@ -111,7 +113,7 @@ END;
 
 		return $code;
 	}
-	
+
 	public function afficherPlanningReservationItem(){
 		$code ="";
 		foreach($this->infos as $key=>$value){
@@ -135,10 +137,10 @@ END;
 					break;}
 				case 5 :{
 					$jour = "Vendredi";
-				}	
+				}
 			}
 			$code.="<p>Reservé par ".$reservateur." le ".$jour." de ".$heured."h à ".$heuref."h.<br>";
-			
+
 		}
 		if($code == ""){
 			$code = "<p>Cet item n'a pas été reservé";
@@ -198,6 +200,82 @@ END;
   $code.="<button type=\"submit\" name=\"valider_reservation\" value=\"valid_reservation\">Valider</button></form>";
   return $code;
   }
+
+  public function afficherPlanningGraphique(){
+    $code="<table><tr><th>Jour</th><th>8h-10h</th><th>10h-12h</th><th>14h-16h</th><th>16h-18h</th></tr>";
+    $tab=array();
+    $tab[]='lundi';
+    $tab[]='mardi';
+    $tab[]='mercredi';
+    $tab[]='jeudi';
+    $tab[]='vendredi';
+	$y=1;
+	$i=0;
+	while($y<6){
+
+		$code=$code."<tr><td>".$tab[$i]."</td>";
+		$estReserve=0;
+		foreach($this->infos as $key=>$value){
+			$res=ControleurClient::testerValidite($y,$y,8,10,$value['jourDeb'],$value['jourFin'],$value['heureDeb'],$value['heureFin']);
+			if($res==1){
+				$estReserve=1;
+			}
+		}
+		$resultat="libre";
+		if($estReserve==1){
+			$resultat="reserve";
+		}
+		$code.="<td id=\"$resultat\">$resultat</<td>";
+
+		$estReserve=0;
+		foreach($this->infos as $key=>$value){
+			$res=ControleurClient::testerValidite($y,$y,10,12,$value['jourDeb'],$value['jourFin'],$value['heureDeb'],$value['heureFin']);
+			if($res==1){
+				$estReserve=1;
+			}
+		}
+		$resultat="libre";
+		if($estReserve==1){
+			$resultat="reserve";
+		}
+		$code.="<td id=\"$resultat\">$resultat</<td>";
+
+		$estReserve=0;
+		foreach($this->infos as $key=>$value){
+			$res=ControleurClient::testerValidite($y,$y,14,16,$value['jourDeb'],$value['jourFin'],$value['heureDeb'],$value['heureFin']);
+			if($res==1){
+				$estReserve=1;
+			}
+		}
+		$resultat="libre";
+		if($estReserve==1){
+			$resultat="reserve";
+		}
+		$code.="<td id=\"$resultat\">$resultat</<td>";
+
+		$estReserve=0;
+		foreach($this->infos as $key=>$value){
+			$res=ControleurClient::testerValidite($y,$y,16,18,$value['jourDeb'],$value['jourFin'],$value['heureDeb'],$value['heureFin']);
+			if($res==1){
+				$estReserve=1;
+			}
+		}
+		$resultat="libre";
+		if($estReserve==1){
+			$resultat="reserve";
+		}
+		$code.="<td id=\"$resultat\">$resultat</<td>";
+		$code.="</tr>";
+
+
+		$i++;
+		$y=$y+1;
+	}
+   $code=$code."</table>";
+   return $code;
+  }
+
+
   /**
   *public function afficherPlanningGraphique(){
   *  $code="<table><tr><th>Jour</th><th>8h-10h</th><th>10h-12h</th><th>12h-14h</th><th>14h-16h</th><th>16h-18h</th></tr>";
@@ -209,12 +287,16 @@ END;
   *  tab[]='vendredi';
   *  $i=0;
   *  foreach($this->infos as $key=>$value){
-  *    $code=$code+"<tr><td>".$tab[i]."</td>";
+  *    $code=$code+"<tr><td>".$tab[$i]."</td>"
+  *    // ajoute creneaux horaires
+  *
+  *     $code=$code."</tr>";
   *    $i++;
   *  }
   *  $code=$code+"</table>";
   *}
   */
+
 
   public function afficherMesReservations(){
     $code="<p>Mes réservations</p><br>";
@@ -226,11 +308,15 @@ END;
     $jours[]="vendredi";
     foreach($this->infos as $key=>$value){
       $item=Item::find($value['idItem']);
-      $code.="<p>Item réservé ".$item->nom." : du ".$jours[$value['jourDeb']-1]." à ".$value['heureDeb']."h au ".$jours[$value['jourFin']-1]." à ".$value['heureFin']."h";
+      $code.="<a href=\"reservation/".$value['id']."\">Item réservé ".$item->nom." : du ".$jours[$value['jourDeb']-1]." à ".$value['heureDeb']."h au ".$jours[$value['jourFin']-1]." à ".$value['heureFin']."h</a><br>";
     }
     return $code;
   }
-  
+
+
+
+  /**
+
   public function afficherPlanningUser(){
 	  $code="";
 	  if(isset($this->infos)){
@@ -255,26 +341,59 @@ END;
 					break;}
 				case 5 :{
 					$jour = "Vendredi";
-				}	
+				}
 			}
 			$code.="<p>Reservé par ".$reservateur." le ".$jour." de ".$heured."h à ".$heuref."h.<br>";
-			
+
 		}
 	  }else{
 		  $code="pas de réservation";
 	  }
 	  return $code;
   }
+  */
+
+
+  public function afficherReservation(){
+    $nom=Item::find($this->infos->idItem)->nom;
+    $jours=array();
+    $jours[]="lundi";
+    $jours[]="mardi";
+    $jours[]="mercredi";
+    $jours[]="jeudi";
+    $jours[]="vendredi";
+    $code="";
+    $nomUser=User::find($this->infos->idUser)->nom;
+    $prenomUser=User::find($this->infos->idUser)->prenom;
+    $code="Item réservé : ".$nom."<br>";
+    $code.="La réservation a lieu du ".$jours[$this->infos->jourDeb]." à ".$this->infos->heureDeb."h jusqu'au ".$jours[$this->infos->jourFin]." à ".$this->infos->heureFin."h<br>";
+    $code.="Le réserveur est ".$nomUser." ".$prenomUser."<br>";
+    $code.="La réservation est actuellement ".$this->infos->etat."<br>";
+    $code.="Elle a été crée le ".$this->infos->dateCreation." et a été modifiée le ".$this->infos->dateCreation."<br>";
+	
+	if($this->infos->etat!="annuler"){
+	$app=\Slim\Slim::getInstance();
+	$route=$app->urlFor("annuler-reservation",['id'=>$this->infos->id]);
+	$button=<<<END
+<form id="annulres" method="post" action ="$route">
+<button type="submit" name="valider_annuler_res" value="valid_annuler_res">Annuler la réservation</button>
+</form>
+END;
+$code.=$button;
+	}
+    return $code;
+  }
 
 
   public function render($int){
+	  $code="";
   switch($int){
     case 1:{
-		$code=VueGeneral::genererHeader("demarrage");
+		 $code=VueGeneral::genererHeader("demarrage");
       $code.=$this->afficherCategories();
       break;
     }
-	case 2:{
+  case 2:{
 	  $code=VueGeneral::genererHeader("demarrage");
 		$code.=$this->afficherItem();
       break;
@@ -282,16 +401,6 @@ END;
 	case 3:{
 		$code=VueGeneral::genererHeader("demarrage");
 		$code.=$this->afficherItemsCateg();
-		break;
-	}
-	case 10:{
-		$code=VueGeneral::genererHeader("demarrage");
-		$code.=$this->afficherListeUtilisateurs();
-		break;
-	}
-	case 11:{
-		$code=VueGeneral::genererHeader("demarrage");
-		$code.=$this->afficherPlanningReservationItem();
 		break;
 	}
   case 4:{
@@ -304,10 +413,28 @@ END;
     $code.=$this->afficherMesReservations();
     break;
     }
+  case 6:{
+    $code=VueGeneral::genererHeader("demarrage");
+    $code.=$this->afficherReservation();
+    break;
+  }
+
 	case 9:{
-		$code=VueGeneral::genererHeader("demarrage");
-		$code.=$this->afficherPlanningUser();
+		$code=VueGeneral::genererHeader("client");
+		$code.=$this->afficherPlanningGraphique();
+		break;
 	}
+	case 10:{
+		$code=VueGeneral::genererHeader("demarrage");
+		$code.=$this->afficherListeUtilisateurs();
+		break;
+	}
+	case 11:{
+		$code=VueGeneral::genererHeader("demarrage");
+		$code.=$this->afficherPlanningReservationItem();
+		break;
+	}
+
   }
   $code.=VueGeneral::genererFooter();
   echo $code;

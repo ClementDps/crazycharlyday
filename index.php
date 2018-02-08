@@ -32,7 +32,7 @@ $app->get('/afficher/items/categorie/:num',function($num){
 $app->get('/afficher/planning/graph/:num',function($num){
 	$control=new ControleurClient();
 	$control->afficherPlanningGraphique($num);
-});
+})->name("afficher-palanning-graph");
 
 $app->get('/contact', function () {
   $c = new GestionAccueil();
@@ -75,7 +75,7 @@ $app->get('/afficher/creation/reservation/:id',function($id){
 $app->get('/afficherlisteutilisateurs',function(){
 	$control=new ControleurClient();
 	$control->afficherListeUtilisateurs();
-});
+})->name("afficher-utilisateurs");
 
 //-----------------------------Formulaire-de-connexion-et-deconnexion-compte----------//
 $app->get('/connexion', function () {
@@ -114,15 +114,25 @@ $app->get('/user/delete', function () {
     $c->supprimerCompte();
 })->name('supprimer-compte');
 
+$app->get('/user/modifier-compte', function () {
+    $c = new GestionCompte();
+    $c->afficherModifCompte();
+})->name('modifier-compte');
+
 $app->post('/user/modifier-compte', function () {
     $c = new GestionCompte();
-    $c->afficherModifierCompte();
-})->name('modifier-compte');
+    $c->modifCompte();
+});
 
 $app->get('/user/change-mdp', function () {
     $c = new GestionCompte();
     $c->afficherChangerMotDePasse();
 })->name("modifier-mdp");
+
+$app->post('/user/change-mdp', function () {
+    $c = new GestionCompte();
+    $c->changerMotDePasse();
+});
 
 $app->post('/validerreservation/:id', function($id) {
     $c = new ControleurClient();
@@ -136,10 +146,15 @@ $app->get('/mesreservations', function () {
 })->name("mes-reservations");
 
 $app->get('/afficherplanningreservationitem/:id',function($id){
-
 	$control=new ControleurClient();
 	$control->afficherPlanningReservationItem($id);
 })->name("reservationitem");
+
+
+$app->get('/reservation/:id' , function ($id) {
+  $control=new ControleurClient();
+  $control->afficherReservation($id);
+})->name("reservation");
 
 
 $app->post('/ajoutercommentaire/:id',function($id){
@@ -154,16 +169,27 @@ $app->get('/afficheritems',function(){
 
 
 
-$app->get('/reservation/' , function () {
+$app->get('/list/reservation/' , function () {
   $c = new ControleurAdministrateur();
   $c->afficherReservation();
+})->name("reservation-list");
 
-})->name("reservation");
+$app->post('/list/reservation/accept/:id' , function ($id) {
+  $c = new ControleurAdministrateur();
+  $c->acceptReservation($id);
+})->name("reservation-accept");
+
+$app->post('/list/reservation/decline/:id' , function ($id) {
+  $c = new ControleurAdministrateur();
+  $c->declineReservation($id);
+})->name("reservation-decline");
+
 
 $app->get('/afficherplanningreservationuser/:id',function($id){
 	$control=new ControleurClient();
 	$control->afficherPlanningUser($id);
 })->name("reservation-user");
+
 
 $app->get('/modifierItem/:id',function($id){
 	$control=new ControleurAdministrateur();
@@ -174,6 +200,14 @@ $app->post('/validationModificationItem/:id',function($id){
 	$control=new ControleurAdministrateur();
 	$control->validationModificationItem($_POST['nom'],$_POST['desc'],$_POST['categorie'],$id);
 })->name("validermodifitem");
+
+$app->post('/annulerreservation/:id',function($id){
+	$control=new ControleurClient();
+	$control->annulerReservation($id);
+})->name("annuler-reservation");
+
+
+
 
 
 $app->run();

@@ -20,15 +20,16 @@ class User extends \Illuminate\Database\Eloquent\Model{
 		$u->save();
 	}
 
-	public static function mettreAjour($nom,$prenom,$amdp,$nmdp){
+	public static function mettreAjour($nom,$prenom,$amdp="",$nmdp=""){
 		$u=User::find($_SESSION['userid']);
-		if(password_verify($amdp,$u->mdp)){
-			$u->nom=$nom;
-			$u->prenom=$prenom;
+		if($amdp != "" && password_verify($amdp,$u->mdp)){
 			if($nmdp!=""){
 				$u->mdp=password_hash($nmdp,PASSWORD_DEFAULT,['cost'=>12]);
 			}
-			$u->save();
 		}
+		$u->prenom=$prenom;
+		$u->nom=$nom;
+		$u->save();
+		Authentication::loadProfile($_SESSION['userid']);
 	}
 }

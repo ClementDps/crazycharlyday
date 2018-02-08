@@ -3,6 +3,10 @@ table, th, td {
     border-collapse: collapse;
 }
 
-td#res{
+td#reserve{
   background-color=#00FF00;
+}
+
+td#libre{
+  background-color=#6A5B2C;
 }

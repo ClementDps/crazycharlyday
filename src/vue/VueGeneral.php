@@ -20,8 +20,9 @@ namespace garagesolidaire\vue;
      $routeAcc = $app->urlFor('accueil');
      $routeUser = $app->urlFor('aff-user');
      $root = $app->request->getRootUri();
+     $utils=$app->urlFor('afficher-utilisateurs');
      $mesReservations=$app->urlFor('mes-reservations');
-     $reservationAdmin = $app->urlFor('reservation');
+     $reservationAdmin = $app->urlFor('reservation-list');
      $menuReservation="";
      $profileHTML = "<li><a href=\"".$routeConnexion."\">Connexion</a></li><li><a href=\"".$routeInsc."\">Inscription</a></li>";
      if(isset($_SESSION['userid'])){
@@ -34,7 +35,8 @@ namespace garagesolidaire\vue;
        $menuReservation="<li><a href=".$mesReservations.">Mes Réservations</a></li>";
      }else{
 
-       if(isset($_SESSION['userid']) && isset($_SESSION['rang']) && $_SESSION['rang']>0){ 
+
+       if(isset($_SESSION['userid']) && isset($_SESSION['rang']) && $_SESSION['rang']>0){
          $menuReservation="<li><a href=\"$reservationAdmin\">Les Réservations</a></li>";
        }
      }
@@ -57,6 +59,7 @@ namespace garagesolidaire\vue;
     <div id="left">
       <ul>
       <li><a href="$root">Accueil</a></li><li><a href="$routeCategorie">Garage Solidaire</a></li>$menuReservation
+      <li><a href="$utils">Liste des utilisateurs</a></li>
       </ul>
     </div>
     <div id="right">
