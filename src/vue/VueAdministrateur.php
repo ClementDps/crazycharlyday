@@ -64,8 +64,6 @@ END;
             $errorMdp = "<p>***Mot de passe invalide !***</p>";
           }else if ($this->infos["error"] === "email"){
             $errorEmail = "<p>***Email invalide !***</p>";
-          }else if ($this->infos["error"] === "mdpShort"){
-            $errorMdp = "<p>***Mot de passe trop court !***</p>";
           }else if ($this->infos["error"] === "emailExist"){
             $errorEmail = "<p>***Email existe déjà dans la base !***</p> ";
           }

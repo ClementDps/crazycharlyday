@@ -76,7 +76,7 @@ $app->get('/connexion', function () {
 
 $app->post('/connexion', function () {
     $c = new GestionCompte();
-    $c->etablirConnection($_POST);
+    $c->etablirConnection();
 });
 
 $app->get('/deconnexion', function () {
