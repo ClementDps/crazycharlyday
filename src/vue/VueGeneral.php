@@ -64,16 +64,16 @@ END;
     */
     public static function genererFooter(){
       $app = \Slim\Slim::getInstance();
-      // $routeContact = $app->urlFor('contact');
-      // $routeHelp= $app->urlFor('help');
-      // $routeAbout = $app->urlFor('about');
+      $routeContact = $app->urlFor('contact');
+      $routeHelp= $app->urlFor('help');
+      $routeAbout = $app->urlFor('about');
       $html =
        <<<END
 
   <footer>
     <ul>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Besoin d'aide ?</a></li>
+      <li><a href="$routeAbout">About</a></li>
+      <li><a href="$routeHelp">Besoin d'aide ?</a></li>
     </ul>
   </footer>
 </body>

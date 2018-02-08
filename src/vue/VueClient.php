@@ -28,7 +28,7 @@ class VueClient{
     $c=$c[0];
     $code="Catégorie :".$c['nom']."<br>"."Description :".$c['description']."<br>";
     foreach($i as $key=>$value){
-      $code=$code."<img src=\"../../img/".$value['img']."\" width=\"50\" height=\"50\">";
+      $code=$code."<img src=\"/img/".$value['img']."\" width=\"50\" height=\"50\">";
       $code=$code."Nom de l'item :"."<A HREF=\"../afficheritem/".$value['id']."\">".$value['nom']."</A>"."<br> Description :".$value['description']."<br>";
     }
     return $code;
