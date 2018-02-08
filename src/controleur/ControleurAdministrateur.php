@@ -13,18 +13,24 @@ class ControleurAdministrateur{
 
 
   public function afficherReservations(){
+    \garagesolidaire\controleur\GestionCompte::checkAdmin();
+
     $reservs = Model\Reservation::where("etat","=","")->get();
     $vue = new VueAdministrateur(null);
     $vue->render(VueAdministrateur::AFF_RESERV);
   }
 
   	public function items(){
+      \garagesolidaire\controleur\GestionCompte::checkAdmin();
+
 		$tab = Item::all();
 		$vue = new VueAdministrateur($tab->toArray());
 		$vue->render(10);
 	}
 
 	public function modifierItem($id){
+    \garagesolidaire\controleur\GestionCompte::checkAdmin();
+
 		$tab = Item::find($id);
 		$vue = new VueAdministrateur($tab->toArray());
 		$vue->render(11);
@@ -39,6 +45,7 @@ class ControleurAdministrateur{
 	}
 
   public function afficherReservation(){
+    \garagesolidaire\controleur\GestionCompte::checkAdmin();
 
     $reservs = Model\Reservation::where("etat","=","reserve")->get();
     $vue = new VueAdministrateur($reservs->toArray());
@@ -46,6 +53,7 @@ class ControleurAdministrateur{
   }
 
   public function acceptReservation($id){
+    \garagesolidaire\controleur\GestionCompte::checkAdmin();
 
       $reserv = Model\Reservation::where("id","=",$id)->first();
       $reserv->etat = "confirmer";
@@ -57,6 +65,8 @@ class ControleurAdministrateur{
   }
 
   public function afficherModuleAdmin(){
+    \garagesolidaire\controleur\GestionCompte::checkAdmin();
+
     if(isset($_SESSION['userid']) && $_SESSION['rang']>0){
       $vue=new VueAdministrateur([]);
       $vue->render(15);
@@ -64,6 +74,8 @@ class ControleurAdministrateur{
   }
 
   public function afficherAjoutItem(){
+    \garagesolidaire\controleur\GestionCompte::checkAdmin();
+
     if(isset($_SESSION['userid']) && $_SESSION['rang']>0){
       $categ=Categorie::get();
       $vue=new VueAdministrateur($categ);
@@ -72,13 +84,17 @@ class ControleurAdministrateur{
   }
 
   public function afficherAjoutCateg(){
+    \garagesolidaire\controleur\GestionCompte::checkAdmin();
+
     if(isset($_SESSION['userid']) && $_SESSION['rang']>0){
       $vue=new VueAdministrateur([]);
       $vue->render(17);
     }
   }
 
-  public function ajouterItem($nom,$desc,$categ){
+  public function ajouterItem($nom,$desc){
+    \garagesolidaire\controleur\GestionCompte::checkAdmin();
+
     if(isset($_SESSION['userid']) && $_SESSION['rang']>0){
       $n=filter_var($nom,FILTER_SANITIZE_STRING);
       $d=filter_var($desc,FILTER_SANITIZE_STRING);
@@ -89,6 +105,8 @@ class ControleurAdministrateur{
   }
 
   public function ajouterCateg($nom,$desc){
+    \garagesolidaire\controleur\GestionCompte::checkAdmin();
+
     if(isset($_SESSION['userid']) && $_SESSION['rang']>0){
       $n=filter_var($nom,FILTER_SANITIZE_STRING);
       $d=filter_var($desc,FILTER_SANITIZE_STRING);
@@ -99,6 +117,8 @@ class ControleurAdministrateur{
   }
 
   public function declineReservation($id){
+    \garagesolidaire\controleur\GestionCompte::checkAdmin();
+
     $reserv = Model\Reservation::where("id","=",$id)->first();
     $reserv->etat = "annuler";
     $reserv->save();

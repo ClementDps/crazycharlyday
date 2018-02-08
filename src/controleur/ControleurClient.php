@@ -66,6 +66,8 @@ public function afficherCreationReservation($id){
 }
 
 public function validerReservation($jdeb,$jfin,$hdeb,$hfin,$id){
+	\garagesolidaire\controleur\GestionCompte::checkConnect();
+
 	if(isset($_SESSION['userid']) && isset($_POST['valider_reservation']) && $_POST['valider_reservation']=='valid_reservation'){
 	if($jdeb<$jfin || ($jdeb==$jfin && $hdeb<$hfin)){
 		//verifier que les plages horaires sont libres
@@ -90,6 +92,8 @@ public function validerReservation($jdeb,$jfin,$hdeb,$hfin,$id){
 }
 
 public static function testerValidite($jdebB,$jfinB,$hdebB,$hfinB, $jdebA,$jfinA,$hdebA,$hfinA){
+	\garagesolidaire\controleur\GestionCompte::checkConnect();
+
 	if($jdebA<$jdebB){
 		if($jfinA<$jdebB){
 			return 0;
@@ -142,6 +146,8 @@ public static function testerValidite($jdebB,$jfinB,$hdebB,$hfinB, $jdebA,$jfinA
 }
 
 	public function ajouterCommentaire($id,$com){
+		\garagesolidaire\controleur\GestionCompte::checkConnect();
+
 		if(isset($_SESSION['userid']) && isset($_POST['valider_message']) && $_POST['valider_message']=='valid_f2'){
 			$com=filter_var($com,FILTER_SANITIZE_STRING);
 			Commentaire::insert($_SESSION['userid'],$id,$com);
@@ -152,6 +158,8 @@ public static function testerValidite($jdebB,$jfinB,$hdebB,$hfinB, $jdebA,$jfinA
 	}
 
 public function mesReservations(){
+	\garagesolidaire\controleur\GestionCompte::checkConnect();
+
 	$r=Reservation::where('idUser','=',$_SESSION['userid'])->get();
 	$vue=new VueClient($r->toArray());
 	$vue->render(5);
@@ -177,6 +185,8 @@ public function afficherPlanningUser($idUser){
 }
 
 public function annulerReservation($id){
+	\garagesolidaire\controleur\GestionCompte::checkConnect();
+
 	if (isset($_POST['valider_annuler_res']) && $_POST['valider_annuler_res']=='valid_annuler_res' ){
 		Reservation::changerEtat($id,"annuler");
 	}
@@ -184,6 +194,8 @@ public function annulerReservation($id){
 }
 
 public function payerReservation($id){
+	\garagesolidaire\controleur\GestionCompte::checkConnect();
+
 	if (isset($_POST['valider_payer']) && $_POST['valider_payer']=='valid_payer' ){
 		Reservation::payer($id,$_POST['montant']);
 	}
@@ -191,6 +203,8 @@ public function payerReservation($id){
 }
 
 public function noterReservation($id){
+	\garagesolidaire\controleur\GestionCompte::checkConnect();
+	
 	if (isset($_POST['valider_note']) && $_POST['valider_note']=='valid_note' ){
 		Reservation::noter($id,$_POST['note']);
 	}

@@ -109,19 +109,16 @@ $app->post('/inscription', function () {
   $c -> ajouterUtilisateur();
 });
 
-<<<<<<< HEAD
 $app->get('/error/forbidden', function (){
   $c = new GestionCompte();
   $c -> afficheNonAccess();
-});
+})->name("forbidden");
 
 $app->get('/error/no_connected', function (){
   $c = new GestionCompte();
   $c -> afficheNonConnection();
 })->name("no-connection");
 
-=======
->>>>>>> 5086b5ed55e8dc19ff024cba5f818439f8ae3934
 $app->get('/user/delete', function () {
     $c = new GestionCompte();
     $c->supprimerCompte();
