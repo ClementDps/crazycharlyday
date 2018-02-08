@@ -1,7 +1,7 @@
 <?php
 require_once 'vendor/autoload.php' ;
 use \garagesolidaire\controleur\ControleurClient;
-use \Illuminate\Database\Capsule\Manager as DB;
+
 
 
 use \Slim\Slim;
@@ -46,5 +46,10 @@ $app->get('/afficheritem/:id',function($id){
 	$control = new ControleurClient();
 	$control->afficherItem($id);
 })->name('item');
+
+$app->get('/affichercategories',function(){
+	$control=new ControleurClient();
+	$control->afficherCategories();
+});
 
 $app->run();

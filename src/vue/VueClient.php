@@ -42,6 +42,17 @@ END;
 		
 		return $code;	  
   }
+  
+  public function afficherCategories(){
+		$code= "<section><ul>";
+		foreach($this->infos as $key=>$value){
+			$code=$code." <li><a href='affichercatergorie/".$value['id']."'>".$value['nom']."</a> </li><br>";
+		}
+		$code=$code."</ul></section>";
+		
+		return $code;
+		
+	}
 
   public function render($int){
   switch($int){
@@ -53,6 +64,10 @@ END;
 		$content=$this->afficherItem();
       break;
     }
+	case 3:{
+		$content=$this->afficherCategories();
+		break;
+	}
   }
   $code= <<<END
   <!DOCTYPE html>
