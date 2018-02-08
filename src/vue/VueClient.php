@@ -2,8 +2,13 @@
 
 namespace garagesolidaire\vue;
 use \garagesolidaire\vue\VueGeneral;
+use \garagesolidaire\controleur\ControleurClient;
 use \garagesolidaire\models\Item;
 use \garagesolidaire\models\User;
+<<<<<<< HEAD
+=======
+use \garagesolidaire\models\Commentaire;
+>>>>>>> b3f2c6f2ede011129677c96a1dafaa2f66458588
 
 class VueClient{
 
@@ -23,18 +28,23 @@ class VueClient{
 	  if($img!==""){
 		$code=$code.'<img src="../../img/item/'.$img.'" width = "150" height="150"></img><br>';
 	  }
+	  $app=\Slim\Slim::getInstance();
 		//liens des boutons bidons
+		$route3=$app->urlFor("reservationitem",['id'=>$id]);
 		$buttonlisteres=<<<END
-<form id="listeres" method="get" action ="afficherlisteres/$id">
+<form id="listeres" method="get" action ="$route3">
 <button type="submit" name="valider_affichage_liste_res" value="valid_affichage_liste_res">Afficher la liste des réservations</button>
 </form>
 END;
+
+
+$route2=$app->urlFor("afficher-palanning-graph",['num'=>$id]);
 $buttonplanning=<<<END
-<form id="planninggraph" method="get" action ="afficherplanninggraph/$id">
+<form id="planninggraph" method="get" action ="$route2">
 <button type="submit" name="valider_affichage_planning_graph" value="valid_affichage_planning_graph">Planning graphique</button>
 </form>
 END;
-$app=\Slim\Slim::getInstance();
+
 $route=$app->urlFor('creation-reservation',['id'=>$id]);
 $buttonformulaireres=<<<END
 <form id="formulaireres" method="get" action ="$route">
@@ -42,9 +52,37 @@ $buttonformulaireres=<<<END
 </form>
 END;
 		$code=$code.$buttonlisteres.$buttonplanning.$buttonformulaireres;
+<<<<<<< HEAD
 
 
 
+=======
+
+
+		if(isset($_SESSION['userid'])){
+		$route3=$app->urlFor('ajouter-commentaire',['id'=>$id]);
+		$code= $code.<<<END
+	<form id = "f1" method="post" action = "$route3">
+	<label for "f1_message">Commenter:</label>
+	<input type="text" id="f1_message" name="message" >
+	<button type="submit" name="valider_message" value="valid_f2">Commenter</button>
+	</form>
+END;
+		}
+
+
+
+		$messages = Commentaire::where('idItem','=',$id)->get();
+		if (isset($messages[0])){
+			$code = $code."<br><br>Commentaires :<br><br>";
+			foreach($messages as $message){
+				$user=User::find($message['idUser']);
+				$code = $code.$user->nom." : ".$message->message." ".$message->dateMess."<br><br>";
+			}
+		}
+
+
+>>>>>>> b3f2c6f2ede011129677c96a1dafaa2f66458588
 		return $code;
   }
 
@@ -75,6 +113,55 @@ END;
 
 		return $code;
 	}
+<<<<<<< HEAD
+=======
+
+	
+	public function afficherListeUtilisateurs(){
+		$code= "<section><ul>";
+		foreach($this->infos as $key=>$value){
+			$code=$code." <li><a href='afficheritemscategorie/".$value['id']."'>".$value['nom']." ".$value["prenom"]."</a> </li>";
+			$code = $code."<img src=\"../img/user/".$value['img'].".jpg\" width=\"50\" height=\"50\"><br><br>";
+		}
+		$code=$code."</ul></section>";
+
+		return $code;
+	}
+
+	public function afficherPlanningReservationItem(){
+		$code ="";
+		foreach($this->infos as $key=>$value){
+			$reservateur  = User::find($value["idUser"])["nom"];
+			$date = "";
+			$heured = $value["heureDeb"];
+			$heuref = $value["heureFin"];
+			$jour="";
+			switch($value["jourDeb"]){
+				case 1 :{
+					$jour = "Lundi";
+					break;}
+				case 2 :{
+					$jour = "Mardi";
+					break;}
+				case 3 :{
+					$jour = "Mercredi";
+					break;}
+				case 4 :{
+					$jour = "Jeudi";
+					break;}
+				case 5 :{
+					$jour = "Vendredi";
+				}
+			}
+			$code.="<p>Reservé par ".$reservateur." le ".$jour." de ".$heured."h à ".$heuref."h.<br>";
+
+		}
+		if($code == ""){
+			$code = "<p>Cet item n'a pas été reservé";
+		}
+		return $code;
+	}
+>>>>>>> b3f2c6f2ede011129677c96a1dafaa2f66458588
 
   public function afficherFormulaireReservation(){
     $jours=array('Lundi','Mardi','Mercredi','Jeudi','Vendredi');
@@ -128,6 +215,81 @@ END;
   $code.="<button type=\"submit\" name=\"valider_reservation\" value=\"valid_reservation\">Valider</button></form>";
   return $code;
   }
+  
+  public function afficherPlanningGraphique(){
+    $code="<table><tr><th>Jour</th><th>8h-10h</th><th>10h-12h</th><th>14h-16h</th><th>16h-18h</th></tr>";
+    $tab=array();
+    $tab[]='lundi';
+    $tab[]='mardi';
+    $tab[]='mercredi';
+    $tab[]='jeudi';
+    $tab[]='vendredi';
+	$y=1;
+	$i=0;
+	while($y<6){
+		
+		$code=$code."<tr><td>".$tab[$i]."</td>";
+		$estReserve=0;
+		foreach($this->infos as $key=>$value){
+			$res=ControleurClient::testerValidite($y,$y,8,10,$value['jourDeb'],$value['jourFin'],$value['heureDeb'],$value['heureFin']);
+			if($res==1){
+				$estReserve=1;
+			}
+		}
+		$resultat="libre";
+		if($estReserve==1){
+			$resultat="reserve";
+		}
+		$code.="<td id=\"$resultat\">$resultat</<td>";
+		
+		$estReserve=0;
+		foreach($this->infos as $key=>$value){
+			$res=ControleurClient::testerValidite($y,$y,10,12,$value['jourDeb'],$value['jourFin'],$value['heureDeb'],$value['heureFin']);
+			if($res==1){
+				$estReserve=1;
+			}
+		}
+		$resultat="libre";
+		if($estReserve==1){
+			$resultat="reserve";
+		}
+		$code.="<td id=\"$resultat\">$resultat</<td>";
+		
+		$estReserve=0;
+		foreach($this->infos as $key=>$value){
+			$res=ControleurClient::testerValidite($y,$y,14,16,$value['jourDeb'],$value['jourFin'],$value['heureDeb'],$value['heureFin']);
+			if($res==1){
+				$estReserve=1;
+			}
+		}
+		$resultat="libre";
+		if($estReserve==1){
+			$resultat="reserve";
+		}
+		$code.="<td id=\"$resultat\">$resultat</<td>";
+		
+		$estReserve=0;
+		foreach($this->infos as $key=>$value){
+			$res=ControleurClient::testerValidite($y,$y,16,18,$value['jourDeb'],$value['jourFin'],$value['heureDeb'],$value['heureFin']);
+			if($res==1){
+				$estReserve=1;
+			}
+		}
+		$resultat="libre";
+		if($estReserve==1){
+			$resultat="reserve";
+		}
+		$code.="<td id=\"$resultat\">$resultat</<td>";
+		$code.="</tr>";
+		
+		
+		$i++;
+		$y=$y+1;
+	}
+   $code=$code."</table>";
+   return $code;
+  }
+  
 
   /**
   *public function afficherPlanningGraphique(){
@@ -165,6 +327,48 @@ END;
     }
     return $code;
   }
+<<<<<<< HEAD
+=======
+
+  
+  /**
+
+  public function afficherPlanningUser(){
+	  $code="";
+	  if(isset($this->infos)){
+		  foreach($this->infos as $key=>$value){
+			$reservateur  = User::find($value["idUser"])["nom"];
+			$date = "";
+			$heured = $value["heureDeb"];
+			$heuref = $value["heureFin"];
+			$jour="";
+			switch($value["jourDeb"]){
+				case 1 :{
+					$jour = "Lundi";
+					break;}
+				case 2 :{
+					$jour = "Mardi";
+					break;}
+				case 3 :{
+					$jour = "Mercredi";
+					break;}
+				case 4 :{
+					$jour = "Jeudi";
+					break;}
+				case 5 :{
+					$jour = "Vendredi";
+				}
+			}
+			$code.="<p>Reservé par ".$reservateur." le ".$jour." de ".$heured."h à ".$heuref."h.<br>";
+
+		}
+	  }else{
+		  $code="pas de réservation";
+	  }
+	  return $code;
+  }*/
+
+>>>>>>> b3f2c6f2ede011129677c96a1dafaa2f66458588
 
   public function afficherReservation(){
     $nom=Item::find($this->infos->idItem)->nom;
@@ -187,7 +391,7 @@ END;
 
 
   public function render($int){
-    $code="";
+	  $code="";
   switch($int){
     case 1:{
 		 $code=VueGeneral::genererHeader("demarrage");
@@ -219,7 +423,25 @@ END;
     $code.=$this->afficherReservation();
     break;
   }
+<<<<<<< HEAD
   }
+=======
+	case 9:{
+		$code=VueGeneral::genererHeader("client");
+		$code.=$this->afficherPlanningGraphique();
+		break;
+	}
+	case 10:{
+		$code=VueGeneral::genererHeader("demarrage");
+		$code.=$this->afficherListeUtilisateurs();
+		break;
+	}
+	case 11:{
+		$code=VueGeneral::genererHeader("demarrage");
+		$code.=$this->afficherPlanningReservationItem();
+		break;
+	}
+>>>>>>> b3f2c6f2ede011129677c96a1dafaa2f66458588
 
   $code.=VueGeneral::genererFooter();
   echo $code;
