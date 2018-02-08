@@ -74,12 +74,12 @@ END;
     $heuresDeb=array(8,10,14,16);
     $heuresFin=array(10,12,16,18);
     $code=<<<END
-    <form id="reservation" method="post" action="validerReservation">
+    <form id="reservation" method="post" action="validerreservation/$this->infos">
     <label for="f1_jourdeb">Jour de départ</label>
     <select id="f1_jourdeb" name="jourdeb" required>
 END;
   $i=0;
-  while(i<5){
+  while($i<5){
     $y=$i+1;
     $code.="<option value=\"".$y."\">".$jours[$i]."</option>";
     $i=$i+1;
@@ -90,7 +90,7 @@ END;
   <select id="f1_heuredeb" name="heuredeb" required>
 END;
   $i=0;
-  while(i<4){
+  while($i<4){
     $code.="<option value=\"".$heuresDeb[$i]."\">".$heuresDeb[$i]."</option>";
     $i=$i+1;
   }
@@ -100,7 +100,7 @@ END;
   <select id="f1_jourfin" name="jourfin" required>
 END;
 $i=0;
-while(i<5){
+while($i<5){
   $y=$i+1;
   $code.="<option value=\"".$y."\">".$jours[$i]."</option>";
   $i=$i+1;
@@ -111,7 +111,7 @@ $code=$code."</select><br>";
   <select id="f1_heurefin" name="heurefin" required>
 END;
   $i=0;
-  while(i<4){
+  while($i<4){
   $code.="<option value=\"".$heuresFin[$i]."\">".$heuresFin[$i]."</option>";
   $i=$i+1;
   }

@@ -22,7 +22,7 @@ class Reservation extends \Illuminate\Database\Eloquent\Model{
 		$r->save();
 	}
 	public function mettreAjour($id,$etat,$note,$prix){
-		$r = Resrvation::find($id);
+		$r = Reservation::find($id);
 		$r->etat=$etat;
 		$r->note=$note;
 		$r->prix=$prix;

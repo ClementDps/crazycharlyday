@@ -50,6 +50,83 @@ public function afficherCreationReservation($id){
 	//}
 }
 
+public function validerReservation($jdeb,$jfin,$hdeb,$hfin,$id){
+	if(isset($_SESSION['userid']) && isset($_POST['valider_reservation']) && $_POST['valider_reservation']=='valid_reservation'){
+	if($jdeb<$jfin || ($jdeb==$jfin && $hdeb<$hfin)){
+		//verifier que les plages horaires sont libres
+		$res=Reservation::where('idItem','=',$id);
+		if(isset($res)){
+			$res=$res->toArray();
+			$g=0;
+			foreach($res as $key=>$value){
+				$g=$g+testerValidite($value['jourDeb'],$value['jourFin'],$value['heureDeb'],$value['heureFin'],$hdeb,$jdeb,$hfin,$jfin);
+				$g=$g+testerValidite($hdeb,$jdeb,$hfin,$jfin,$value['jourDeb'],$value['jourFin'],$value['heureDeb'],$value['heureFin']);
+			}
+			if($g==0){
+				Reservation::insert($_SESSION['user_id'],$id,$hdeb,$jdeb,$hfin,$jfin);
+			}
+		}else{
+			Reservation::insert($_SESSION['user_id'],$id,$hdeb,$jdeb,$hfin,$jfin);
+		}
+
+	}
+	}
+	$vue=new VueClient([]);
+	$vue->render(1)
+}
+
+public function testerValidite($jdebB,$jfinB,$hdebB,$hfinB, $jdebA,$jfinA,$hdebA,$hfinA){
+	if($jdebA<$jdebB){
+		if($jfinA<$jdebB){
+			return 0;
+		}else{
+			if($jfinA==$jdebB){
+				if($hfinA<=$hdebB){
+					return 0;
+				}else{
+					return 1;
+				}
+			}else{
+				return 1;
+			}
+		}
+	}else{
+		if($jdebA==$jdebB){
+			if($jfinA==$jdebB){
+				if($hfinA<=$hdebB){
+					return 0;
+				}else{
+					return 1;
+				}
+			}else{
+				if($jfinB==$jdebA){
+					if($hfinB<=$hdebA){
+						return 0;
+					}else{
+						return 1;
+					}
+				}else{
+					return 1;
+				}
+			}
+		}else{
+			if($jfinB<$jdebA){
+				return 0;
+			}else if($jfinB==$jdebA){
+				if($hfinB<=$hdebA){
+					return 0;
+				}else{
+					return 1;
+				}
+			}else{
+				return 1;
+			}
+		}
+		return 1;
+	}
+
+}
+
 
 
 
