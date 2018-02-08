@@ -80,6 +80,7 @@ END;
 	</form>
 END;
 		}
+
 		$messages = Commentaire::where('idItem','=',$id)->get();
 		if (isset($messages[0])){
 			$code = $code."<br><br>Commentaires :<br><br>";
@@ -481,5 +482,6 @@ $code.=$button;
   }
   $code.=VueGeneral::genererFooter();
   echo $code;
+
 }
 }

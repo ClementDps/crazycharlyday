@@ -8,7 +8,7 @@ class Item extends \Illuminate\Database\Eloquent\Model{
 	protected $primaryKey='id';
 	public $timestamps=false;
 
-  public function insert($nom,$desc,$idCateg){
+  public static function insert($nom,$desc,$idCateg){
     $i=new Item();
     $i->nom=$nom;
     $i->description=$desc;
@@ -16,7 +16,7 @@ class Item extends \Illuminate\Database\Eloquent\Model{
     $i->save();
   }
 
-  public function mettreAjour($id,$nom,$desc,$idCateg){
+  public static function mettreAjour($id,$nom,$desc,$idCateg){
     $i=Item::find($id);
     $i->nom=$nom;
     $i->description=$desc;

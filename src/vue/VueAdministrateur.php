@@ -2,8 +2,11 @@
 
 namespace garagesolidaire\vue;
 
+
+use garagesolidaire\models\Categorie;
 use \garagesolidaire\models\User;
 use \garagesolidaire\models\Item;
+
 
 class VueAdministrateur{
 
@@ -19,6 +22,99 @@ class VueAdministrateur{
   public function __construct($tab){
     $this->infos=$tab;
   }
+
+
+  public function afficherModuleAdmin(){
+    $app=\Slim\Slim::getInstance();
+    $routeitem=$app->urlFor('afficher-ajoutItem');
+    $routecateg=$app->urlFor('afficher-ajoutCateg');
+    $code=<<<END
+<form id="afficherAjoutItem" method= "get" action ="$routeitem">
+<button type="submit" name="valider_allerversitem"  value="valid_versitem">Ajouter un item</button>
+</form>
+
+<form id="afficherAjoutCateg" method= "get" action ="$routecateg">
+<button type="submit" name="valider_allerverscateg"  value="valid_versitem">Ajouter une catégorie</button>
+</form>
+END;
+  return $code;
+  }
+
+  public function afficherAjoutItem(){
+    $app=\Slim\Slim::getInstance();
+    $routeitem=$app->urlFor('ajouter-item');
+$code=<<<END
+<form id="afficherAjoutItem" method= "post" action ="$routeitem">
+<label for="f2_nom"> Nom :</label>
+<input type = "text" id="f2_nom" name="nom" placeholder="<Nom>" required>
+<label for="f2_desc"> Description :</label>
+<input type = "text" id="f2_desc" name="desc" placeholder="<Description>" required>
+<button type="submit" name="valider_sitem"  value="valid_item">Ajouter un item</button>
+</form>
+END;
+return $code;
+  }
+
+  public function afficherAjoutCateg(){
+    $app=\Slim\Slim::getInstance();
+    $routecateg=$app->urlFor('ajouter-categ');
+$code=<<<END
+<form id="afficherAjoutItem" method= "post" action ="$routecateg">
+<label for="f2_nom"> Nom :</label>
+<input type = "text" id="f2_nom" name="nom" placeholder="<Nom>" required>
+<label for="f2_desc"> Description :</label>
+<input type = "text" id="f2_desc" name="desc" placeholder="<Description>" required>
+<button type="submit" name="valider_categ"  value="valid_categ">Ajouter une catégorie</button>
+</form>
+END;
+  return $code;
+  }
+
+  public function afficherItems(){
+	  $code = "";
+	  $app = \Slim\Slim::getInstance();
+
+
+	  foreach($this->infos as $key=>$value){
+		$route = $app->urlFor("modifierItem", ['id' => $value['id']]);
+		$code = $code."<li><a href='$route'>".$value['nom']."</a> </li><br>";
+	  }
+	  return $code;
+  }
+
+  public function modifierItem(){
+
+		$name=$this->infos['nom'];
+		$desc = $this->infos['description'];
+		$categorie = Categorie::find($this->infos['id'])['nom'];
+		$app = \Slim\Slim::getInstance();
+		$route = $app->urlFor("validermodifitem", ['id' => $this->infos['id']]);
+		$categ = Categorie::get();
+		$code=<<<END
+<form id="crea" method= "post" action = "$route">
+<table>
+<tr><th><label for="f1_nom"> Nom :</label></th>
+<th><input type = "text" id="f5_nom" name="nom" value="$name" placeholder="<Nom>" required></th></tr>
+
+<tr><th><label for="f1_nom"> Description :</label></th>
+<th><input type = "text" id="f1_desc" name="desc" value="$desc" placeholder="<Description>" required></th></tr>
+
+<tr><th><label for="f1_nom"> Categorie :</label></th>
+<th> <select id="f1_categ" name="categorie" required>
+END;
+
+foreach($categ as $key=>$value){
+	$code=$code."<option value=\"".$value['id']."\">".$value['nom']."</option>";
+}
+
+$code.=<<<END
+</th></tr><tr><th><button type="submit" name="valider_modifUser"  value="valid_f5">Valider</button></th></tr></table>
+</form>
+END;
+	return $code;
+  }
+
+
 
 
   public function render($int){
@@ -128,6 +224,20 @@ END;
 
       break;
     }
+
+	case 10 : {
+		$code = \garagesolidaire\vue\VueGeneral::genererHeader("menu");
+		$code.=$this->afficherItems();
+		break;
+
+	}
+	case 11:{
+		$code = \garagesolidaire\vue\VueGeneral::genererHeader("menu");
+		$code .= $this->modifierItem();
+		break;
+	}
+
+
     case VueAdministrateur::AFF_RESERV : {
       $code = \garagesolidaire\vue\VueGeneral::genererHeader("menu");
       if (count($this->infos)>0) { //Affichage des items
@@ -189,6 +299,11 @@ END;
     $code.= "<p>Aucune Reservations...</p>";
   }
       break;
+
+    }case 15:{
+    $code.=$this->afficherModuleAdmin();
+    break;
+
     }
     case VueAdministrateur::AFF_CMDP:{
       $code = \garagesolidaire\vue\VueGeneral::genererHeader("formulaire");
@@ -228,7 +343,20 @@ END;
         </form>
 END;
     }
+
+
+
+  case 16:{
+  $code.=$this->afficherAjoutItem();
+  break;
+}
+case 17:{
+$code.=$this->afficherAjoutCateg();
+break;
+}
+
   }
+
   $code .= \garagesolidaire\vue\VueGeneral::genererFooter();
   echo $code;
 }
