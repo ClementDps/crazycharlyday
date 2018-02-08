@@ -4,7 +4,9 @@ namespace garagesolidaire\controleur;
 use \garagesolidaire\models\Item;
 use \garagesolidaire\models\Categorie;
 use \garagesolidaire\vue\VueClient;
-use \garagesolidaire\models\Reservation;
+use \garagesolidaire\models\User;
+use garagesolidaire\models\Reservation;
+
 
 class ControleurClient{
 
@@ -27,7 +29,6 @@ class ControleurClient{
 		$vue->afficherConnexion();
 	}
 
-
 	public function afficheritemscategorie($num){
 		$categ=Categorie::where('id','=',$num)->get();
 		$items=Item::where('id_categ','=',$num)->get();
@@ -36,6 +37,18 @@ class ControleurClient{
 		$tab['i']=$items;
 		$v=new VueClient($tab);
 		$v->render(3);
+	}
+	
+	public function afficherListeUtilisateurs(){
+		$utilisateurs = User::all();
+		$vue = new VueClient($utilisateurs->toArray());
+		$vue->render(10);
+	}
+	
+	public function afficherPlanningReservationItem($num){
+		$tab = Reservation::where('idItem','=',$num)->orderBy("jourDeb")->get();
+		$vue = new VueClient($tab->toArray());
+		$vue->render(11);
 	}
 
 	public function afficherPlanningGraphique($num){
@@ -127,8 +140,6 @@ public function testerValidite($jdebB,$jfinB,$hdebB,$hfinB, $jdebA,$jfinA,$hdebA
 	}
 
 }
-
-
 
 
 }
