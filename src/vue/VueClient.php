@@ -79,7 +79,7 @@ END;
     <select id="f1_jourdeb" name="jourdeb" required>
 END;
   $i=0;
-  while(i<5){
+  while($i<5){
     $y=$i+1;
     $code.="<option value=\"".$y."\">".$jours[$i]."</option>";
     $i=$i+1;
@@ -90,7 +90,7 @@ END;
   <select id="f1_heuredeb" name="heuredeb" required>
 END;
   $i=0;
-  while(i<4){
+  while($i<4){
     $code.="<option value=\"".$heuresDeb[$i]."\">".$heuresDeb[$i]."</option>";
     $i=$i+1;
   }
@@ -100,7 +100,7 @@ END;
   <select id="f1_jourfin" name="jourfin" required>
 END;
 $i=0;
-while(i<5){
+while($i<5){
   $y=$i+1;
   $code.="<option value=\"".$y."\">".$jours[$i]."</option>";
   $i=$i+1;
@@ -111,7 +111,7 @@ $code=$code."</select><br>";
   <select id="f1_heurefin" name="heurefin" required>
 END;
   $i=0;
-  while(i<4){
+  while($i<4){
   $code.="<option value=\"".$heuresFin[$i]."\">".$heuresFin[$i]."</option>";
   $i=$i+1;
   }
