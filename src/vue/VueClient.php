@@ -423,8 +423,9 @@ END;
 		$code.=$this->afficherPlanningReservationItem();
 		break;
 	}
+
+  }
   $code.=VueGeneral::genererFooter();
   echo $code;
-}
 }
 }
