@@ -108,8 +108,6 @@ $app->post('/inscription', function () {
   $c -> ajouterUtilisateur();
 });
 
-
-
 $app->get('/user/delete', function () {
     $c = new GestionCompte();
     $c->supprimerCompte();
@@ -147,6 +145,12 @@ $app->post('/ajoutercommentaire/:id',function($id){
 	$control=new ControleurClient();
 	$control->ajouterCommentaire($id,$_POST['message']);
 })->name("ajouter-commentaire");
+
+$app->post('/afficheritems',function(){
+	$control=new ControleurAdministrateur();
+	$control->items();
+})->name("afficherItems");
+
 
 
 $app->get('/reservation/' , function () {

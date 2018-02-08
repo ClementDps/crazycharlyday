@@ -14,6 +14,16 @@ class VueAdministrateur{
     $this->infos=$tab;
   }
 
+  public function afficherItems(){
+	  $code = "";
+	  $app = \Slim\Slim::getInstance();
+	  $route = $app->urlFor("afficher-item", ['num' => $value['id']]);
+	  
+	  foreach($this->infos as $key=>$value){
+		$code = $code."<li><a href='$route'>".$value['nom']."</a> </li><br>";
+	  }
+	  return $code;
+  }
 
   public function render($int){
     $code = "";
@@ -122,6 +132,12 @@ END;
 
       break;
     }
+	case 10 : {
+		$code = \garagesolidaire\vue\VueGeneral::genererHeader("menu");
+		$code.=afficherItems();
+
+	}
+	
   }
   $code .= \garagesolidaire\vue\VueGeneral::genererFooter();
   echo $code;

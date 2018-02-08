@@ -59,8 +59,6 @@ END;
 END;
 		}
 
-
-
 		$messages = Commentaire::where('idItem','=',$id)->get();
 		if (isset($messages[0])){
 			$code = $code."<br><br>Commentaires :<br><br>";
