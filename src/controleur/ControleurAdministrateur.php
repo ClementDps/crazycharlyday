@@ -8,7 +8,7 @@ use garagesolidaire\models\Authentication as Authentification;
 use garagesolidaire\models\UserInfo as UserInfo;
 use garagesolidaire\models as Model;
 use garagesolidaire\models\Item;
-
+use garagesolidaire\models\Categorie;
 class ControleurAdministrateur{
 
 
@@ -17,19 +17,19 @@ class ControleurAdministrateur{
     $vue = new VueAdministrateur(null);
     $vue->render(VueAdministrateur::AFF_RESERV);
   }
-  
+
   	public function items(){
 		$tab = Item::all();
 		$vue = new VueAdministrateur($tab->toArray());
 		$vue->render(10);
 	}
-	
+
 	public function modifierItem($id){
 		$tab = Item::find($id);
 		$vue = new VueAdministrateur($tab->toArray());
 		$vue->render(11);
 	}
-	
+
 	public function validationModificationItem($nom,$desc,$idcateg,$id){
 		$n=filter_var($nom,FILTER_SANITIZE_STRING);
 		$d=filter_var($desc,FILTER_SANITIZE_STRING);
@@ -58,32 +58,33 @@ class ControleurAdministrateur{
 
   public function afficherModuleAdmin(){
     if(isset($_SESSION['userid']) && $_SESSION['rang']>0){
-      $vue=new VueAdministrateur();
+      $vue=new VueAdministrateur([]);
       $vue->render(15);
     }
   }
 
   public function afficherAjoutItem(){
     if(isset($_SESSION['userid']) && $_SESSION['rang']>0){
-      $vue=new VueAdministrateur();
+      $categ=Categorie::get();
+      $vue=new VueAdministrateur($categ);
       $vue->render(16);
     }
   }
 
   public function afficherAjoutCateg(){
     if(isset($_SESSION['userid']) && $_SESSION['rang']>0){
-      $vue=new VueAdministrateur();
+      $vue=new VueAdministrateur([]);
       $vue->render(17);
     }
   }
 
-  public function ajouterItem($nom,$desc){
+  public function ajouterItem($nom,$desc,$categ){
     if(isset($_SESSION['userid']) && $_SESSION['rang']>0){
       $n=filter_var($nom,FILTER_SANITIZE_STRING);
       $d=filter_var($desc,FILTER_SANITIZE_STRING);
-      Item::insert($nom,$desc);
+      Item::insert($nom,$desc,$categ);
     }
-    $vue=new VueAdministrateur();
+    $vue=new VueAdministrateur([]);
     $vue->render(15);
   }
 
@@ -93,7 +94,7 @@ class ControleurAdministrateur{
       $d=filter_var($desc,FILTER_SANITIZE_STRING);
       Categorie::insert($nom,$desc);
     }
-    $vue=new VueAdministrateur();
+    $vue=new VueAdministrateur([]);
     $vue->render(15);
   }
 
@@ -107,5 +108,3 @@ class ControleurAdministrateur{
   }
 
 }
-	
-

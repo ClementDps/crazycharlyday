@@ -49,9 +49,19 @@ $code=<<<END
 <input type = "text" id="f2_nom" name="nom" placeholder="<Nom>" required>
 <label for="f2_desc"> Description :</label>
 <input type = "text" id="f2_desc" name="desc" placeholder="<Description>" required>
+
+<label for="f2_categ">Catégorie</label>
+<select id="f2_categ" name="categ" required>
+END;
+foreach($this->infos as $key=>$value){
+  $code.="<option value=\"".$value['id']."\">".$value['nom']."</option>";
+}
+$code=$code."</select><br>";
+$code.=<<<END
 <button type="submit" name="valider_sitem"  value="valid_item">Ajouter un item</button>
 </form>
 END;
+
 return $code;
   }
 
@@ -301,6 +311,7 @@ END;
       break;
 
     }case 15:{
+      $code = \garagesolidaire\vue\VueGeneral::genererHeader("demarrage");
     $code.=$this->afficherModuleAdmin();
     break;
 
@@ -347,10 +358,12 @@ END;
 
 
   case 16:{
+    $code = \garagesolidaire\vue\VueGeneral::genererHeader("demarrage");
   $code.=$this->afficherAjoutItem();
   break;
 }
 case 17:{
+  $code = \garagesolidaire\vue\VueGeneral::genererHeader("demarrage");
 $code.=$this->afficherAjoutCateg();
 break;
 }

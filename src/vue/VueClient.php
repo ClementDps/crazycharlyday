@@ -370,7 +370,7 @@ END;
     $code.="Le réserveur est ".$nomUser." ".$prenomUser."<br>";
     $code.="La réservation est actuellement ".$this->infos->etat."<br>";
     $code.="Elle a été crée le ".$this->infos->dateCreation." et a été modifiée le ".$this->infos->dateCreation."<br>";
-	
+
 	if($this->infos->etat!="annuler"){
 	$app=\Slim\Slim::getInstance();
 	$route=$app->urlFor("annuler-reservation",['id'=>$this->infos->id]);
@@ -405,7 +405,7 @@ $code.=$button;
 END;
 $code.=$button;
 	}
-	
+
     return $code;
   }
 

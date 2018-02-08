@@ -222,12 +222,12 @@ $app->post('/annulerreservation/:id',function($id){
 })->name("annuler-reservation");
 
 
-$app->post('/ajouteritem',function($id){
+$app->post('/ajouteritem',function(){
 	$control=new ControleurAdministrateur();
-	$control->ajouterItem($_POST['nom'],$_POST['desc']);
+	$control->ajouterItem($_POST['nom'],$_POST['desc'],$_POST['categ']);
 })->name("ajouter-item");
 
-$app->post('/ajoutercateg',function($id){
+$app->post('/ajoutercateg',function(){
 	$control=new ControleurAdministrateur();
 	$control->ajouterCateg($_POST['nom'],$_POST['desc']);
 })->name("ajouter-categ");
