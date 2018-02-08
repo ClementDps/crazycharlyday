@@ -22,6 +22,11 @@ $app->get('/', function () {
   $c -> afficheAccueil();
 })->name("accueil");
 
+$app->get('/afficheritemscategorie/:num',function($num){
+	$control=new ControleurClient();
+	$control->afficheritemscategorie($num);
+});
+
 $app->get('/contact', function () {
   $c = new GestionAccueil();
   $c -> afficheContact();

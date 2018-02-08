@@ -15,10 +15,10 @@ class Categorie extends \Illuminate\Database\Eloquent\Model{
     $c->save();
   }
 
-  /*public function update($id,$nom,$desc){
+  public function mettreAjour($id,$nom,$desc){
     $c=Item::find($id);
     $c->nom=$nom;
     $c->description=$desc;
     $c->save();
-  }*/
+  }
 }

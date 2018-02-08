@@ -20,7 +20,7 @@ footer li{
 footer {
 	display : table-row;
 	height: 4em;
-  background-color: grey;
+  background-color: #495769;
 }
 
 footer ul{
@@ -33,7 +33,7 @@ footer ul{
 footer a {
 	display: inline-block;
   text-decoration: none;
-  color: #dddddd;
+  color: white;
 	padding:  1em 1em;
 	padding-top:  1.5em;
 }

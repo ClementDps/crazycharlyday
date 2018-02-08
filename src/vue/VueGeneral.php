@@ -44,7 +44,7 @@ namespace garagesolidaire\vue;
   <div id="top-zone">
     <div id="left">
       <ul>
-      <li><a href="#">Accueil</a></li><li><a href="#">Mes Listes de Cadeaux</a></li>
+      <li><a href="#">Accueil</a></li><li><a href="#">Garage Solidaire</a></li>
       </ul>
     </div>
     <div id="right">
