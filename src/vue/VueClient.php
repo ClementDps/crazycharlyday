@@ -2,7 +2,9 @@
 
 namespace garagesolidaire\vue;
 use \garagesolidaire\vue\VueGeneral;
+use \garagesolidaire\models\Item;
 use \garagesolidaire\models\User;
+use \garagesolidaire\models\Commentaire;
 
 class VueClient{
 
@@ -44,8 +46,31 @@ $buttonformulaireres=<<<END
 </form>
 END;
 		$code=$code.$buttonlisteres.$buttonplanning.$buttonformulaireres;
+		
+		
+		if(isset($_SESSION['userid'])){
+		$route3=$app->urlFor('ajouter-commentaire',['id'=>$id]);
+		$code= $code.<<<END
+	<form id = "f1" method="post" action = "$route3">
+	<label for "f1_message">Commenter:</label>
+	<input type="text" id="f1_message" name="message" >
+	<button type="submit" name="valider_message" value="valid_f2">Commenter</button>
+	</form>
+END;
+		}
 
 
+
+		$messages = Commentaire::where('idItem','=',$id)->get();
+		if (isset($messages[0])){
+			$code = $code."<br><br>Commentaires :<br><br>";
+			foreach($messages as $message){
+				$user=User::find($message['idUser']);
+				$code = $code.$user->nom." : ".$message->message." ".$message->dateMess."<br><br>";
+			}
+		}
+
+	
 
 		return $code;
   }
@@ -193,6 +218,22 @@ END;
   *}
   */
 
+  public function afficherMesReservations(){
+    $code="<p>Mes réservations</p><br>";
+    $jours=array();
+    $jours[]="lundi";
+    $jours[]="mardi";
+    $jours[]="mercredi";
+    $jours[]="jeudi";
+    $jours[]="vendredi";
+    foreach($this->infos as $key=>$value){
+      $item=Item::find($value['idItem']);
+      $code.="<p>Item réservé ".$item->nom." : du ".$jours[$value['jourDeb']-1]." à ".$value['heureDeb']."h au ".$jours[$value['jourFin']-1]." à ".$value['heureFin']."h";
+    }
+    return $code;
+  }
+
+
   public function render($int){
   switch($int){
     case 1:{
@@ -225,6 +266,11 @@ END;
   		$code.=$this->afficherFormulaireReservation();
   		break;
   	}
+  case 5:{
+    $code=VueGeneral::genererHeader("demarrage");
+    $code.=$this->afficherMesReservations();
+    break;
+    }
   }
   $code.=VueGeneral::genererFooter();
   echo $code;

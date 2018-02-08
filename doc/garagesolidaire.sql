@@ -98,8 +98,8 @@ CREATE TABLE IF NOT EXISTS `Reservation` (
   `etat` varchar(20) NOT NULL,
   `dateCreation` date NOT NULL,
   `dateDerniereModif` date NOT NULL,
-  `note` int(11) NOT NULL,
-  `prix` int(11) NOT NULL,
+  `note` int(11) ,
+  `prix` int(11) ,
   `heureDeb` int(11) NOT NULL,
   `jourDeb` int(11) NOT NULL,
   `heureFin` int(11) NOT NULL,
@@ -129,6 +129,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `nom`, `prenom`, `email`, `mdp`, `rang`, `img`) VALUES
+(0, 'TEST', 'AdminTest', 'test@test.com', '$2y$12$FbqrCI0tSKa6X//tHrXHiuhdxZ3FqQBjyFSHNhrIl1Jkt84eJ1ESq', '1', '0'),
 (1, 'Cassandre', '', '', '', 0, 0),
 (2, 'Achille', '', '', '', 0, 0),
 (3, 'Calypso', '', '', '', 0, 0),

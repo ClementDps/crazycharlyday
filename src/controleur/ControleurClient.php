@@ -5,6 +5,7 @@ use \garagesolidaire\models\Item;
 use \garagesolidaire\models\Categorie;
 use \garagesolidaire\vue\VueClient;
 use \garagesolidaire\models\User;
+use \garagesolidaire\models\Commentaire;
 use garagesolidaire\models\Reservation;
 
 
@@ -38,13 +39,13 @@ class ControleurClient{
 		$v=new VueClient($tab);
 		$v->render(3);
 	}
-	
+
 	public function afficherListeUtilisateurs(){
 		$utilisateurs = User::all();
 		$vue = new VueClient($utilisateurs->toArray());
 		$vue->render(10);
 	}
-	
+
 	public function afficherPlanningReservationItem($num){
 		$tab = Reservation::where('idItem','=',$num)->orderBy("jourDeb")->get();
 		$vue = new VueClient($tab->toArray());
@@ -85,8 +86,7 @@ public function validerReservation($jdeb,$jfin,$hdeb,$hfin,$id){
 
 	}
 	}
-	$vue=new VueClient([]);
-	$vue->render(1);
+	\Slim\Slim::getInstance()->redirect(\Slim\Slim::getInstance()->urlFor("aff-categorie"));
 }
 
 public function testerValidite($jdebB,$jfinB,$hdebB,$hfinB, $jdebA,$jfinA,$hdebA,$hfinA){
@@ -140,6 +140,23 @@ public function testerValidite($jdebB,$jfinB,$hdebB,$hfinB, $jdebA,$jfinA,$hdebA
 	}
 
 }
+
+	public function ajouterCommentaire($id,$com){
+		if(isset($_SESSION['userid']) && isset($_POST['valider_message']) && $_POST['valider_message']=='valid_f2'){
+			$com=filter_var($com,FILTER_SANITIZE_STRING);
+			Commentaire::insert($_SESSION['userid'],$id,$com);
+		}
+		$i=Item::find($id);
+		$vue=new VueClient($i);
+		$vue->render(2);
+	}
+	
+public function mesReservations(){
+	$r=Reservation::where('idUser','=',$_SESSION['userid'])->get();
+	$vue=new VueClient($r->toArray());
+	$vue->render(5);
+}
+
 
 
 }
