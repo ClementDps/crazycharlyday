@@ -130,20 +130,21 @@ $app->post('/validerreservation/:id', function($id) {
     $c->validerReservation($_POST['jourdeb'],$_POST['jourfin'],$_POST['heuredeb'],$_POST['heurefin'],$id);
 })->name("valid-reserv");
 
-<<<<<<< HEAD
+
 $app->get('/mesreservations', function () {
     $c = new ControleurClient();
     $c->mesReservations();
 })->name("mes-reservations");
-=======
+
 $app->get('/afficherplanningreservationitem/:num',function($num){
 	$control=new ControleurClient();
 	$control->afficherPlanningReservationItem($num);
 })->name("reservationitem");
 
-$app->get('/reservation/' , function () {
-
+$app->get('/reservation/:id' , function ($id) {
+  $control=new ControleurClient();
+  $control->afficherReservation($id);
 })->name("reservation");
->>>>>>> 9ff0fef0658a3b6dfbd68bddbdf455a31834010d
+
 
 $app->run();

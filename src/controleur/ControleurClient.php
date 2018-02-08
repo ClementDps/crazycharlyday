@@ -58,10 +58,10 @@ class ControleurClient{
 	}
 
 public function afficherCreationReservation($id){
-	//if(isset($_SESSION['userid'])){
+	if(isset($_SESSION['userid'])){
 		$vue=new VueClient($id);
 		$vue->render(4);
-	//}
+	}
 }
 
 public function validerReservation($jdeb,$jfin,$hdeb,$hfin,$id){
@@ -144,6 +144,12 @@ public function mesReservations(){
 	$r=Reservation::where('idUser','=',$_SESSION['userid'])->get();
 	$vue=new VueClient($r->toArray());
 	$vue->render(5);
+}
+
+public function afficherReservation($id){
+	$r=Reservation::find($id);
+	$vue=new VueClient($r);
+	$vue->render(6);
 }
 
 
