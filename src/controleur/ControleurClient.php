@@ -150,7 +150,7 @@ public static function testerValidite($jdebB,$jfinB,$hdebB,$hfinB, $jdebA,$jfinA
 		$vue=new VueClient($i);
 		$vue->render(2);
 	}
-	
+
 public function mesReservations(){
 	$r=Reservation::where('idUser','=',$_SESSION['userid'])->get();
 	$vue=new VueClient($r->toArray());
@@ -158,13 +158,14 @@ public function mesReservations(){
 }
 
 
-/**
+
 
 public function afficherReservation($id){
 	$r=Reservation::find($id);
 	$vue=new VueClient($r);
 	$vue->render(6);
 }
+/**
 public function afficherPlanningUser($idUser){
 	if(isset($_SESSION['userid'])){
 		$r=Reservation::where('idUser','=',$idUser)->get();
@@ -175,6 +176,7 @@ public function afficherPlanningUser($idUser){
 		$vue->render(9);
 	}
 }*/
+
 
 
 
