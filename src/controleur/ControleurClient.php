@@ -39,13 +39,13 @@ class ControleurClient{
 		$v=new VueClient($tab);
 		$v->render(3);
 	}
-	
+
 	public function afficherListeUtilisateurs(){
 		$utilisateurs = User::all();
 		$vue = new VueClient($utilisateurs->toArray());
 		$vue->render(10);
 	}
-	
+
 	public function afficherPlanningReservationItem($num){
 		$tab = Reservation::where('idItem','=',$num)->orderBy("jourDeb")->get();
 		$vue = new VueClient($tab->toArray());
@@ -86,8 +86,7 @@ public function validerReservation($jdeb,$jfin,$hdeb,$hfin,$id){
 
 	}
 	}
-	$vue=new VueClient([]);
-	$vue->render(1);
+	\Slim\Slim::getInstance()->redirect(\Slim\Slim::getInstance()->urlFor("aff-categorie"));
 }
 
 public function testerValidite($jdebB,$jfinB,$hdebB,$hfinB, $jdebA,$jfinA,$hdebA,$hfinA){
@@ -151,6 +150,13 @@ public function testerValidite($jdebB,$jfinB,$hdebB,$hfinB, $jdebA,$jfinA,$hdebA
 		$vue=new VueClient($i);
 		$vue->render(2);
 	}
+	
+public function mesReservations(){
+	$r=Reservation::where('idUser','=',$_SESSION['userid'])->get();
+	$vue=new VueClient($r->toArray());
+	$vue->render(5);
+}
+
 
 
 }

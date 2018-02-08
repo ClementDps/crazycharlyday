@@ -2,6 +2,7 @@
 
 namespace garagesolidaire\vue;
 use \garagesolidaire\vue\VueGeneral;
+use \garagesolidaire\models\Item;
 use \garagesolidaire\models\User;
 use \garagesolidaire\models\Commentaire;
 
@@ -218,6 +219,22 @@ END;
   *}
   */
 
+  public function afficherMesReservations(){
+    $code="<p>Mes réservations</p><br>";
+    $jours=array();
+    $jours[]="lundi";
+    $jours[]="mardi";
+    $jours[]="mercredi";
+    $jours[]="jeudi";
+    $jours[]="vendredi";
+    foreach($this->infos as $key=>$value){
+      $item=Item::find($value['idItem']);
+      $code.="<p>Item réservé ".$item->nom." : du ".$jours[$value['jourDeb']-1]." à ".$value['heureDeb']."h au ".$jours[$value['jourFin']-1]." à ".$value['heureFin']."h";
+    }
+    return $code;
+  }
+
+
   public function render($int){
   switch($int){
     case 1:{
@@ -250,6 +267,11 @@ END;
   		$code.=$this->afficherFormulaireReservation();
   		break;
   	}
+  case 5:{
+    $code=VueGeneral::genererHeader("demarrage");
+    $code.=$this->afficherMesReservations();
+    break;
+    }
   }
   $code.=VueGeneral::genererFooter();
   echo $code;

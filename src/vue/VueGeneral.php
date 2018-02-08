@@ -20,13 +20,23 @@ namespace garagesolidaire\vue;
      $routeAcc = $app->urlFor('accueil');
      $routeUser = $app->urlFor('aff-user');
      $root = $app->request->getRootUri();
-
+     $mesReservations=$app->urlFor('mes-reservations');
+     $menuReservation="";
      $profileHTML = "<li><a href=\"".$routeConnexion."\">Connexion</a></li><li><a href=\"".$routeInsc."\">Inscription</a></li>";
      if(isset($_SESSION['userid'])){
        $routeDeconnexion = $app->urlFor('deconnexion');
 
        $profileHTML = "<li><a href=\"$routeUser\">".$_SESSION["usernickname"]."</a></li><li><a href=\"$routeDeconnexion\">Déconnexion</a></li>";
      }
+
+     if(isset($_SESSION['userid']) && $_SESSION['rang']==0){
+       $menuReservation="<li><a href=".$mesReservations.">Mes Réservations</a></li>";
+     }else{
+       if(isset($_SESSION['userid']) && $_SESSION['rang']>0){
+         $menuReservation="<li><a href=\"acompleter\">Les Réservations</a></li>";
+       }
+     }
+
 
       $html =
       <<<END
@@ -44,7 +54,7 @@ namespace garagesolidaire\vue;
   <div id="top-zone">
     <div id="left">
       <ul>
-      <li><a href="$root">Accueil</a></li><li><a href="$routeCategorie">Garage Solidaire</a></li>
+      <li><a href="$root">Accueil</a></li><li><a href="$routeCategorie">Garage Solidaire</a></li>$menuReservation
       </ul>
     </div>
     <div id="right">
