@@ -22,6 +22,8 @@ class VueClient{
 	  $nom=$this->infos['nom'];
 	  $desc=$this->infos['description'];
 	  $img=$this->infos['img'];
+	  $app=\Slim\Slim::getInstance();
+		$root=$app->request->getRootUri();
 
 	  $code="<p>Nom : ".$nom." <br> Description : ".$desc."<p>";
 
@@ -43,7 +45,7 @@ class VueClient{
 
 
 	  if($img!==""){
-		$code=$code.'<img src="../../img/item/'.$img.'" width = "150" height="150"></img><br>';
+		$code=$code."<img src=\"$root/img/item/".$img.'" width = "150" height="150"></img><br>';
 	  }
 	  $app=\Slim\Slim::getInstance();
 		$route3=$app->urlFor("reservationitem",['id'=>$id]);
@@ -67,7 +69,19 @@ $buttonformulaireres=<<<END
 <button type="submit" name="valider_affichage_formulaire_res" value="valid_affichage_formulaire_res">Réserver</button>
 </form>
 END;
-		$code=$code.$buttonlisteres.$buttonplanning.$buttonformulaireres;
+$code=$code.$buttonlisteres.$buttonplanning.$buttonformulaireres;
+
+if( isset($_SESSION['userid']) && isset($_SESSION['rang']) && $_SESSION['rang']>0){
+
+$route=$app->urlFor('modifierItem',['id'=>$id]);
+$button=<<<END
+<form id="modifItem" method="get" action ="$route">
+<button type="submit" name="valider_modif" value="valid_modif">Modifier l'item</button>
+</form>
+END;
+$code.=$button;
+}
+		
 
 
 		if(isset($_SESSION['userid'])){
@@ -223,11 +237,11 @@ END;
   public function afficherPlanningGraphique(){
     $code="<table><tr><th>Jour</th><th>8h-10h</th><th>10h-12h</th><th>14h-16h</th><th>16h-18h</th></tr>";
     $tab=array();
-    $tab[]='lundi';
-    $tab[]='mardi';
-    $tab[]='mercredi';
-    $tab[]='jeudi';
-    $tab[]='vendredi';
+    $tab[]='Lundi';
+    $tab[]='Mardi';
+    $tab[]='Mercredi';
+    $tab[]='Jeudi';
+    $tab[]='Vendredi';
 	$y=1;
 	$i=0;
 	while($y<6){

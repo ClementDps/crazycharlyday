@@ -308,7 +308,7 @@ END;
 END;
     }
   } else {
-    $code.= "<p>Aucune Reservations...</p>";
+    $code.= "<p>Aucune Reservation...</p>";
   }
       break;
 

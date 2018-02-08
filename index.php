@@ -175,7 +175,7 @@ $app->post('/ajoutercommentaire/:id',function($id){
 $app->get('/afficheritems',function(){
 	$control=new ControleurAdministrateur();
 	$control->items();
-})->name("afficherItems");
+})->name("afficher-tous-items");
 
 
 

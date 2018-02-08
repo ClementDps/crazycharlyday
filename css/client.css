@@ -26,7 +26,7 @@ td{
 }
 
 #reserve:hover{
-	background-color red;
+	background-color : red;
 	color:white;
 	border: 3px solid red;
 }
