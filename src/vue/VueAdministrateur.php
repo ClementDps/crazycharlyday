@@ -13,6 +13,7 @@ class VueAdministrateur{
   const AFF_INSC = 4;
   const AFF_USER = 5;
   const AFF_RESERV = 6;
+  const AFF_CMDP = 7;
 
   public function __construct($tab){
     $this->infos=$tab;
@@ -186,6 +187,27 @@ END;
   } else {
     $code.= "<p>Aucune Reservations...</p>";
   }
+      break;
+    }
+    case VueAdministrateur::AFF_CMDP:{
+      $code = \garagesolidaire\vue\VueGeneral::genererHeader("formulaire");
+      $cheminMdp = $app->urlFor('modifier-mdp');
+      $errorLogIn = "";
+      if(isset($this->infos) && $this->infos == 'error'){
+        $errorLogIn = "<p>*** Mot de passe invalide ***</p>";
+      }
+      $code = \garagesolidaire\vue\VueGeneral::genererHeader("formulaire");
+      $code .= <<<END
+<header>CHANGER DE MOT DE PASSE</header>
+<form id="form" method="POST" action="${cheminMdp}">
+$errorLogIn
+        <label>ANCIEN MOT DE PASSE* : </label> <input type="password" name="old-pass" placeholder="ANCIEN MOT DE PASSE"  required>
+        <label>NOUVEAU MOT DE PASSE* : </label><input type="password" name="new-pass" placeholder="MOT DE PASSE" required>
+        <label>CONFIRMATION* : </label><input type="password" name="conf-pass" placeholder="CONFIRMATION" required>
+    <input id="submit" type="submit" name="connection" value="Changer de mot de passe">
+</form>
+</div>
+END;
       break;
     }
   }

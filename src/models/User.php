@@ -20,7 +20,7 @@ class User extends \Illuminate\Database\Eloquent\Model{
 		$u->save();
 	}
 
-	public static function mettreAjour($nom,$prenom,$amdp,$nmdp){
+	public static function mettreAjour($nom,$prenom,$amdp=null,$nmdp=null){
 		$u=User::find($_SESSION['userid']);
 		if(password_verify($amdp,$u->mdp)){
 			$u->nom=$nom;
