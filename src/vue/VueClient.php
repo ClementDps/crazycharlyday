@@ -5,10 +5,7 @@ use \garagesolidaire\vue\VueGeneral;
 use \garagesolidaire\controleur\ControleurClient;
 use \garagesolidaire\models\Item;
 use \garagesolidaire\models\User;
-<<<<<<< HEAD
-=======
 use \garagesolidaire\models\Commentaire;
->>>>>>> 2edc42426462b2c4c93edae0c766166433d97455
 
 class VueClient{
 
@@ -103,8 +100,6 @@ END;
 
 		return $code;
 	}
-<<<<<<< HEAD
-=======
 	
 	public function afficherListeUtilisateurs(){
 		$code= "<section><ul>";
@@ -150,7 +145,6 @@ END;
 		}
 		return $code;
 	}
->>>>>>> 2edc42426462b2c4c93edae0c766166433d97455
 
   public function afficherFormulaireReservation(){
     $jours=array('Lundi','Mardi','Mercredi','Jeudi','Vendredi');
@@ -204,7 +198,6 @@ END;
   $code.="<button type=\"submit\" name=\"valider_reservation\" value=\"valid_reservation\">Valider</button></form>";
   return $code;
   }
-<<<<<<< HEAD
   
   public function afficherPlanningGraphique(){
     $code="<table><tr><th>Jour</th><th>8h-10h</th><th>10h-12h</th><th>14h-16h</th><th>16h-18h</th></tr>";
@@ -280,7 +273,6 @@ END;
    return $code;
   }
   
-=======
 
   /**
   *public function afficherPlanningGraphique(){
@@ -302,7 +294,6 @@ END;
   *  $code=$code+"</table>";
   *}
   */
->>>>>>> 6e1071fb8ae94ecaa56035b27f4f52a05bec7c07
 
 
   public function afficherMesReservations(){
@@ -403,18 +394,15 @@ END;
     $code.=$this->afficherMesReservations();
     break;
     }
-<<<<<<< HEAD
   case 6:{
     $code=VueGeneral::genererHeader("demarrage");
     $code.=$this->afficherReservation();
     break;
-=======
+  }
 	case 9:{
 		$code=VueGeneral::genererHeader("demarrage");
 		$code.=$this->afficherPlanningGraphique();
 	}
->>>>>>> 2edc42426462b2c4c93edae0c766166433d97455
-  }
   }
 
   $code.=VueGeneral::genererFooter();
