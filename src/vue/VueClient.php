@@ -230,6 +230,41 @@ END;
     }
     return $code;
   }
+  
+  public function afficherPlanningUser(){
+	  $code="";
+	  if(isset($this->infos)){
+		  foreach($this->infos as $key=>$value){
+			$reservateur  = User::find($value["idUser"])["nom"];
+			$date = "";
+			$heured = $value["heureDeb"];
+			$heuref = $value["heureFin"];
+			$jour="";
+			switch($value["jourDeb"]){
+				case 1 :{
+					$jour = "Lundi";
+					break;}
+				case 2 :{
+					$jour = "Mardi";
+					break;}
+				case 3 :{
+					$jour = "Mercredi";
+					break;}
+				case 4 :{
+					$jour = "Jeudi";
+					break;}
+				case 5 :{
+					$jour = "Vendredi";
+				}	
+			}
+			$code.="<p>Reservé par ".$reservateur." le ".$jour." de ".$heured."h à ".$heuref."h.<br>";
+			
+		}
+	  }else{
+		  $code="pas de réservation";
+	  }
+	  return $code;
+  }
 
 
   public function render($int){
@@ -269,6 +304,10 @@ END;
     $code.=$this->afficherMesReservations();
     break;
     }
+	case 9:{
+		$code=VueGeneral::genererHeader("demarrage");
+		$code.=$this->afficherPlanningUser();
+	}
   }
   $code.=VueGeneral::genererFooter();
   echo $code;

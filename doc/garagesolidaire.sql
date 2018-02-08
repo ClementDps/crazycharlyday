@@ -152,6 +152,23 @@ INSERT INTO `user` (`id`, `nom`, `prenom`, `email`, `mdp`, `rang`, `img`) VALUES
 --
 ALTER TABLE `item`
   ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`id_categ`) REFERENCES `categorie` (`id`);
+  
+  CREATE TABLE IF NOT EXISTS `Commentaire` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idUser` int(11) NOT NULL,
+  `idItem` int(11) NOT NULL,
+  `message` varchar(256) NOT NULL,
+  `dateMess` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Contenu de la table `Commentaire`
+--
+
+INSERT INTO `Commentaire` (`id`, `idUser`, `idItem`, `message`, `dateMess`) VALUES
+(1, 13, 8, 'Très beau', '2018-02-08'),
+(2, 13, 8, 'Efficace', '2018-02-08');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

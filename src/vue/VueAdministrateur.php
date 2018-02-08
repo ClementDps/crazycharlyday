@@ -9,6 +9,7 @@ class VueAdministrateur{
   const AFF_CO = 3;
   const AFF_INSC = 4;
   const AFF_USER = 5;
+  const AFF_RESERV = 6;
 
   public function __construct($tab){
     $this->infos=$tab;
@@ -17,7 +18,7 @@ class VueAdministrateur{
   public function afficherItems(){
 	  $code = "";
 	  $app = \Slim\Slim::getInstance();
-	  $route = $app->urlFor("afficher-item", ['num' => $value['id']]);
+	  $route = $app->urlFor("afficher-item", ['num' => $this->infos[0]['id']]);
 	  
 	  foreach($this->infos as $key=>$value){
 		$code = $code."<li><a href='$route'>".$value['nom']."</a> </li><br>";
@@ -132,12 +133,19 @@ END;
 
       break;
     }
+
 	case 10 : {
 		$code = \garagesolidaire\vue\VueGeneral::genererHeader("menu");
-		$code.=afficherItems();
+		$code.=$this->afficherItems();
 
 	}
 	
+
+    case VueAdministrateur::AFF_RESERV : {
+      
+      break;
+    }
+
   }
   $code .= \garagesolidaire\vue\VueGeneral::genererFooter();
   echo $code;

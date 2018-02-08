@@ -157,6 +157,16 @@ public function mesReservations(){
 	$vue->render(5);
 }
 
+public function afficherPlanningUser($idUser){
+	if(isset($_SESSION['userid'])){
+		$r=Reservation::where('idUser','=',$idUser)->get();
+		if(isset($r[0])){
+			$r=$r->toArray();
+		}
+		$vue=new VueClient($r);
+		$vue->render(9);
+	}
+}
 
 
 }

@@ -1,6 +1,7 @@
 <?php
 require_once 'vendor/autoload.php' ;
 use \garagesolidaire\controleur\ControleurClient;
+use \garagesolidaire\controleur\ControleurAdministrateur;
 use \Illuminate\Database\Capsule\Manager as DB;
 
 
@@ -146,7 +147,7 @@ $app->post('/ajoutercommentaire/:id',function($id){
 	$control->ajouterCommentaire($id,$_POST['message']);
 })->name("ajouter-commentaire");
 
-$app->post('/afficheritems',function(){
+$app->get('/afficheritems',function(){
 	$control=new ControleurAdministrateur();
 	$control->items();
 })->name("afficherItems");
@@ -154,9 +155,18 @@ $app->post('/afficheritems',function(){
 
 
 $app->get('/reservation/' , function () {
-
+  $c = new ControleurAdministrateur();
+  $c->afficherReservation();
 
 })->name("reservation");
+
+$app->get('/afficherplanningreservationuser/:id',function($id){
+
+	$control=new ControleurClient();
+	$control->afficherPlanningUser($id);
+})->name("reservation-user");
+
+
 
 
 $app->run();
