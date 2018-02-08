@@ -211,6 +211,10 @@ $app->post('/payerRes/:id',function($id){
 	$control->payerReservation($id);
 })->name("payer-reservation");
 
+$app->post('/noter/:id',function($id){
+	$control=new ControleurClient();
+	$control->noterReservation($id);
+})->name("noter-item");
 
 
 $app->run();

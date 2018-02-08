@@ -393,6 +393,19 @@ $code.=$button;
 END;
 $code.=$button;
 	}
+	if($this->infos->etat=="payee" && $this->infos->note==0){
+		$app=\Slim\Slim::getInstance();
+	$route=$app->urlFor("noter-item",['id'=>$this->infos->id]);
+	$button=<<<END
+<form id="payer" method="post" action ="$route">
+ <label for="f1_noter">Note : </label>
+ <input type = "number" id="f1_noter" name="note" placeholder="<Note>" min="1" max="5" required></br>
+<button type="submit" name="valider_note" value="valid_note">Noter</button>
+</form>
+END;
+$code.=$button;
+	}
+	
     return $code;
   }
 

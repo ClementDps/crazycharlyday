@@ -190,6 +190,12 @@ public function payerReservation($id){
 	$this->afficherReservation($id);
 }
 
+public function noterReservation($id){
+	if (isset($_POST['valider_note']) && $_POST['valider_note']=='valid_note' ){
+		Reservation::noter($id,$_POST['note']);
+	}
+	$this->afficherReservation($id);
+}
 
 
 }
