@@ -72,8 +72,7 @@ public function validerReservation($jdeb,$jfin,$hdeb,$hfin,$id){
 
 	}
 	}
-	$vue=new VueClient([]);
-	$vue->render(1);
+	\Slim\Slim::getInstance()->redirect(\Slim\Slim::getInstance()->urlFor("aff-categorie"));
 }
 
 public function testerValidite($jdebB,$jfinB,$hdebB,$hfinB, $jdebA,$jfinA,$hdebA,$hfinA){
