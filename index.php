@@ -156,11 +156,11 @@ $app->post('/ajoutercommentaire/:id',function($id){
 })->name("ajouter-commentaire");
 
 
-$app->get('/reservation/' , function () {
+$app->get('/list/reservation' , function () {
   $c = new ControleurAdministrateur();
   $c->afficherReservation();
 
-})->name("reservation");
+})->name("reservation-list");
 
 $app->get('/afficherplanningreservationuser/:id',function($id){
 

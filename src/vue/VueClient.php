@@ -4,10 +4,7 @@ namespace garagesolidaire\vue;
 use \garagesolidaire\vue\VueGeneral;
 use \garagesolidaire\models\Item;
 use \garagesolidaire\models\User;
-<<<<<<< HEAD
-=======
 use \garagesolidaire\models\Commentaire;
->>>>>>> 2edc42426462b2c4c93edae0c766166433d97455
 
 class VueClient{
 
@@ -22,12 +19,8 @@ class VueClient{
 	  $nom=$this->infos['nom'];
 	  $desc=$this->infos['description'];
 	  $img=$this->infos['img'];
-<<<<<<< HEAD
 	  $app=\Slim\Slim::getInstance();
     $root = $app->request->getRootUri();
-=======
-
->>>>>>> 6e1071fb8ae94ecaa56035b27f4f52a05bec7c07
 	  $code="<p>Nom : ".$nom." <br> Description : ".$desc."<p>";
 	  if($img!==""){
 		$code=$code."<img src=\"$root/img/item/".$img.'" width = "150" height="150"></img><br>';
@@ -107,13 +100,7 @@ END;
 
 		return $code;
 	}
-<<<<<<< HEAD
 
-=======
-<<<<<<< HEAD
-=======
-	
->>>>>>> 6e1071fb8ae94ecaa56035b27f4f52a05bec7c07
 	public function afficherListeUtilisateurs(){
 		$code= "<section><ul>";
 		foreach($this->infos as $key=>$value){
@@ -158,7 +145,6 @@ END;
 		}
 		return $code;
 	}
->>>>>>> 2edc42426462b2c4c93edae0c766166433d97455
 
   public function afficherFormulaireReservation(){
     $jours=array('Lundi','Mardi','Mercredi','Jeudi','Vendredi');
@@ -332,21 +318,22 @@ END;
     $code.=$this->afficherMesReservations();
     break;
     }
-<<<<<<< HEAD
+
   case 6:{
     $code=VueGeneral::genererHeader("demarrage");
     $code.=$this->afficherReservation();
     break;
-=======
-	case 9:{
-		$code=VueGeneral::genererHeader("demarrage");
-		$code.=$this->afficherPlanningUser();
-	}
->>>>>>> 2edc42426462b2c4c93edae0c766166433d97455
-  }
   }
 
+  case 9:{
+		$code=VueGeneral::genererHeader("demarrage");
+		$code.=$this->afficherPlanningUser();
+    break;
+  }
+
+  }
   $code.=VueGeneral::genererFooter();
   echo $code;
-}
+  }
+
 }
