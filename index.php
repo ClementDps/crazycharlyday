@@ -116,10 +116,15 @@ $app->get('/user/delete', function () {
     $c->supprimerCompte();
 })->name('supprimer-compte');
 
+$app->get('/user/modifier-compte', function () {
+    $c = new GestionCompte();
+    $c->afficherModifCompte();
+})->name('modifier-compte');
+
 $app->post('/user/modifier-compte', function () {
     $c = new GestionCompte();
-    $c->afficherModifierCompte();
-})->name('modifier-compte');
+    $c->modifCompte();
+});
 
 $app->get('/user/change-mdp', function () {
     $c = new GestionCompte();
@@ -130,7 +135,6 @@ $app->post('/user/change-mdp', function () {
     $c = new GestionCompte();
     $c->changerMotDePasse();
 });
-
 
 $app->post('/validerreservation/:id', function($id) {
     $c = new ControleurClient();

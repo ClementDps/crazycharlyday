@@ -23,6 +23,22 @@ namespace garagesolidaire\controleur;
         $vue->render(VueAdministrateur::AFF_CMDP);
       }
 
+      public function afficherModifCompte(){
+        $vue = new VueAdministrateur(null);
+        $vue->render(VueAdministrateur::AFF_MODIF_COMPTE);
+      }
+
+      public function modifCompte(){
+
+        $app = \Slim\Slim::getInstance();
+
+        $valueFiltred = $this->filterVar($_POST);
+        Model\User::mettreAjour($valueFiltred['nom'],$valueFiltred['prenom']);
+        
+        $app->redirect( $app->urlFor("aff-user") ) ; //Redirection à ses listes
+
+      }
+
       public function changerMotDePasse(){
         $app = \Slim\Slim::getInstance();
         //Redirection si l'utilisateur n'est pas connecté
