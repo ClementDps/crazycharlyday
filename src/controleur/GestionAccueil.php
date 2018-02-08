@@ -27,4 +27,9 @@ class GestionAccueil {
     $vue = new \garagesolidaire\vue\VueAccueil(\garagesolidaire\vue\VueAccueil::AFF_HELP);
     $vue->render();
   }
+
+  public function error404(){
+    $vue = new \garagesolidaire\vue\VueAccueil(\garagesolidaire\vue\VueAccueil::AFF_ERROR_404);
+    $vue->render();
+  }
 }
