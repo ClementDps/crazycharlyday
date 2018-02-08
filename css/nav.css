@@ -49,7 +49,7 @@ body{
 }
 
 #top-zone a {
-  font: 300 16px/17px 'Open Sans';
+  font: 16px/17px 'Open Sans', sans-serif;
   display: block;
   height: 1em;
   padding: 2em 2em;

@@ -21,6 +21,7 @@ namespace garagesolidaire\vue;
      $routeUser = $app->urlFor('aff-user');
      $root = $app->request->getRootUri();
      $mesReservations=$app->urlFor('mes-reservations');
+     $reservationAdmin = $app->urlFor('reservation');
      $menuReservation="";
      $profileHTML = "<li><a href=\"".$routeConnexion."\">Connexion</a></li><li><a href=\"".$routeInsc."\">Inscription</a></li>";
      if(isset($_SESSION['userid'])){
@@ -32,8 +33,10 @@ namespace garagesolidaire\vue;
      if(isset($_SESSION['userid']) && isset($_SESSION['rang']) && $_SESSION['rang']==0){
        $menuReservation="<li><a href=".$mesReservations.">Mes Réservations</a></li>";
      }else{
-       if(isset($_SESSION['userid']) && isset($_SESSION['rang']) && $_SESSION['rang']>0){
-         $menuReservation="<li><a href=\"acompleter\">Les Réservations</a></li>";
+
+       if(isset($_SESSION['userid']) && $_SESSION['rang']>0){
+         $menuReservation="<li><a href=\"$reservationAdmin\">Les Réservations</a></li>";
+
        }
      }
 

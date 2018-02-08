@@ -31,6 +31,7 @@ footer ul{
 
 
 footer a {
+	font: 16px/17px 'Open Sans', sans-serif;
 	display: inline-block;
   text-decoration: none;
   color: white;
