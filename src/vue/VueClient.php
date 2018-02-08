@@ -233,6 +233,12 @@ END;
     }
     return $code;
   }
+  
+  public function afficherPlanningUser(){
+	  if(isset($this->infos)){
+		  
+	  }
+  }
 
 
   public function render($int){
@@ -272,6 +278,10 @@ END;
     $code.=$this->afficherMesReservations();
     break;
     }
+	case 9:{
+		$code=VueGeneral::genererHeader("demarrage");
+		$code.=$this->afficherPlanningUser();
+	}
   }
   $code.=VueGeneral::genererFooter();
   echo $code;
