@@ -11,7 +11,7 @@ class Authentication{
 		return 0;
 	}
 	else{
-		User::insert($n,$p,$e,$mdp);
+		User::insert($n,$p,$e,$mdp,0);
 		Authentication::authenticate($e,$mdp);
 		return 1;
 	}
@@ -31,10 +31,11 @@ class Authentication{
   }
 
   public static function loadProfile($id){
-	$u=User::where("id","=",$id)->get();
-	$_SESSION=[];
-	$_SESSION['username'] = $u[0]->nom;
-	$_SESSION['userid'] = $u[0]->id;
+	   $u=User::where("id","=",$id)->get();
+	    $_SESSION=[];
+      $_SESSION['usernickname'] = $u[0]->prenom;
+	     $_SESSION['username'] = $u[0]->nom;
+	      $_SESSION['userid'] = $u[0]->id;
   }
 
   public static function checkAccessRights($rang){

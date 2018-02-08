@@ -8,6 +8,7 @@ class VueAdministrateur{
 
   const AFF_CO = 3;
   const AFF_INSC = 4;
+  const AFF_USER = 5;
 
   public function __construct($tab){
     $this->infos=$tab;
@@ -59,19 +60,17 @@ END;
         $email = "";
         $errorMdp = "";
         $errorEmail = "";
-        if(isset($this->param)){ // Gestion de l'affichage de l'erreur
-          if ($this->param["error"] === "mdpDiff"){
+        if(isset($this->infos)){ // Gestion de l'affichage de l'erreur
+          if ($this->infos["error"] === "mdpDiff"){
             $errorMdp = "<p>***Mot de passe invalide !***</p>";
-          }else if ($this->param["error"] === "email"){
+          }else if ($this->infos["error"] === "email"){
             $errorEmail = "<p>***Email invalide !***</p>";
-          }else if ($this->param["error"] === "mdpShort"){
-            $errorMdp = "<p>***Mot de passe trop court !***</p>";
-          }else if ($this->param["error"] === "emailExist"){
+          }else if ($this->infos["error"] === "emailExist"){
             $errorEmail = "<p>***Email existe déjà dans la base !***</p> ";
           }
-          $nom = "value=\"".$this->param["nom"]."\""; //Affichage pré-rempli du formulaire en cas d'erreur
-          $prenom = "value=\"".$this->param["prenom"]."\"";
-          $email = "value=\"".$this->param["email"]."\"";
+          $nom = "value=\"".$this->infos["nom"]."\""; //Affichage pré-rempli du formulaire en cas d'erreur
+          $prenom = "value=\"".$this->infos["prenom"]."\"";
+          $email = "value=\"".$this->infos["email"]."\"";
         }
 //----------------------------------------------
         $code = \garagesolidaire\vue\VueGeneral::genererHeader("formulaire");
@@ -88,6 +87,39 @@ END;
     <input id="submit" type="submit" name="valider-insc" value="S'inscrire"  placeholder="Mot de passe">
   </form>
 END;
+      break;
+    }
+
+    case VueAdministrateur::AFF_USER : {
+      $cheminDelete = $app->urlFor('supprimer-compte');
+      $cheminCompteInfo = $app->urlFor('modifier-compte');
+      $cheminModifMdp = $app->urlFor('modifier-mdp');
+      $code = \garagesolidaire\vue\VueGeneral::genererHeader("menu");
+      $code .= <<<END
+<div id="bouton">
+  <a href="$cheminCompteInfo">Modifier son compte</a>
+  <a href="$cheminModifMdp">Changer de mot de passe</a>
+  <a href="#sup-compte">Supprimer son compte</a>
+</div>
+<div id="sup-compte" class="modal">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <header class="container">
+      <a href="#" class="closebtn">×</a>
+        <h4>Supprimer son compte</h4>
+      </header>
+      <div class="container">
+        <p> Voulez-vous réellement supprimer votre compte ? </p><br>
+        <form class="reservation" method="GET" action="$cheminDelete">
+            <button class="suppr" type="submit" name="valid-reserv" value="valid_reserv">Supprimer</button>
+            <a href="#">Annuler</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+END;
+
       break;
     }
   }

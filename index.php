@@ -23,9 +23,14 @@ $app->get('/', function () {
   $c -> afficheAccueil();
 })->name("accueil");
 
-$app->get('/afficheritemscategorie/:num',function($num){
+$app->get('/afficher/items/categorie/:num',function($num){
 	$control=new ControleurClient();
 	$control->afficheritemscategorie($num);
+})->name("afficher-item");
+
+$app->get('/afficher/planning/graph/:num',function($num){
+	$control=new ControleurClient();
+	$control->afficherPlanningGraphique($num);
 });
 
 $app->get('/contact', function () {
@@ -49,15 +54,21 @@ $app->notFound(function () use ($app) {
   $c -> error404();
 });
 
-$app->get('/afficheritem/:id',function($id){
+$app->get('/afficher/item/:id',function($id){
 	$control = new ControleurClient();
 	$control->afficherItem($id);
 })->name('item');
 
-$app->get('/affichercategories',function(){
+$app->get('/afficher/categories',function(){
 	$control=new ControleurClient();
 	$control->afficherCategories();
-});
+})->name("aff-categorie");
+
+
+$app->get('/afficher/creation/reservation/:id',function($id){
+	$control=new ControleurClient();
+	$control->afficherCreationReservation($id);
+})->name("creation-reservation");
 
 
 $app->get('/afficherlisteutilisateurs',function(){
@@ -73,13 +84,18 @@ $app->get('/connexion', function () {
 
 $app->post('/connexion', function () {
     $c = new GestionCompte();
-    $c->etablirConnection($_POST);
+    $c->etablirConnection();
 });
 
 $app->get('/deconnexion', function () {
   $c = new GestionCompte();
   $c -> deconnecter();
 })->name("deconnexion");
+
+$app->get('/user',function () {
+  $c = new GestionCompte();
+  $c->afficherPanel();
+})->name( 'aff-user' );
 
 //----------------------Formulaire-Inscription-Compte------//
 $app->get('/inscription', function () {
@@ -88,20 +104,30 @@ $app->get('/inscription', function () {
 })->name("inscription");
 
 $app->post('/inscription', function () {
-
-  if( isset($_POST['valider-insc']) && $_POST['valider-insc'] == 'S\'inscrire'){
-
-    $c = new GestionCompte();
-
-    $valueFiltred = $c->filtrerInscription($_POST);
-
-    if( !empty($valueFiltred) ){
-      $c->ajouterUtilisateur($valueFiltred);
-    }
-
-  }
-
+  $c = new GestionCompte();
+  $c -> ajouterUtilisateur();
 });
+
+
+$app->get('/user/delete', function () {
+    $c = new GestionCompte();
+    $c->supprimerCompte();
+})->name('supprimer-compte');
+
+$app->post('/user/modifier-compte', function () {
+    $c = new GestionCompte();
+    $c->afficherModifierCompte();
+})->name('modifier-compte');
+
+$app->get('/user/change-mdp', function () {
+    $c = new GestionCompte();
+    $c->afficherChangerMotDePasse();
+})->name("modifier-mdp");
+
+$app->post('/validerreservation/:id', function($id) {
+    $c = new ControleurClient();
+    $c->validerReservation($_POST['jourdeb'],$_POST['jourfin'],$_POST['heuredeb'],$_POST['heurefin'],$id);
+})->name("valid-reserv");
 
 $app->get('/afficherplanningreservationitem/:num',function($num){
 	$control=new ControleurClient();

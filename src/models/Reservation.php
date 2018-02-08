@@ -8,7 +8,7 @@ class Reservation extends \Illuminate\Database\Eloquent\Model{
 	protected $primaryKey='id';
 	public $timestamps=false;
 
-	public function insert($user,$item,$heureDeb,$jourDeb,$heureFin,$jourFin,$etat){
+	public static function insert($user,$item,$heureDeb,$jourDeb,$heureFin,$jourFin){
 		$r = new Reservation();
 		$r->idUser=$user;
 		$r->idItem=$item;
@@ -16,13 +16,13 @@ class Reservation extends \Illuminate\Database\Eloquent\Model{
 		$r->jourDeb=$jourDeb;
 		$r->heureFin=$heureFin;
 		$r->jourFin=$jourFin;
-		$r->etat=$etat;
+		$r->etat="reserve";
 		$r->dateCreation=date("Y-m-d H:i:s",time());
 		$r->dateDerniereModif=date("Y-m-d H:i:s",time());
 		$r->save();
 	}
-	public function mettreAjour($id,$etat,$note,$prix){
-		$r = Resrvation::find($id);
+	public static function mettreAjour($id,$etat,$note,$prix){
+		$r = Reservation::find($id);
 		$r->etat=$etat;
 		$r->note=$note;
 		$r->prix=$prix;
