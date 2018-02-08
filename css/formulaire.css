@@ -1,5 +1,5 @@
 body{
-  background: #ADD8E6;
+  background:  #fbfaed;
   font: 1em 'Open Sans', sans-serif;
 }
 
@@ -120,7 +120,7 @@ input {
 }
 
 input:hover {
-  background: #b3aca7;
+  background: #495769;
   color: white;
 }
 
@@ -157,11 +157,11 @@ input:hover {
 
 a#link {
   text-decoration: none;
-  color: grey;
+  color: #495769;
 }
 
 a#link:hover {
-  color: white;
+  color: #01D758;
   transition: all 0.3s ease-in-out;
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;

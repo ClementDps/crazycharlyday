@@ -22,4 +22,20 @@ class ControleurAdministrateur{
 		$vue = new VueAdministrateur($tab->toArray());
 		$vue->render(10);
 	}
+	
+	public function modifierItem($id){
+		$tab = Item::find($id);
+		$vue = new VueAdministrateur($tab->toArray());
+		$vue->render(11);
+	}
+	
+	public function validationModificationItem($nom,$desc,$idcateg,$id){
+		$n=filter_var($nom,FILTER_SANITIZE_STRING);
+		$d=filter_var($desc,FILTER_SANITIZE_STRING);
+		$c=filter_var($idcateg,FILTER_SANITIZE_NUMBER_INT);
+		Item::mettreAjour($id,$n,$d,$c);
+		$this->items();
+	}
 }
+	
+

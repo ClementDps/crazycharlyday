@@ -1,5 +1,5 @@
 body{
-	background: #ADD8E6;
+	background: #fbfaed;
 }
 
 
@@ -11,7 +11,7 @@ h1{
   margin-left : 3em;
   margin-bottom: 4em;
   margin-top: 3em;
-	color : #006575;
+	color : #495769;
 }
 
 h3{
@@ -19,15 +19,15 @@ h3{
   text-align: center;
   width: 75%;
   margin : 0 12.5%;
-	color : #006575;
+	color : #495769;
 }
 
 p{
 	font: 18px/24px 'Open Sans', sans-serif;
   width: 75%;
-  margin : 2em 12.5%;
+  margin : 0em 12.5%;
   text-align: center;
-  color : #129894;
+  color : #0F0C40;
 }
 
 a#link {

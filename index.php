@@ -161,12 +161,19 @@ $app->get('/reservation/' , function () {
 })->name("reservation");
 
 $app->get('/afficherplanningreservationuser/:id',function($id){
-
 	$control=new ControleurClient();
 	$control->afficherPlanningUser($id);
 })->name("reservation-user");
 
+$app->get('/modifierItem/:id',function($id){
+	$control=new ControleurAdministrateur();
+	$control->modifierItem($id);
+})->name("modifierItem");
 
+$app->post('/validationModificationItem/:id',function($id){
+	$control=new ControleurAdministrateur();
+	$control->validationModificationItem($_POST['nom'],$_POST['desc'],$_POST['categorie'],$id);
+})->name("validermodifitem");
 
 
 $app->run();

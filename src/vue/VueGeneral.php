@@ -36,7 +36,6 @@ namespace garagesolidaire\vue;
 
        if(isset($_SESSION['userid']) && isset($_SESSION['rang']) && $_SESSION['rang']>0){ 
          $menuReservation="<li><a href=\"$reservationAdmin\">Les Réservations</a></li>";
-
        }
      }
 

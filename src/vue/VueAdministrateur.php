@@ -2,6 +2,8 @@
 
 namespace garagesolidaire\vue;
 
+use garagesolidaire\models\Categorie;
+
 class VueAdministrateur{
 
   private $infos;
@@ -18,13 +20,47 @@ class VueAdministrateur{
   public function afficherItems(){
 	  $code = "";
 	  $app = \Slim\Slim::getInstance();
-	  $route = $app->urlFor("afficher-item", ['num' => $this->infos[0]['id']]);
+	  $route = $app->urlFor("modifierItem", ['id' => $this->infos[0]['id']]);
 	  
 	  foreach($this->infos as $key=>$value){
 		$code = $code."<li><a href='$route'>".$value['nom']."</a> </li><br>";
 	  }
 	  return $code;
   }
+  
+  public function modifierItem(){
+
+		$name=$this->infos['nom'];
+		$desc = $this->infos['description'];
+		$categorie = Categorie::find($this->infos['id'])['nom'];
+		$app = \Slim\Slim::getInstance();
+		$route = $app->urlFor("validermodifitem", ['id' => $this->infos['id']]);
+		$categ = Categorie::get();
+		$code=<<<END
+<form id="crea" method= "post" action = "$route">
+<table>
+<tr><th><label for="f1_nom"> Nom :</label></th>
+<th><input type = "text" id="f5_nom" name="nom" value="$name" placeholder="<Nom>" required></th></tr>
+
+<tr><th><label for="f1_nom"> Description :</label></th>
+<th><input type = "text" id="f1_desc" name="desc" value="$desc" placeholder="<Description>" required></th></tr>
+
+<tr><th><label for="f1_nom"> Categorie :</label></th>
+<th> <select id="f1_categ" name="categorie" required>
+END;
+
+foreach($categ as $key=>$value){
+	$code=$code."<option value=\"".$value['id']."\">".$value['nom']."</option>";
+}
+
+$code.=<<<END
+</th></tr><tr><th><button type="submit" name="valider_modifUser"  value="valid_f5">Valider</button></th></tr></table>
+</form>
+END;
+	return $code;
+  }
+  
+  
 
   public function render($int){
     $code = "";
@@ -137,7 +173,13 @@ END;
 	case 10 : {
 		$code = \garagesolidaire\vue\VueGeneral::genererHeader("menu");
 		$code.=$this->afficherItems();
+		break;
 
+	}
+	case 11:{
+		$code = \garagesolidaire\vue\VueGeneral::genererHeader("menu");
+		$code .= $this->modifierItem();
+		break;
 	}
 	
 
