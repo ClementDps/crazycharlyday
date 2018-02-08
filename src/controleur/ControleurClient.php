@@ -15,6 +15,13 @@ class ControleurClient{
 		}
 	}
 
+	public function afficherCategories(){
+		$categorie = Categorie::all();
+		$vue = new VueClient($categorie->toArray());
+		$vue->render(1);
+	}
+
+
 
 	public function afficheritemscategorie($num){
 		$categ=Categorie::where('id','=',$num)->get();

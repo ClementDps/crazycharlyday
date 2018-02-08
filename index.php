@@ -52,4 +52,9 @@ $app->get('/afficheritem/:id',function($id){
 	$control->afficherItem($id);
 })->name('item');
 
+$app->get('/affichercategories',function(){
+	$control=new ControleurClient();
+	$control->afficherCategories();
+});
+
 $app->run();

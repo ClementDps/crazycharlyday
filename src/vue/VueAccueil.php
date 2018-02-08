@@ -30,9 +30,9 @@ public function render(){
       $html = \garagesolidaire\vue\VueGeneral::genererHeader("demarrage");
       $html .=
       <<<END
-  <h1>Bienvenue sur le site <strong>garagesolidaire</strong></h1>
-  <h3> garagesolidaire est un site qui permet de partager vos idées de cadeaux lors d'un événement</h3>
-  <p> Groupe : Claisse Julien | Grebot Lucas | Savouroux Florian | Mercier Clément | Parisel Guillaume </p>
+  <h1>Bienvenue sur le site du <strong>garage solidaire</strong></h1>
+  <h3> garagesolidaire est un site qui permet de réserver un garage afin de réparer sa voiture </h3>
+  <p> Groupe : Briand Lucas | Claisse Julien | Combe-Deschaumes Sarah | Domps Clément | Millotte Baptiste </p>
 END;
     break;
 
