@@ -5,6 +5,7 @@ use \garagesolidaire\models\Item;
 use \garagesolidaire\models\Categorie;
 use \garagesolidaire\vue\VueClient;
 use \garagesolidaire\models\User;
+use \garagesolidaire\models\Commentaire;
 use garagesolidaire\models\Reservation;
 
 
@@ -140,16 +141,38 @@ public function testerValidite($jdebB,$jfinB,$hdebB,$hfinB, $jdebA,$jfinA,$hdebA
 
 }
 
+	public function ajouterCommentaire($id,$com){
+		if(isset($_SESSION['userid']) && isset($_POST['valider_message']) && $_POST['valider_message']=='valid_f2'){
+			$com=filter_var($com,FILTER_SANITIZE_STRING);
+			Commentaire::insert($_SESSION['userid'],$id,$com);
+		}
+		$i=Item::find($id);
+		$vue=new VueClient($i);
+		$vue->render(2);
+	}
+	
 public function mesReservations(){
 	$r=Reservation::where('idUser','=',$_SESSION['userid'])->get();
 	$vue=new VueClient($r->toArray());
 	$vue->render(5);
 }
 
+<<<<<<< HEAD
 public function afficherReservation($id){
 	$r=Reservation::find($id);
 	$vue=new VueClient($r);
 	$vue->render(6);
+=======
+public function afficherPlanningUser($idUser){
+	if(isset($_SESSION['userid'])){
+		$r=Reservation::where('idUser','=',$idUser)->get();
+		if(isset($r[0])){
+			$r=$r->toArray();
+		}
+		$vue=new VueClient($r);
+		$vue->render(9);
+	}
+>>>>>>> 2edc42426462b2c4c93edae0c766166433d97455
 }
 
 

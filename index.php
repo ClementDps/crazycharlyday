@@ -136,15 +136,37 @@ $app->get('/mesreservations', function () {
     $c->mesReservations();
 })->name("mes-reservations");
 
-$app->get('/afficherplanningreservationitem/:num',function($num){
+$app->get('/afficherplanningreservationitem/:id',function($id){
+
 	$control=new ControleurClient();
-	$control->afficherPlanningReservationItem($num);
+	$control->afficherPlanningReservationItem($id);
 })->name("reservationitem");
+
 
 $app->get('/reservation/:id' , function ($id) {
   $control=new ControleurClient();
   $control->afficherReservation($id);
 })->name("reservation");
+
+
+$app->post('/ajoutercommentaire/:id',function($id){
+	$control=new ControleurClient();
+	$control->ajouterCommentaire($id,$_POST['message']);
+})->name("ajouter-commentaire");
+
+
+$app->get('/reservation/' , function () {
+  $c = new ControleurAdministrateur();
+  $c->afficherReservation();
+
+})->name("reservation");
+
+$app->get('/afficherplanningreservationuser/:id',function($id){
+
+	$control=new ControleurClient();
+	$control->afficherPlanningUser($id);
+})->name("reservation-user");
+
 
 
 $app->run();

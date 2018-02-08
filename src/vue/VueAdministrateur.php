@@ -9,6 +9,7 @@ class VueAdministrateur{
   const AFF_CO = 3;
   const AFF_INSC = 4;
   const AFF_USER = 5;
+  const AFF_RESERV = 6;
 
   public function __construct($tab){
     $this->infos=$tab;
@@ -120,6 +121,10 @@ END;
 </div>
 END;
 
+      break;
+    }
+    case VueAdministrateur::AFF_RESERV : {
+      
       break;
     }
   }
