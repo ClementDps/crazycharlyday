@@ -190,7 +190,10 @@ $app->post('/annulerreservation/:id',function($id){
 	$control->annulerReservation($id);
 })->name("annuler-reservation");
 
-
+$app->post('/payerRes/:id',function($id){
+	$control=new ControleurClient();
+	$control->payerReservation($id);
+})->name("payer-reservation");
 
 
 $app->run();
