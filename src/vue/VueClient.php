@@ -16,15 +16,9 @@ class VueClient{
 	  $nom=$this->infos['nom'];
 	  $desc=$this->infos['description'];
 	  $img=$this->infos['img'];
-<<<<<<< HEAD
 	  
 	  $code="<p>Nom : ".$nom." <br> Description : ".$desc."<p>";
 	  if($img!==""){
-=======
-
-	  $code="Nom : ".$nom." <br> Description : ".$desc;
-    if($img!==""){
->>>>>>> a2f25840cfa669192a82d52fea9eb0e087a90cbf
 		$code=$code.'<img src="../../img/item/'.$img.'" width = "150" height="150"></img><br>';
 	  }
 		//liens des boutons bidons
