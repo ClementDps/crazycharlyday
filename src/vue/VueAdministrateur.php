@@ -4,6 +4,13 @@ namespace garagesolidaire\vue;
 
 class VueAdministrateur{
 
+  private $infos;
+
+  public function __construct($tab){
+    $this->infos=$tab;
+  }
+
+
   public function render($int){
   switch($int){
     case 1:{

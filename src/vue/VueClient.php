@@ -4,6 +4,19 @@ namespace garagesolidaire\vue;
 
 class VueClient{
 
+  private $infos;
+
+  public function __construct($tab){
+    $this->infos=$tab;
+  }
+  
+  public function afficherItem(){
+	  $nom=$this->infos['nom'];
+	  $desc=$this->infos['description'];
+	  $img=$this->infos['img'];
+	  
+	  
+  }
 
   public function render($int){
   switch($int){
@@ -12,7 +25,7 @@ class VueClient{
       break;
     }
   case 2:{
-
+		$content=$this->afficherItem();
       break;
     }
   }
@@ -26,7 +39,7 @@ class VueClient{
           <link rel="stylesheet" href="../style.css" />
       </head>
       <body>
-
+		$content
       </body>
   </html>
 
