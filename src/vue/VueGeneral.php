@@ -21,7 +21,7 @@ namespace garagesolidaire\vue;
      $routeUser = $app->urlFor('aff-user');
      $root = $app->request->getRootUri();
      $utils=$app->urlFor('afficher-utilisateurs');
-     $moduleAmin=$app->urlFor('module-admin');
+     $moduleAdmin=$app->urlFor('module-admin');
      $mesReservations=$app->urlFor('mes-reservations');
      $reservationAdmin = $app->urlFor('reservation-list');
      $menuReservation="";
