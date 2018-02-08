@@ -17,8 +17,9 @@ class VueClient{
 	  $img=$this->infos['img'];
 	  
 	  $code="Nom : ".$nom." <br> Description : ".$desc;
-		$code=$code.'<img src="../../../img/'.$img.'" width = "150" height="150"></img><br>';
-		
+	  if($img!==""){
+		$code=$code.'<img src="../../img/item/'.$img.'" width = "150" height="150"></img><br>';
+	  }
 		//liens des boutons bidons
 		$buttonlisteres=<<<END
 <form id="listeres" method="get" action ="afficherlisteres/$id">
