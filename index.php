@@ -32,7 +32,7 @@ $app->get('/afficher/items/categorie/:num',function($num){
 $app->get('/afficher/planning/graph/:num',function($num){
 	$control=new ControleurClient();
 	$control->afficherPlanningGraphique($num);
-});
+})->name("afficher-palanning-graph");
 
 $app->get('/contact', function () {
   $c = new GestionAccueil();

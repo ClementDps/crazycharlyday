@@ -26,18 +26,23 @@ class VueClient{
 	  if($img!==""){
 		$code=$code."<img src=\"$root/img/item/".$img.'" width = "150" height="150"></img><br>';
 	  }
+	  $app=\Slim\Slim::getInstance();
 		//liens des boutons bidons
+		$route3=$app->urlFor("reservationitem",['id'=>$id]);
 		$buttonlisteres=<<<END
-<form id="listeres" method="get" action ="afficherlisteres/$id">
+<form id="listeres" method="get" action ="$route3">
 <button type="submit" name="valider_affichage_liste_res" value="valid_affichage_liste_res">Afficher la liste des réservations</button>
 </form>
 END;
+
+
+$route2=$app->urlFor("afficher-palanning-graph",['num'=>$id]);
 $buttonplanning=<<<END
-<form id="planninggraph" method="get" action ="afficherplanninggraph/$id">
+<form id="planninggraph" method="get" action ="$route2">
 <button type="submit" name="valider_affichage_planning_graph" value="valid_affichage_planning_graph">Planning graphique</button>
 </form>
 END;
-$app=\Slim\Slim::getInstance();
+
 $route=$app->urlFor('creation-reservation',['id'=>$id]);
 $buttonformulaireres=<<<END
 <form id="formulaireres" method="get" action ="$route">
@@ -372,6 +377,7 @@ END;
 
 
   public function render($int){
+	  $code="";
   switch($int){
     case 1:{
 		 $code=VueGeneral::genererHeader("demarrage");
@@ -406,6 +412,17 @@ END;
 	case 9:{
 		$code=VueGeneral::genererHeader("client");
 		$code.=$this->afficherPlanningGraphique();
+		break;
+	}
+	case 10:{
+		$code=VueGeneral::genererHeader("client");
+		$code.=$this->afficherListeUtilisateurs();
+		break;
+	}
+	case 11:{
+		$code=VueGeneral::genererHeader("client");
+		$code.=$this->afficherPlanningReservationItem();
+		break;
 	}
 
   }
