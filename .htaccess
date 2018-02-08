@@ -1,7 +1,7 @@
 RewriteEngine on
 
 #RewriteBase indispensable sur webetu :
-#RewriteBase /www/claisse4u/dossier
+RewriteBase /www/domps1u/dangoJulienBaptisteLesMeilleurs
 
 #Interdire l'accès aux répertoires contenant du code
 RewriteRule ^sql(/.*|)$ - [NC,F]
