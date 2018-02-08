@@ -14,7 +14,7 @@ namespace garagesolidaire\vue;
    */
    public static function genererHeader($fichierCss = ""){
      $app = \Slim\Slim::getInstance();
-     // $routeListe = $app->urlFor('liste');
+     $routeCategorie = $app->urlFor('aff-categorie');
      $routeInsc = $app->urlFor('inscription');
      $routeConnexion = $app->urlFor('connexion');
      $routeAcc = $app->urlFor('accueil');
@@ -44,7 +44,7 @@ namespace garagesolidaire\vue;
   <div id="top-zone">
     <div id="left">
       <ul>
-      <li><a href="$root">Accueil</a></li><li><a href="#">Garage Solidaire</a></li>
+      <li><a href="$root">Accueil</a></li><li><a href="$routeCategorie">Garage Solidaire</a></li>
       </ul>
     </div>
     <div id="right">

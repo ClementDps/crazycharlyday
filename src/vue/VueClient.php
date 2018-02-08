@@ -61,8 +61,10 @@ END;
 
   public function afficherCategories(){
 		$code= "<section><ul>";
-		foreach($this->infos as $key=>$value){
-			$code=$code." <li><a href='afficheritemscategorie/".$value['id']."'>".$value['nom']."</a> </li><br>";
+    $app = \Slim\Slim::getInstance();
+    foreach($this->infos as $key=>$value){
+      $route = $app->urlFor("afficher-item", ['num' => $value['id']]);
+			$code=$code." <li><a href='$route'>".$value['nom']."</a> </li><br>";
 		}
 		$code=$code."</ul></section>";
 
@@ -120,21 +122,21 @@ END;
   return $code;
   }
   /**
-  public function afficherPlanningGraphique(){
-    $code="<table><tr><th>Jour</th><th>8h-10h</th><th>10h-12h</th><th>12h-14h</th><th>14h-16h</th><th>16h-18h</th></tr>";
-    $tab=array();
-    tab[]='lundi';
-    tab[]='mardi';
-    tab[]='mercredi';
-    tab[]='jeudi';
-    tab[]='vendredi';
-    $i=0;
-    foreach($this->infos as $key=>$value){
-      $code=$code+"<tr><td>".$tab[i]."</td>";
-      $i++;
-    }
-    $code=$code+"</table>";
-  }
+  *public function afficherPlanningGraphique(){
+  *  $code="<table><tr><th>Jour</th><th>8h-10h</th><th>10h-12h</th><th>12h-14h</th><th>14h-16h</th><th>16h-18h</th></tr>";
+  *  $tab=array();
+  *  tab[]='lundi';
+  *  tab[]='mardi';
+  *  tab[]='mercredi';
+  *  tab[]='jeudi';
+  *  tab[]='vendredi';
+  *  $i=0;
+  *  foreach($this->infos as $key=>$value){
+  *    $code=$code+"<tr><td>".$tab[i]."</td>";
+  *    $i++;
+  *  }
+  *  $code=$code+"</table>";
+  *}
   */
 
   public function render($int){

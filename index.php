@@ -22,12 +22,12 @@ $app->get('/', function () {
   $c -> afficheAccueil();
 })->name("accueil");
 
-$app->get('/afficheritemscategorie/:num',function($num){
+$app->get('/afficher/items/categorie/:num',function($num){
 	$control=new ControleurClient();
 	$control->afficheritemscategorie($num);
-});
+})->name("afficher-item");
 
-$app->get('/afficherplanninggraph/:num',function($num){
+$app->get('/afficher/planning/graph/:num',function($num){
 	$control=new ControleurClient();
 	$control->afficherPlanningGraphique($num);
 });
@@ -53,20 +53,20 @@ $app->notFound(function () use ($app) {
   $c -> error404();
 });
 
-$app->get('/afficheritem/:id',function($id){
+$app->get('/afficher/item/:id',function($id){
 	$control = new ControleurClient();
 	$control->afficherItem($id);
 })->name('item');
 
-$app->get('/affichercategories',function(){
+$app->get('/afficher/categories',function(){
 	$control=new ControleurClient();
 	$control->afficherCategories();
-});
+})->name("aff-categorie");
 
-$app->get('/affichercreationreservation/:id',function($id){
+$app->get('/afficher/creation/reservation/:id',function($id){
 	$control=new ControleurClient();
 	$control->afficherCreationReservation($id);
-});
+})->name("creation-reservation");
 
 //-----------------------------Formulaire-de-connexion-et-deconnexion-compte----------//
 $app->get('/connexion', function () {
