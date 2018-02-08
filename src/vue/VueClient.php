@@ -69,6 +69,17 @@ END;
 		return $code;
 
 	}
+	
+	public function afficherListeUtilisateurs(){
+		$code= "<section><ul>";
+		foreach($this->infos as $key=>$value){
+			$code=$code." <li><a href='afficheritemscategorie/".$value['id']."'>".$value['nom']." ".$value["prenom"]."</a> </li>";
+			$code = $code."<img src=\"../img/user/".$value['img'].".jpg\" width=\"50\" height=\"50\"><br><br>";
+		}
+		$code=$code."</ul></section>";
+
+		return $code;
+	}
 
 	//mettre les bons css
   public function render($int){
@@ -78,17 +89,23 @@ END;
       $code.=$this->afficherCategories();
       break;
     }
-  case 2:{
+	case 2:{
 	  $code=VueGeneral::genererHeader("demarrage");
 		$code.=$this->afficherItem();
       break;
     }
-
 	case 3:{
 		$code=VueGeneral::genererHeader("demarrage");
 		$code.=$this->afficherItemsCateg();
 		break;
 	}
+	case 10:{
+		$code=VueGeneral::genererHeader("demarrage");
+		$code.=$this->afficherListeUtilisateurs();
+		break;
+	}
+	
+	
   }
 
   $code.=VueGeneral::genererFooter();

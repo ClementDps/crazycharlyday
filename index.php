@@ -58,4 +58,10 @@ $app->get('/affichercategories',function(){
 	$control->afficherCategories();
 });
 
+$app->get('/afficherlisteutilisateurs',function(){
+	$control=new ControleurClient();
+	$control->afficherListeUtilisateurs();
+});
+
+
 $app->run();

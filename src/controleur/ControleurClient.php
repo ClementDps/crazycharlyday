@@ -4,6 +4,7 @@ namespace garagesolidaire\controleur;
 use \garagesolidaire\models\Item;
 use \garagesolidaire\models\Categorie;
 use \garagesolidaire\vue\VueClient;
+use \garagesolidaire\models\User;
 
 class ControleurClient{
 
@@ -32,4 +33,14 @@ class ControleurClient{
 		$v=new VueClient($tab);
 		$v->render(3);
 	}
+	
+	public function afficherListeUtilisateurs(){
+		$utilisateurs = User::all();
+		$vue = new VueClient($utilisateurs->toArray());
+		$vue->render(10);
+	}
+	
+	
+	
+	
 }
