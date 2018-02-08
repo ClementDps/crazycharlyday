@@ -21,7 +21,7 @@ namespace garagesolidaire\vue;
      $routeUser = $app->urlFor('aff-user');
      $root = $app->request->getRootUri();
      $utils=$app->urlFor('afficher-utilisateurs');
-     $moduleAmin=$app->urlFor('module-admin');
+     $moduleAdmin=$app->urlFor('module-admin');
      $mesReservations=$app->urlFor('mes-reservations');
      $reservationAdmin = $app->urlFor('reservation-list');
      $menuReservation="";
@@ -38,7 +38,7 @@ namespace garagesolidaire\vue;
 
 
        if(isset($_SESSION['userid']) && isset($_SESSION['rang']) && $_SESSION['rang']>0){
-         $menuReservation="<li><a href=\"$reservationAdmin\">Les Réservations</a></li><li><a href=\"$moduleAmin\">Module administrateur</a></li>";
+         $menuReservation="<li><a href=\"$reservationAdmin\">Les Réservations</a></li><li><a href=\"$moduleAdmin\">Module administrateur</a></li>";
        }
      }
 
