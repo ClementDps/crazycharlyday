@@ -1,13 +1,15 @@
 <?php
 require_once 'vendor/autoload.php' ;
+use \garagesolidaire\controleur\ControleurClient;
+use \Illuminate\Database\Capsule\Manager as DB;
+
 
 use \Slim\Slim;
-use Illuminate\Database\Capsule\Manager as DB;
 use garagesolidaire\controleur\GestionAccueil;
 
 
 $db=new DB();
-$db->addConnection(parse_ini_file('conf/conf.ini'));
+$db->addConnection(parse_ini_file('./conf/conf.ini'));
 $db->setAsGlobal();
 $db->bootEloquent();
 
@@ -44,5 +46,13 @@ $app->get('/afficheritem/:id',function($id){
 	$control = new ControleurClient();
 	$control->afficherItem($id);
 })->name('item');
+<<<<<<< HEAD
+=======
+
+$app->get('/affichercategories',function(){
+	$control=new ControleurClient();
+	$control->afficherCategories();
+});
+>>>>>>> 4965767e4166ca741a65ec355b6746b642657748
 
 $app->run();
