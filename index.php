@@ -116,15 +116,25 @@ $app->get('/user/delete', function () {
     $c->supprimerCompte();
 })->name('supprimer-compte');
 
+$app->get('/user/modifier-compte', function () {
+    $c = new GestionCompte();
+    $c->afficherModifCompte();
+})->name('modifier-compte');
+
 $app->post('/user/modifier-compte', function () {
     $c = new GestionCompte();
-    $c->afficherModifierCompte();
-})->name('modifier-compte');
+    $c->modifCompte();
+});
 
 $app->get('/user/change-mdp', function () {
     $c = new GestionCompte();
     $c->afficherChangerMotDePasse();
 })->name("modifier-mdp");
+
+$app->post('/user/change-mdp', function () {
+    $c = new GestionCompte();
+    $c->changerMotDePasse();
+});
 
 $app->post('/validerreservation/:id', function($id) {
     $c = new ControleurClient();
@@ -175,6 +185,7 @@ $app->get('/afficherplanningreservationuser/:id',function($id){
 	$control->afficherPlanningUser($id);
 })->name("reservation-user");
 
+
 $app->get('/moduleadministrateur',function(){
   $control=new ControleurAdministrateur();
   $control->afficherModuleAdmin();
@@ -190,7 +201,20 @@ $app->get('/afficherajoutecateg',function(){
   $control->afficherAjoutCateg();
 })->name("afficher-ajoutCateg");
 
+$app->post('/annulerreservation/:id',function($id){
+	$control=new ControleurClient();
+	$control->annulerReservation($id);
+})->name("annuler-reservation");
 
+$app->post('/ajouteritem',function($id){
+	$control=new ControleurAdministrateur();
+	$control->ajouterItem($_POST['nom'],$_POST['desc']);
+})->name("ajouter-item");
+
+$app->post('/ajoutercateg',function($id){
+	$control=new ControleurAdministrateur();
+	$control->ajouterCateg($_POST['nom'],$_POST['desc']);
+})->name("ajouter-categ");
 
 
 $app->run();

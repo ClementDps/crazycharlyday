@@ -34,18 +34,38 @@ class ControleurAdministrateur{
     }
   }
 
-  public function afficherModuleAdmin(){
+  public function afficherAjoutItem(){
     if(isset($_SESSION['userid']) && $_SESSION['rang']>0){
       $vue=new VueAdministrateur();
       $vue->render(16);
     }
   }
 
-  public function afficherModuleAdmin(){
+  public function afficherAjoutCateg(){
     if(isset($_SESSION['userid']) && $_SESSION['rang']>0){
       $vue=new VueAdministrateur();
       $vue->render(17);
     }
+  }
+
+  public function ajouterItem($nom,$desc){
+    if(isset($_SESSION['userid']) && $_SESSION['rang']>0){
+      $n=filter_var($nom,FILTER_SANITIZE_STRING);
+      $d=filter_var($desc,FILTER_SANITIZE_STRING);
+      Item::insert($nom,$desc);
+    }
+    $vue=new VueAdministrateur();
+    $vue->render(15);
+  }
+
+  public function ajouterCateg($nom,$desc){
+    if(isset($_SESSION['userid']) && $_SESSION['rang']>0){
+      $n=filter_var($nom,FILTER_SANITIZE_STRING);
+      $d=filter_var($desc,FILTER_SANITIZE_STRING);
+      Categorie::insert($nom,$desc);
+    }
+    $vue=new VueAdministrateur();
+    $vue->render(15);
   }
 
   public function declineReservation($id){

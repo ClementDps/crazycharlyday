@@ -27,7 +27,6 @@ class VueClient{
 		$code=$code.'<img src="../../img/item/'.$img.'" width = "150" height="150"></img><br>';
 	  }
 	  $app=\Slim\Slim::getInstance();
-		//liens des boutons bidons
 		$route3=$app->urlFor("reservationitem",['id'=>$id]);
 		$buttonlisteres=<<<END
 <form id="listeres" method="get" action ="$route3">
@@ -370,6 +369,17 @@ END;
     $code.="Le réserveur est ".$nomUser." ".$prenomUser."<br>";
     $code.="La réservation est actuellement ".$this->infos->etat."<br>";
     $code.="Elle a été crée le ".$this->infos->dateCreation." et a été modifiée le ".$this->infos->dateCreation."<br>";
+	
+	if($this->infos->etat!="annuler"){
+	$app=\Slim\Slim::getInstance();
+	$route=$app->urlFor("annuler-reservation",['id'=>$this->infos->id]);
+	$button=<<<END
+<form id="annulres" method="post" action ="$route">
+<button type="submit" name="valider_annuler_res" value="valid_annuler_res">Annuler la réservation</button>
+</form>
+END;
+$code.=$button;
+	}
     return $code;
   }
 

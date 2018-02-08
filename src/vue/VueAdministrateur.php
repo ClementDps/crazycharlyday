@@ -13,6 +13,8 @@ class VueAdministrateur{
   const AFF_INSC = 4;
   const AFF_USER = 5;
   const AFF_RESERV = 6;
+  const AFF_CMDP = 7;
+  const AFF_MODIF_COMPTE = 8;
 
   public function __construct($tab){
     $this->infos=$tab;
@@ -23,11 +25,11 @@ class VueAdministrateur{
     $routeitem=$app->urlFor('afficher-ajoutItem');
     $routecateg=$app->urlFor('afficher-ajoutCateg');
     $code=<<<END
-<form id="afficherAjoutItem" method= "post" action ="$routeitem">
+<form id="afficherAjoutItem" method= "get" action ="$routeitem">
 <button type="submit" name="valider_allerversitem"  value="valid_versitem">Ajouter un item</button>
 </form>
 
-<form id="afficherAjoutCateg" method= "post" action ="$routecateg">
+<form id="afficherAjoutCateg" method= "get" action ="$routecateg">
 <button type="submit" name="valider_allerverscateg"  value="valid_versitem">Ajouter une catégorie</button>
 </form>
 END;
@@ -35,21 +37,33 @@ END;
   }
 
   public function afficherAjoutItem(){
+    $app=\Slim\Slim::getInstance();
+    $routeitem=$app->urlFor('ajouter-item');
 $code=<<<END
-
-
-
+<form id="afficherAjoutItem" method= "post" action ="$routeitem">
+<label for="f2_nom"> Nom :</label>
+<input type = "text" id="f2_nom" name="nom" placeholder="<Nom>" required>
+<label for="f2_desc"> Description :</label>
+<input type = "text" id="f2_desc" name="desc" placeholder="<Description>" required>
+<button type="submit" name="valider_sitem"  value="valid_item">Ajouter un item</button>
+</form>
 END;
 return $code;
   }
 
   public function afficherAjoutCateg(){
-    $code=<<<END
-
-
-
+    $app=\Slim\Slim::getInstance();
+    $routecateg=$app->urlFor('ajouter-categ');
+$code=<<<END
+<form id="afficherAjoutItem" method= "post" action ="$routecateg">
+<label for="f2_nom"> Nom :</label>
+<input type = "text" id="f2_nom" name="nom" placeholder="<Nom>" required>
+<label for="f2_desc"> Description :</label>
+<input type = "text" id="f2_desc" name="desc" placeholder="<Description>" required>
+<button type="submit" name="valider_categ"  value="valid_categ">Ajouter une catégorie</button>
+</form>
 END;
-    return $code;
+  return $code;
   }
 
   public function render($int){
@@ -220,10 +234,52 @@ END;
     $code.= "<p>Aucune Reservations...</p>";
   }
       break;
+
     }case 15:{
     $code.=$this->afficherModuleAdmin();
     break;
-  }
+
+    }
+    case VueAdministrateur::AFF_CMDP:{
+      $code = \garagesolidaire\vue\VueGeneral::genererHeader("formulaire");
+      $cheminMdp = $app->urlFor('modifier-mdp');
+      $errorLogIn = "";
+      if(isset($this->infos) && $this->infos == 'error'){
+        $errorLogIn = "<p>*** Mot de passe invalide ***</p>";
+      }
+      $code = \garagesolidaire\vue\VueGeneral::genererHeader("formulaire");
+      $code .= <<<END
+<header>CHANGER DE MOT DE PASSE</header>
+<form id="form" method="POST" action="${cheminMdp}">
+$errorLogIn
+        <label>ANCIEN MOT DE PASSE* : </label> <input type="password" name="old-pass" placeholder="ANCIEN MOT DE PASSE"  required>
+        <label>NOUVEAU MOT DE PASSE* : </label><input type="password" name="new-pass" placeholder="MOT DE PASSE" required>
+        <label>CONFIRMATION* : </label><input type="password" name="conf-pass" placeholder="CONFIRMATION" required>
+    <input id="submit" type="submit" name="connection" value="Changer de mot de passe">
+</form>
+</div>
+END;
+      break;
+    }
+
+    case VueAdministrateur::AFF_MODIF_COMPTE : {
+      $cheminCompte = $app->urlFor('modifier-compte');
+        $nom = "value=\"".$_SESSION['username']."\"";
+        $prenom = "value=\"".$_SESSION['usernickname']."\"";
+
+
+        $code = \garagesolidaire\vue\VueGeneral::genererHeader("formulaire");
+        $code .= <<<END
+        <header>MODIFIER SON COMPTE</header>
+        <form id="form" method="POST" action="$cheminCompte">
+          <label>Nom* : </label> <input type="text" name="nom" placeholder="Nom" $nom required>
+          <label>Prénom* : </label><input type="text" name="prenom" placeholder="Prénom" $prenom required>
+          <input id="submit" type="submit" name="valider-insc" value="Modifier">
+        </form>
+END;
+    }
+
+
   case 16:{
   $code.=$this->afficherAjoutItem();
   break;
