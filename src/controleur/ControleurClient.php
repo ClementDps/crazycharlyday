@@ -2,6 +2,7 @@
 
 namespace garagesolidaire\controleur;
 use \garagesolidaire\models\Item;
+use \garagesolidaire\models\Categorie;
 use \garagesolidaire\vue\VueClient;
 
 class ControleurClient{
@@ -13,8 +14,8 @@ class ControleurClient{
 			$vue->render(2);
 		}
 	}
-	
-	
+
+
 	public function afficheritemscategorie($num){
 		$categ=Categorie::where('id','=',$num)->get();
 		$items=Item::where('id_categ','=',$num)->get();

@@ -9,23 +9,28 @@ class VueClient{
   public function __construct($tab){
     $this->infos=$tab;
   }
-  
+
   public function afficherItem(){
 	  $nom=$this->infos['nom'];
 	  $desc=$this->infos['description'];
 	  $img=$this->infos['img'];
-	  
+
 	  $code="Nom : ".$nom." <br> Description : ".$desc;
 		$code=$code.'<img src="../../../img/'.$img.'" width = "150" height="150"></img><br>';
-		return $code;	  
+		return $code;
   }
-  
+
    public function afficherItemsCateg(){
+     $app=\Slim\Slim::getInstance();
     $code="";
     $c=$this->infos['c'];
     $i=$this->infos['i'];
-    echo $c;
-    echo $i;
+    $c=$c[0];
+    $code="Catégorie :".$c['nom']."<br>"."Description :".$c['description']."<br>";
+    foreach($i as $key=>$value){
+      $code=$code."<img src=\"../../img/".$value['img']."\" width=\"50\" height=\"50\">";
+      $code=$code."Nom de l'item :"."<A HREF=\"../afficheritem/".$value['id']."\">".$value['nom']."</A>"."<br> Description :".$value['description']."<br>";
+    }
     return $code;
   }
 
