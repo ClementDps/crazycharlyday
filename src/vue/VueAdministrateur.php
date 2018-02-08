@@ -15,6 +15,8 @@ class VueAdministrateur{
   const AFF_RESERV = 6;
   const AFF_CMDP = 7;
   const AFF_MODIF_COMPTE = 8;
+  const AFF_NO_CO = 9;
+  const AFF_NO_ACCES = 10;
 
   public function __construct($tab){
     $this->infos=$tab;
@@ -228,6 +230,43 @@ END;
         </form>
 END;
     }
+    case VueAdministrateur::AFF_NO_CO :  //-----------------------------------------------------------------------Erreur-Non-conecté
+    $app = \Slim\Slim::getInstance();
+    $cheminCo = $app->urlFor("connexion");
+    $cheminInsc = $app->urlFor("inscription");
+      $code = \garagesolidaire\vue\VueGeneral::genererHeader("erreur");
+        $code .= "<h1> Oupss ! Il semble que vous n'&ecirc;tes pas connect&eacute ... :( </h1> \n";
+        $code .= <<<END
+        <p>Inscrivez-vous sur <a href="${cheminInsc}">ce lien</a></br>Ou si vous &ecirc;tes d&eacutej&agrave; inscrit c'est sur <a href="${cheminCo}">celui-ci</a> </p>
+END;
+    break;
+case VueAdministrateur::AFF_NO_ACCES :  //------------------------------------------------------------------------interdiction-Acces
+  $accueil = $app->urlFor('accueil');
+  $code = \garagesolidaire\vue\VueGeneral::genererHeader("erreur403");
+  $code .= <<<END
+  <div class="message">Erreur 403 : Vous n&#39;avez pas le droit d'acc&egrave;s.</div>
+    <div class="message2">Retour &agrave; la <a href="$accueil">page d&#39;accueil</a></div>
+    <div class="container">
+      <div class="neon">403</div>
+      <div class="door-frame">
+        <div class="door">
+          <div class="rectangle">
+        </div>
+          <div class="handle">
+            </div>
+          <div class="window">
+            <div class="eye">
+            </div>
+            <div class="eye eye2">
+            </div>
+            <div class="leaf">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+END;
+break;
   }
   $code .= \garagesolidaire\vue\VueGeneral::genererFooter();
   echo $code;

@@ -13,12 +13,16 @@ namespace garagesolidaire\controleur;
   class GestionCompte{
 
       public function afficherPanel(){
+        \garagesolidaire\controleur\GestionCompte::checkConnect();
+
 
         $vue = new VueAdministrateur(null);
         $vue->render(VueAdministrateur::AFF_USER);
       }
 
       public function supprimerCompte(){
+        \garagesolidaire\controleur\GestionCompte::checkConnect();
+
         $c = Model\Commentaire::where("idUser","=",$_SESSION['userid'])->get();
         $r = Model\Reservation::where("idUser","=",$_SESSION['userid'])->get();
 
@@ -32,20 +36,24 @@ namespace garagesolidaire\controleur;
         $this->deconnecter();
         $app = \Slim\Slim::getInstance();
         $app->redirect( $app->urlFor("accueil") ) ; //Redirection à ses listes
-
       }
 
       public function afficherChangerMotDePasse(){
+        \garagesolidaire\controleur\GestionCompte::checkConnect();
+
         $vue = new VueAdministrateur(null);
         $vue->render(VueAdministrateur::AFF_CMDP);
       }
 
       public function afficherModifCompte(){
+        \garagesolidaire\controleur\GestionCompte::checkConnect();
+
         $vue = new VueAdministrateur(null);
         $vue->render(VueAdministrateur::AFF_MODIF_COMPTE);
       }
 
       public function modifCompte(){
+        \garagesolidaire\controleur\GestionCompte::checkConnect();
 
         $app = \Slim\Slim::getInstance();
 
@@ -57,11 +65,8 @@ namespace garagesolidaire\controleur;
       }
 
       public function changerMotDePasse(){
+        \garagesolidaire\controleur\GestionCompte::checkConnect();
         $app = \Slim\Slim::getInstance();
-        //Redirection si l'utilisateur n'est pas connecté
-        // if(!isset($_SESSION["profile"])){
-          // $app->redirect( $app->urlFor("no-connection")  ) ;
-        // }
 
         $user = Model\User::where('id','=',$_SESSION['userid'])->first();
 
@@ -101,10 +106,17 @@ namespace garagesolidaire\controleur;
        * Affichage avertissement accès interdit
        */
       public function afficheNonAccess(){
-        // $vue = new VueAdministrateur(null, VueAdministrateur::AFF_NO_ACCES);
-        // $vue->render();
+        $vue = new VueAdministrateur(null);
+        $vue->render(VueAdministrateur::AFF_NO_ACCES);
       }
 
+      /**
+       * Affichage avertissement accès interdit
+       */
+      public function afficheNonConnection(){
+        $vue = new VueAdministrateur(null);
+        $vue->render(VueAdministrateur::AFF_NO_CO);
+      }
 
       /**
       * Ajoute un utlisateur dans la base de données
@@ -157,6 +169,8 @@ namespace garagesolidaire\controleur;
      * Déconnecte l'utilisateur
      */
     public function deconnecter(){
+      \garagesolidaire\controleur\GestionCompte::checkConnect();
+
       $app = \Slim\Slim::getInstance();
       Authentification::deconnexion();
       $app->redirect( $app->request->getRootUri() ) ;
@@ -181,5 +195,13 @@ namespace garagesolidaire\controleur;
         $vue = new VueAdministrateur($valueFiltred);
         $vue->render(VueAdministrateur::AFF_CO);
       }
+    }
+
+    public static function checkConnect(){
+      $app = \Slim\Slim::getInstance();
+      //Redirection si l'utilisateur n'est pas connecté
+       if(!isset($_SESSION["userid"])){
+         $app->redirect( $app->urlFor("no-connection")  ) ;
+       }
     }
 }

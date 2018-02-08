@@ -109,7 +109,15 @@ $app->post('/inscription', function () {
   $c -> ajouterUtilisateur();
 });
 
+$app->get('/error/forbidden', function (){
+  $c = new GestionCompte();
+  $c -> afficheNonAccess();
+});
 
+$app->get('/error/no_connected', function (){
+  $c = new GestionCompte();
+  $c -> afficheNonConnection();
+})->name("no-connection");
 
 $app->get('/user/delete', function () {
     $c = new GestionCompte();
