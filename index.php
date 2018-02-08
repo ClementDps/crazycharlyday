@@ -46,13 +46,10 @@ $app->get('/afficheritem/:id',function($id){
 	$control = new ControleurClient();
 	$control->afficherItem($id);
 })->name('item');
-<<<<<<< HEAD
-=======
 
 $app->get('/affichercategories',function(){
 	$control=new ControleurClient();
 	$control->afficherCategories();
 });
->>>>>>> 4965767e4166ca741a65ec355b6746b642657748
 
 $app->run();

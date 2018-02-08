@@ -5,7 +5,7 @@ body{
 #top-zone{
   width : 100%;
   height: 5em;
-  background-color: grey;
+  background-color: #495769;
   margin-bottom: 2em;
 }
 
@@ -49,11 +49,11 @@ body{
 }
 
 #top-zone a {
-  font: 300 16px/17px 'Open Sans', sans-serif;
+  font: 300 16px/17px 'Open Sans';
   display: block;
   height: 1em;
   padding: 2em 2em;
-  color: #ddd;
+  color: white;
   text-decoration: none;
   vertical-align: center;
 }
