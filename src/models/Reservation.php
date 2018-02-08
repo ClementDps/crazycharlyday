@@ -36,4 +36,19 @@ class Reservation extends \Illuminate\Database\Eloquent\Model{
 		$r->dateDerniereModif=date("Y-m-d H:i:s",time());
 		$r->save();
 	}
+	
+	public static function payer($id,$montant){
+		$r = Reservation::find($id);
+		$r->etat="payee";
+		$r->prix=$montant;
+		$r->dateDerniereModif=date("Y-m-d H:i:s",time());
+		$r->save();
+	}
+	
+	public static function noter($id,$note){
+		$r = Reservation::find($id);
+		$r->note=$note;
+		$r->dateDerniereModif=date("Y-m-d H:i:s",time());
+		$r->save();
+	}
 }

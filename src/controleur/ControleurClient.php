@@ -183,7 +183,19 @@ public function annulerReservation($id){
 	$this->afficherReservation($id);
 }
 
+public function payerReservation($id){
+	if (isset($_POST['valider_payer']) && $_POST['valider_payer']=='valid_payer' ){
+		Reservation::payer($id,$_POST['montant']);
+	}
+	$this->afficherReservation($id);
+}
 
+public function noterReservation($id){
+	if (isset($_POST['valider_note']) && $_POST['valider_note']=='valid_note' ){
+		Reservation::noter($id,$_POST['note']);
+	}
+	$this->afficherReservation($id);
+}
 
 
 }

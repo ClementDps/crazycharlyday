@@ -206,6 +206,7 @@ $app->post('/annulerreservation/:id',function($id){
 	$control->annulerReservation($id);
 })->name("annuler-reservation");
 
+
 $app->post('/ajouteritem',function($id){
 	$control=new ControleurAdministrateur();
 	$control->ajouterItem($_POST['nom'],$_POST['desc']);
@@ -215,6 +216,17 @@ $app->post('/ajoutercateg',function($id){
 	$control=new ControleurAdministrateur();
 	$control->ajouterCateg($_POST['nom'],$_POST['desc']);
 })->name("ajouter-categ");
+
+
+$app->post('/payerRes/:id',function($id){
+	$control=new ControleurClient();
+	$control->payerReservation($id);
+})->name("payer-reservation");
+
+$app->post('/noter/:id',function($id){
+	$control=new ControleurClient();
+	$control->noterReservation($id);
+})->name("noter-item");
 
 
 $app->run();
