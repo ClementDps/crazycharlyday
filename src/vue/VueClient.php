@@ -4,7 +4,10 @@ namespace garagesolidaire\vue;
 use \garagesolidaire\vue\VueGeneral;
 use \garagesolidaire\models\Item;
 use \garagesolidaire\models\User;
+<<<<<<< HEAD
+=======
 use \garagesolidaire\models\Commentaire;
+>>>>>>> 2edc42426462b2c4c93edae0c766166433d97455
 
 class VueClient{
 
@@ -19,26 +22,28 @@ class VueClient{
 	  $nom=$this->infos['nom'];
 	  $desc=$this->infos['description'];
 	  $img=$this->infos['img'];
+<<<<<<< HEAD
 	  $app=\Slim\Slim::getInstance();
     $root = $app->request->getRootUri();
+=======
+
+>>>>>>> 6e1071fb8ae94ecaa56035b27f4f52a05bec7c07
 	  $code="<p>Nom : ".$nom." <br> Description : ".$desc."<p>";
 	  if($img!==""){
 		$code=$code."<img src=\"$root/img/item/".$img.'" width = "150" height="150"></img><br>';
 	  }
 		//liens des boutons bidons
-		$route2=$app->urlFor('reservationitem',['id'=>$id]);
 		$buttonlisteres=<<<END
-<form id="listeres" method="get" action ="$route2">
+<form id="listeres" method="get" action ="afficherlisteres/$id">
 <button type="submit" name="valider_affichage_liste_res" value="valid_affichage_liste_res">Afficher la liste des réservations</button>
 </form>
 END;
-
 $buttonplanning=<<<END
-<form id="planninggraph" method="get" action ="reservationitem/$id">
+<form id="planninggraph" method="get" action ="afficherplanninggraph/$id">
 <button type="submit" name="valider_affichage_planning_graph" value="valid_affichage_planning_graph">Planning graphique</button>
 </form>
 END;
-
+$app=\Slim\Slim::getInstance();
 $route=$app->urlFor('creation-reservation',['id'=>$id]);
 $buttonformulaireres=<<<END
 <form id="formulaireres" method="get" action ="$route">
@@ -76,7 +81,7 @@ END;
   }
 
    public function afficherItemsCateg(){
-    $app=\Slim\Slim::getInstance();
+     $app=\Slim\Slim::getInstance();
     $code="";
     $c=$this->infos['c'];
     $i=$this->infos['i'];
@@ -102,7 +107,13 @@ END;
 
 		return $code;
 	}
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+=======
+	
+>>>>>>> 6e1071fb8ae94ecaa56035b27f4f52a05bec7c07
 	public function afficherListeUtilisateurs(){
 		$code= "<section><ul>";
 		foreach($this->infos as $key=>$value){
@@ -147,6 +158,7 @@ END;
 		}
 		return $code;
 	}
+>>>>>>> 2edc42426462b2c4c93edae0c766166433d97455
 
   public function afficherFormulaireReservation(){
     $jours=array('Lundi','Mardi','Mercredi','Jeudi','Vendredi');
@@ -200,6 +212,7 @@ END;
   $code.="<button type=\"submit\" name=\"valider_reservation\" value=\"valid_reservation\">Valider</button></form>";
   return $code;
   }
+
   /**
   *public function afficherPlanningGraphique(){
   *  $code="<table><tr><th>Jour</th><th>8h-10h</th><th>10h-12h</th><th>12h-14h</th><th>14h-16h</th><th>16h-18h</th></tr>";
@@ -211,12 +224,16 @@ END;
   *  tab[]='vendredi';
   *  $i=0;
   *  foreach($this->infos as $key=>$value){
-  *    $code=$code+"<tr><td>".$tab[i]."</td>";
+  *    $code=$code+"<tr><td>".$tab[$i]."</td>"
+  *    // ajoute creneaux horaires
+  *
+  *     $code=$code."</tr>";
   *    $i++;
   *  }
   *  $code=$code+"</table>";
   *}
   */
+
 
   public function afficherMesReservations(){
     $code="<p>Mes réservations</p><br>";
@@ -228,7 +245,7 @@ END;
     $jours[]="vendredi";
     foreach($this->infos as $key=>$value){
       $item=Item::find($value['idItem']);
-      $code.="<p>Item réservé ".$item->nom." : du ".$jours[$value['jourDeb']-1]." à ".$value['heureDeb']."h au ".$jours[$value['jourFin']-1]." à ".$value['heureFin']."h";
+      $code.="<a href=\"reservation/".$value['id']."\">Item réservé ".$item->nom." : du ".$jours[$value['jourDeb']-1]." à ".$value['heureDeb']."h au ".$jours[$value['jourFin']-1]." à ".$value['heureFin']."h</a><br>";
     }
     return $code;
   }
@@ -268,15 +285,34 @@ END;
 	  return $code;
   }
 
+  public function afficherReservation(){
+    $nom=Item::find($this->infos->idItem)->nom;
+    $jours=array();
+    $jours[]="lundi";
+    $jours[]="mardi";
+    $jours[]="mercredi";
+    $jours[]="jeudi";
+    $jours[]="vendredi";
+    $code="";
+    $nomUser=User::find($this->infos->idUser)->nom;
+    $prenomUser=User::find($this->infos->idUser)->prenom;
+    $code="Item réservé : ".$nom."<br>";
+    $code.="La réservation a lieu du ".$jours[$this->infos->jourDeb]." à ".$this->infos->heureDeb."h jusqu'au ".$jours[$this->infos->jourFin]." à ".$this->infos->heureFin."h<br>";
+    $code.="Le réserveur est ".$nomUser." ".$prenomUser."<br>";
+    $code.="La réservation est actuellement ".$this->infos->etat."<br>";
+    $code.="Elle a été crée le ".$this->infos->dateCreation." et a été modifiée le ".$this->infos->dateCreation."<br>";
+    return $code;
+  }
+
 
   public function render($int){
   switch($int){
     case 1:{
-		$code=VueGeneral::genererHeader("demarrage");
+		 $code=VueGeneral::genererHeader("demarrage");
       $code.=$this->afficherCategories();
       break;
     }
-	case 2:{
+  case 2:{
 	  $code=VueGeneral::genererHeader("demarrage");
 		$code.=$this->afficherItem();
       break;
@@ -284,16 +320,6 @@ END;
 	case 3:{
 		$code=VueGeneral::genererHeader("demarrage");
 		$code.=$this->afficherItemsCateg();
-		break;
-	}
-	case 10:{
-		$code=VueGeneral::genererHeader("demarrage");
-		$code.=$this->afficherListeUtilisateurs();
-		break;
-	}
-	case 11:{
-		$code=VueGeneral::genererHeader("demarrage");
-		$code.=$this->afficherPlanningReservationItem();
 		break;
 	}
   case 4:{
@@ -306,11 +332,20 @@ END;
     $code.=$this->afficherMesReservations();
     break;
     }
+<<<<<<< HEAD
+  case 6:{
+    $code=VueGeneral::genererHeader("demarrage");
+    $code.=$this->afficherReservation();
+    break;
+=======
 	case 9:{
 		$code=VueGeneral::genererHeader("demarrage");
 		$code.=$this->afficherPlanningUser();
 	}
+>>>>>>> 2edc42426462b2c4c93edae0c766166433d97455
   }
+  }
+
   $code.=VueGeneral::genererFooter();
   echo $code;
 }

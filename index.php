@@ -144,6 +144,12 @@ $app->get('/afficherplanningreservationitem/:id',function($id){
 })->name("reservationitem");
 
 
+$app->get('/reservation/:id' , function ($id) {
+  $control=new ControleurClient();
+  $control->afficherReservation($id);
+})->name("reservation");
+
+
 $app->post('/ajoutercommentaire/:id',function($id){
 	$control=new ControleurClient();
 	$control->ajouterCommentaire($id,$_POST['message']);
@@ -161,6 +167,7 @@ $app->get('/afficherplanningreservationuser/:id',function($id){
 	$control=new ControleurClient();
 	$control->afficherPlanningUser($id);
 })->name("reservation-user");
+
 
 
 $app->run();
