@@ -130,6 +130,8 @@ END;
       $code = \garagesolidaire\vue\VueGeneral::genererHeader("menu");
       if (count($this->infos)>0) { //Affichage des items
         foreach ($this->infos as $value) {
+            $rootDecline = $app->urlFor("reservation-decline", ["id" => $value['id']]) ;
+            $rootAccept = $app->urlFor("reservation-accept", ["id" => $value['id']]) ;
             $id = $value['id'];
             $idItem = $value['idItem'];
             $idUser = $value['idUser'];
@@ -150,12 +152,12 @@ END;
         <div class="modal-content">
           <header class="container">
             <a href="#" class="closebtn">×</a>
-              <h4>Suppression Item</h4>
+              <h4>Validation Réservation</h4>
             </header>
             <div class="container">
-              <p>Supprimer l'item $nomItem ? </p><br>
-              <form class="reservation" method="GET" action="#">
-                  <button class="suppr" type="submit" name="valid-reserv" value="valid_reserv" >Valider</button>
+              <p>Valider la reservation de l'item $nomItem ? </p><br>
+              <form class="reservation" method="POST" action="$rootAccept">
+                  <button class="suppr" type="submit"  >Valider</button>
                   <a href="#">Annuler</a>
               </form>
             </div>
@@ -167,12 +169,12 @@ END;
         <div class="modal-content">
           <header class="container">
             <a href="#" class="closebtn">×</a>
-              <h4>Suppression Item</h4>
+              <h4>Annuler Réservation</h4>
             </header>
             <div class="container">
               <p>Annuler la réservation de l'item $nomItem par $nomUser $prenomUser? </p><br>
-              <form class="reservation" method="GET" action="#">
-                  <button class="suppr" type="submit" name="valid-reserv" value="valid_reserv" >Annuler</button>
+              <form class="reservation" method="POST" action="$rootDecline">
+                  <button class="suppr" type="submit" >Annuler</button>
                   <a href="#">Retour</a>
               </form>
             </div>

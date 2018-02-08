@@ -15,4 +15,24 @@ class ControleurAdministrateur{
     $vue = new VueAdministrateur($reservs->toArray());
     $vue->render(VueAdministrateur::AFF_RESERV);
   }
+
+  public function acceptReservation($id){
+
+      $reserv = Model\Reservation::where("id","=",$id)->first();
+      $reserv->etat = "confirmer";
+      $reserv->save();
+
+      $app = \Slim\Slim::getInstance();
+      $app->redirect($app->urlFor("reservation-list"));
+    
+  }
+
+  public function declineReservation($id){
+    $reserv = Model\Reservation::where("id","=",$id)->first();
+    $reserv->etat = "annuler";
+    $reserv->save();
+
+    $app = \Slim\Slim::getInstance();
+    $app->redirect($app->urlFor("reservation-list"));
+  }
 }
