@@ -36,6 +36,7 @@ class Authentication{
       $_SESSION['usernickname'] = $u[0]->prenom;
 	     $_SESSION['username'] = $u[0]->nom;
 	      $_SESSION['userid'] = $u[0]->id;
+        $_SESSION['rang'] = $u[0]->rang;
   }
 
   public static function checkAccessRights($rang){

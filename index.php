@@ -109,6 +109,7 @@ $app->post('/inscription', function () {
 });
 
 
+
 $app->get('/user/delete', function () {
     $c = new GestionCompte();
     $c->supprimerCompte();
@@ -129,11 +130,36 @@ $app->post('/validerreservation/:id', function($id) {
     $c->validerReservation($_POST['jourdeb'],$_POST['jourfin'],$_POST['heuredeb'],$_POST['heurefin'],$id);
 })->name("valid-reserv");
 
-$app->get('/afficherplanningreservationitem/:num',function($num){
+
+$app->get('/mesreservations', function () {
+    $c = new ControleurClient();
+    $c->mesReservations();
+})->name("mes-reservations");
+
+$app->get('/afficherplanningreservationitem/:id',function($id){
+
 	$control=new ControleurClient();
-	$control->afficherPlanningReservationItem($num);
+	$control->afficherPlanningReservationItem($id);
 })->name("reservationitem");
 
+
+$app->post('/ajoutercommentaire/:id',function($id){
+	$control=new ControleurClient();
+	$control->ajouterCommentaire($id,$_POST['message']);
+})->name("ajouter-commentaire");
+
+
+$app->get('/reservation/' , function () {
+  $c = new ControleurAdministrateur();
+  $c->afficherReservation();
+
+})->name("reservation");
+
+$app->get('/afficherplanningreservationuser/:id',function($id){
+
+	$control=new ControleurClient();
+	$control->afficherPlanningUser($id);
+})->name("reservation-user");
 
 
 $app->run();
