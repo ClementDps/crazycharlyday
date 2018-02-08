@@ -109,6 +109,7 @@ $app->post('/inscription', function () {
 });
 
 
+
 $app->get('/user/delete', function () {
     $c = new GestionCompte();
     $c->supprimerCompte();
@@ -134,6 +135,8 @@ $app->get('/afficherplanningreservationitem/:num',function($num){
 	$control->afficherPlanningReservationItem($num);
 })->name("reservationitem");
 
+$app->get('/reservation/' , function () {
 
+})->name("reservation");
 
 $app->run();
