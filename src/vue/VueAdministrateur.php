@@ -14,6 +14,7 @@ class VueAdministrateur{
   const AFF_USER = 5;
   const AFF_RESERV = 6;
   const AFF_CMDP = 7;
+  const AFF_MODIF_COMPTE = 8;
 
   public function __construct($tab){
     $this->infos=$tab;
@@ -209,6 +210,23 @@ $errorLogIn
 </div>
 END;
       break;
+    }
+
+    case VueAdministrateur::AFF_MODIF_COMPTE : {
+      $cheminCompte = $app->urlFor('modifier-compte');
+        $nom = "value=\"".$_SESSION['username']."\"";
+        $prenom = "value=\"".$_SESSION['usernickname']."\"";
+
+
+        $code = \garagesolidaire\vue\VueGeneral::genererHeader("formulaire");
+        $code .= <<<END
+        <header>MODIFIER SON COMPTE</header>
+        <form id="form" method="POST" action="$cheminCompte">
+          <label>Nom* : </label> <input type="text" name="nom" placeholder="Nom" $nom required>
+          <label>Prénom* : </label><input type="text" name="prenom" placeholder="Prénom" $prenom required>
+          <input id="submit" type="submit" name="valider-insc" value="Modifier">
+        </form>
+END;
     }
   }
   $code .= \garagesolidaire\vue\VueGeneral::genererFooter();
