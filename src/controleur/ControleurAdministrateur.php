@@ -9,10 +9,10 @@ use garagesolidaire\models as Model;
 
 class ControleurAdministrateur{
 
-  public function afficherReservations(){
+  public function afficherReservation(){
 
-    $reservs = Model\Reservation::where("etat","=","")->et();
-    $vue = new VueAdministrateur(null);
+    $reservs = Model\Reservation::where("etat","=","reserve")->get();
+    $vue = new VueAdministrateur($reservs->toArray());
     $vue->render(VueAdministrateur::AFF_RESERV);
   }
 }

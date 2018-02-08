@@ -7,6 +7,7 @@ use \Illuminate\Database\Capsule\Manager as DB;
 use \Slim\Slim;
 use garagesolidaire\controleur\GestionAccueil;
 use garagesolidaire\controleur\GestionCompte;
+use garagesolidaire\controleur\ControleurAdministrateur;
 
 
 $db=new DB();

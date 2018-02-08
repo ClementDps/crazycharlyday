@@ -20,10 +20,10 @@ class VueClient{
 	  $desc=$this->infos['description'];
 	  $img=$this->infos['img'];
 	  $app=\Slim\Slim::getInstance();
-
+    $root = $app->request->getRootUri();
 	  $code="<p>Nom : ".$nom." <br> Description : ".$desc."<p>";
 	  if($img!==""){
-		$code=$code.'<img src="../../img/item/'.$img.'" width = "150" height="150"></img><br>';
+		$code=$code."<img src=\"$root/img/item/".$img.'" width = "150" height="150"></img><br>';
 	  }
 		//liens des boutons bidons
 		$route2=$app->urlFor('reservationitem',['id'=>$id]);
@@ -46,8 +46,8 @@ $buttonformulaireres=<<<END
 </form>
 END;
 		$code=$code.$buttonlisteres.$buttonplanning.$buttonformulaireres;
-		
-		
+
+
 		if(isset($_SESSION['userid'])){
 		$route3=$app->urlFor('ajouter-commentaire',['id'=>$id]);
 		$code= $code.<<<END
@@ -70,7 +70,7 @@ END;
 			}
 		}
 
-	
+
 
 		return $code;
   }
@@ -102,7 +102,7 @@ END;
 
 		return $code;
 	}
-	
+
 	public function afficherListeUtilisateurs(){
 		$code= "<section><ul>";
 		foreach($this->infos as $key=>$value){
@@ -113,7 +113,7 @@ END;
 
 		return $code;
 	}
-	
+
 	public function afficherPlanningReservationItem(){
 		$code ="";
 		foreach($this->infos as $key=>$value){
@@ -137,10 +137,10 @@ END;
 					break;}
 				case 5 :{
 					$jour = "Vendredi";
-				}	
+				}
 			}
 			$code.="<p>Reservé par ".$reservateur." le ".$jour." de ".$heured."h à ".$heuref."h.<br>";
-			
+
 		}
 		if($code == ""){
 			$code = "<p>Cet item n'a pas été reservé";
@@ -232,7 +232,7 @@ END;
     }
     return $code;
   }
-  
+
   public function afficherPlanningUser(){
 	  $code="";
 	  if(isset($this->infos)){
@@ -257,10 +257,10 @@ END;
 					break;}
 				case 5 :{
 					$jour = "Vendredi";
-				}	
+				}
 			}
 			$code.="<p>Reservé par ".$reservateur." le ".$jour." de ".$heured."h à ".$heuref."h.<br>";
-			
+
 		}
 	  }else{
 		  $code="pas de réservation";
