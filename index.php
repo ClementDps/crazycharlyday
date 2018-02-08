@@ -9,4 +9,9 @@ session_start();
 $app = new \Slim\Slim() ;
 
 
+// Redirection Erreur 404 
+// $app->notFound(function () use ($app) {
+//   $app->redirect($app->urlFor('list-not-found'));
+// });
+
 $app->run();
