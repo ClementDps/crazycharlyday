@@ -20,6 +20,7 @@ namespace garagesolidaire\vue;
      $routeAcc = $app->urlFor('accueil');
      $routeUser = $app->urlFor('aff-user');
      $root = $app->request->getRootUri();
+     $utils=$app->urlFor('afficher-utilisateurs');
      $mesReservations=$app->urlFor('mes-reservations');
      $reservationAdmin = $app->urlFor('reservation-list');
      $menuReservation="";
@@ -57,6 +58,7 @@ namespace garagesolidaire\vue;
     <div id="left">
       <ul>
       <li><a href="$root">Accueil</a></li><li><a href="$routeCategorie">Garage Solidaire</a></li>$menuReservation
+      <li><a href="$utils">Liste des utilisateurs</a></li>
       </ul>
     </div>
     <div id="right">

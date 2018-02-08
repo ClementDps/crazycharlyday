@@ -169,7 +169,7 @@ END;
         <div class="modal-content">
           <header class="container">
             <a href="#" class="closebtn">×</a>
-              <h4>Suppression Item</h4>
+              <h4>Annuler Réservation</h4>
             </header>
             <div class="container">
               <p>Annuler la réservation de l'item $nomItem par $nomUser $prenomUser? </p><br>
