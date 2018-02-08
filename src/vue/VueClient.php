@@ -62,7 +62,7 @@ END;
   public function afficherCategories(){
 		$code= "<section><ul>";
 		foreach($this->infos as $key=>$value){
-			$code=$code." <li><a href='affichercatergorie/".$value['id']."'>".$value['nom']."</a> </li><br>";
+			$code=$code." <li><a href='afficheritemscategorie/".$value['id']."'>".$value['nom']."</a> </li><br>";
 		}
 		$code=$code."</ul></section>";
 
