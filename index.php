@@ -5,7 +5,6 @@ use \garagesolidaire\controleur\ControleurClient;
 
 
 use \Slim\Slim;
-use Illuminate\Database\Capsule\Manager as DB;
 use garagesolidaire\controleur\GestionAccueil;
 
 

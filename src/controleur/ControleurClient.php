@@ -13,8 +13,6 @@ class ControleurClient{
 			$vue = new VueClient($i->toArray());
 			$vue->render(2);
 		}
-		$vue = new VueClient($i->toArray());
-		$vue->render(2);
 	}
 	
 	public function afficherCategories(){
