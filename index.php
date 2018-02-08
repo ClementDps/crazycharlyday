@@ -7,6 +7,7 @@ use \Illuminate\Database\Capsule\Manager as DB;
 use \Slim\Slim;
 use garagesolidaire\controleur\GestionAccueil;
 use garagesolidaire\controleur\GestionCompte;
+use garagesolidaire\controleur\ControleurAdministrateur;
 
 
 $db=new DB();
@@ -143,23 +144,30 @@ $app->get('/afficherplanningreservationitem/:id',function($id){
 })->name("reservationitem");
 
 
+$app->get('/reservation/:id' , function ($id) {
+  $control=new ControleurClient();
+  $control->afficherReservation($id);
+})->name("reservation");
+
+
 $app->post('/ajoutercommentaire/:id',function($id){
 	$control=new ControleurClient();
 	$control->ajouterCommentaire($id,$_POST['message']);
 })->name("ajouter-commentaire");
 
 
-$app->get('/reservation/' , function () {
+$app->get('/list/reservation' , function () {
   $c = new ControleurAdministrateur();
   $c->afficherReservation();
 
-})->name("reservation");
+})->name("reservation-list");
 
 $app->get('/afficherplanningreservationuser/:id',function($id){
 
 	$control=new ControleurClient();
 	$control->afficherPlanningUser($id);
 })->name("reservation-user");
+
 
 
 $app->run();

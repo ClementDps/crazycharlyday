@@ -2,6 +2,9 @@
 
 namespace garagesolidaire\vue;
 
+use \garagesolidaire\models\User;
+use \garagesolidaire\models\Item;
+
 class VueAdministrateur{
 
   private $infos;
@@ -124,7 +127,63 @@ END;
       break;
     }
     case VueAdministrateur::AFF_RESERV : {
-      
+      $code = \garagesolidaire\vue\VueGeneral::genererHeader("menu");
+      if (count($this->infos)>0) { //Affichage des items
+        foreach ($this->infos as $value) {
+            $id = $value['id'];
+            $idItem = $value['idItem'];
+            $idUser = $value['idUser'];
+            $nomItem = Item::find($idItem)->nom;
+            $nomUser = User::find($idUser)->nom;
+            $prenomUser = User::find($idUser)->prenom;
+      $code.= <<<END
+      <div class="item">
+          <div class="description">
+            <h4>Utilisateur : $nomUser $prenomUser</h4>
+          </div>
+          <p class="etat">Nom Item : $nomItem</p>
+          <a href="#id$id" class="supprimer" style="color:green">Valider</a>
+          <a href="#id2$id" class="supprimer">Annuler</a>
+      </div>
+      <div id="id$id" class="modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <header class="container">
+            <a href="#" class="closebtn">×</a>
+              <h4>Suppression Item</h4>
+            </header>
+            <div class="container">
+              <p>Supprimer l'item $nomItem ? </p><br>
+              <form class="reservation" method="GET" action="#">
+                  <button class="suppr" type="submit" name="valid-reserv" value="valid_reserv" >Valider</button>
+                  <a href="#">Annuler</a>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="id2$id" class="modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <header class="container">
+            <a href="#" class="closebtn">×</a>
+              <h4>Suppression Item</h4>
+            </header>
+            <div class="container">
+              <p>Annuler la réservation de l'item $nomItem par $nomUser $prenomUser? </p><br>
+              <form class="reservation" method="GET" action="#">
+                  <button class="suppr" type="submit" name="valid-reserv" value="valid_reserv" >Annuler</button>
+                  <a href="#">Retour</a>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+END;
+    }
+  } else {
+    $code.= "<p>Aucune Reservations...</p>";
+  }
       break;
     }
   }
