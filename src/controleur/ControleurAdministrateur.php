@@ -92,7 +92,7 @@ class ControleurAdministrateur{
     }
   }
 
-  public function ajouterItem($nom,$desc){
+  public function ajouterItem($nom,$desc,$categ){
     \garagesolidaire\controleur\GestionCompte::checkAdmin();
 
     if(isset($_SESSION['userid']) && $_SESSION['rang']>0){
