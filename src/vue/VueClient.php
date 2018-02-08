@@ -237,11 +237,11 @@ END;
   public function afficherPlanningGraphique(){
     $code="<table><tr><th>Jour</th><th>8h-10h</th><th>10h-12h</th><th>14h-16h</th><th>16h-18h</th></tr>";
     $tab=array();
-    $tab[]='lundi';
-    $tab[]='mardi';
-    $tab[]='mercredi';
-    $tab[]='jeudi';
-    $tab[]='vendredi';
+    $tab[]='Lundi';
+    $tab[]='Mardi';
+    $tab[]='Mercredi';
+    $tab[]='Jeudi';
+    $tab[]='Vendredi';
 	$y=1;
 	$i=0;
 	while($y<6){
