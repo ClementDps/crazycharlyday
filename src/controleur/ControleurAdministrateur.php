@@ -24,7 +24,28 @@ class ControleurAdministrateur{
 
       $app = \Slim\Slim::getInstance();
       $app->redirect($app->urlFor("reservation-list"));
-    
+
+  }
+
+  public function afficherModuleAdmin(){
+    if(isset($_SESSION['userid']) && $_SESSION['rang']>0){
+      $vue=new VueAdministrateur();
+      $vue->render(15);
+    }
+  }
+
+  public function afficherModuleAdmin(){
+    if(isset($_SESSION['userid']) && $_SESSION['rang']>0){
+      $vue=new VueAdministrateur();
+      $vue->render(16);
+    }
+  }
+
+  public function afficherModuleAdmin(){
+    if(isset($_SESSION['userid']) && $_SESSION['rang']>0){
+      $vue=new VueAdministrateur();
+      $vue->render(17);
+    }
   }
 
   public function declineReservation($id){

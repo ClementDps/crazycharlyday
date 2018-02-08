@@ -175,6 +175,20 @@ $app->get('/afficherplanningreservationuser/:id',function($id){
 	$control->afficherPlanningUser($id);
 })->name("reservation-user");
 
+$app->get('/moduleadministrateur',function(){
+  $control=new ControleurAdministrateur();
+  $control->afficherModuleAdmin();
+})->name("module-admin");
+
+$app->get('/afficherajoutitem',function(){
+  $control=new ControleurAdministrateur();
+  $control->afficherAjoutItem();
+})->name("afficher-ajoutItem");
+
+$app->get('/afficherajoutecateg',function(){
+  $control=new ControleurAdministrateur();
+  $control->afficherAjoutCateg();
+})->name("afficher-ajoutCateg");
 
 
 
