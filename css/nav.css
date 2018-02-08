@@ -1,0 +1,59 @@
+body{
+  margin:0;
+}
+
+#top-zone{
+  width : 100%;
+  height: 5em;
+  background-color: grey;
+  margin-bottom: 2em;
+}
+
+#text{
+  display : none;
+}
+
+#top-zone ul{
+  margin : 0;
+  list-style: none;
+  height : 100%;
+}
+
+#left {
+  float : left;
+  height : 100%;
+}
+
+#left ul{
+  padding-left: 0;
+}
+
+#right{
+  float : right
+}
+
+#top-zone li {
+  display : inline-block;
+  height: 5em;
+  transition: background 0.3s ease;
+}
+
+#top-zone ul li:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+#top-zone ul li:hover > a {
+  color: #fff;
+  border-bottom: 1px;
+  border-color: white;
+}
+
+#top-zone a {
+  font: 300 16px/17px 'Open Sans', sans-serif;
+  display: block;
+  height: 1em;
+  padding: 2em 2em;
+  color: #ddd;
+  text-decoration: none;
+  vertical-align: center;
+}

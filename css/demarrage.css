@@ -1,0 +1,48 @@
+body{
+	background: #ADD8E6;
+}
+
+
+
+/*Content*/
+
+h1{
+	font: 600 36px/30px 'Open Sans', sans-serif;
+  margin-left : 3em;
+  margin-bottom: 4em;
+  margin-top: 3em;
+	color : #006575;
+}
+
+h3{
+	font: 400 18px/24px 'Open Sans', sans-serif;
+  text-align: center;
+  width: 75%;
+  margin : 0 12.5%;
+	color : #006575;
+}
+
+p{
+	font: 18px/24px 'Open Sans', sans-serif;
+  width: 75%;
+  margin : 2em 12.5%;
+  text-align: center;
+  color : #129894;
+}
+
+a#link {
+	font: 18px/24px 'Open Sans', sans-serif;
+	text-align: center;
+	margin-left :  45%;
+  font-style: italic;
+	text-decoration: none;
+  color: grey;
+}
+
+a#link:hover {
+  color: white;
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+}

@@ -1,0 +1,26 @@
+body {
+	background: #ADD8E6;
+}
+
+h1 {
+  font: 600 36px/30px 'Open Sans', sans-serif;
+  margin-left : 3em;
+  margin-bottom: 3em;
+  margin-top: 3em;
+	color : #006575;
+}
+
+h3 {
+  font: 600 18px/24px 'Open Sans', sans-serif;
+  width: 75%;
+  margin : 1em 12.5%;
+	color : #006575;
+}
+
+p {
+  font: 300 18px/24px 'Open Sans', sans-serif;
+  width: 75%;
+  margin : 0em 15%;
+  margin-bottom: 2em;
+  color : #129894;
+}
