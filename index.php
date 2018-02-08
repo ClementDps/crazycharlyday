@@ -136,9 +136,10 @@ $app->get('/mesreservations', function () {
     $c->mesReservations();
 })->name("mes-reservations");
 
-$app->get('/afficherplanningreservationitem/:num',function($num){
+$app->get('/afficherplanningreservationitem/:id',function($id){
+
 	$control=new ControleurClient();
-	$control->afficherPlanningReservationItem($num);
+	$control->afficherPlanningReservationItem($id);
 })->name("reservationitem");
 
 
