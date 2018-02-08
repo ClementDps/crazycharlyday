@@ -94,14 +94,16 @@ INSERT INTO `item` (`id`, `nom`, `description`, `id_categ`, `img`) VALUES
 CREATE TABLE IF NOT EXISTS `Reservation` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idUser` int(11) NOT NULL,
-  `idCategorie` int(11) NOT NULL,
-  `dateDeb` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `dateFin` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `idItem` int(11) NOT NULL,
   `etat` varchar(20) NOT NULL,
   `dateCreation` date NOT NULL,
   `dateDerniereModif` date NOT NULL,
   `note` int(11) NOT NULL,
   `prix` int(11) NOT NULL,
+  `heureDeb` int(11) NOT NULL,
+  `jourDeb` int(11) NOT NULL,
+  `heureFin` int(11) NOT NULL,
+  `jourFin` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
