@@ -14,4 +14,9 @@ $app = new \Slim\Slim() ;
 //   $app->redirect($app->urlFor('list-not-found'));
 // });
 
+$app->get('/afficheritem/:id',function($id){
+	$control = new ControleurClient();
+	$control->afficherItem($id);
+});->name('item');
+
 $app->run();
