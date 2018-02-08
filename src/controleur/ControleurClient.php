@@ -21,6 +21,10 @@ class ControleurClient{
 		$vue->render(1);
 	}
 
+	public function afficherConnexion(){
+		$vue=new VueClient([]);
+		$vue->afficherConnexion();
+	}
 
 
 	public function afficheritemscategorie($num){
@@ -32,4 +36,21 @@ class ControleurClient{
 		$v=new VueClient($tab);
 		$v->render(3);
 	}
+
+	public function afficherPlanningGraphique($num){
+		$r=Reservation::where('idItem','=',$num)->get();
+		$vue=new VueClient($r);
+		$vue->render();
+	}
+
+public function afficherCreationReservation($id){
+	//if(isset($_SESSION['userid'])){
+		$vue=new VueClient($id);
+		$vue->render(4);
+	//}
+}
+
+
+
+
 }

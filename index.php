@@ -27,6 +27,11 @@ $app->get('/afficheritemscategorie/:num',function($num){
 	$control->afficheritemscategorie($num);
 });
 
+$app->get('/afficherplanninggraph/:num',function($num){
+	$control=new ControleurClient();
+	$control->afficherPlanningGraphique($num);
+});
+
 $app->get('/contact', function () {
   $c = new GestionAccueil();
   $c -> afficheContact();
@@ -58,6 +63,11 @@ $app->get('/affichercategories',function(){
 	$control->afficherCategories();
 });
 
+$app->get('/affichercreationreservation/:id',function($id){
+	$control=new ControleurClient();
+	$control->afficherCreationReservation($id);
+});
+
 //-----------------------------Formulaire-de-connexion-et-deconnexion-compte----------//
 $app->get('/connexion', function () {
   $c = new GestionCompte();
@@ -86,6 +96,5 @@ $app->post('/inscription', function () {
     $c->ajouterUtilisateur();
 
 });
-
 
 $app->run();

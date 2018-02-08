@@ -16,7 +16,7 @@ class VueClient{
 	  $nom=$this->infos['nom'];
 	  $desc=$this->infos['description'];
 	  $img=$this->infos['img'];
-	  
+
 	  $code="<p>Nom : ".$nom." <br> Description : ".$desc."<p>";
 	  if($img!==""){
 		$code=$code.'<img src="../../img/item/'.$img.'" width = "150" height="150"></img><br>';
@@ -67,10 +67,76 @@ END;
 		$code=$code."</ul></section>";
 
 		return $code;
-
 	}
 
-	//mettre les bons css
+  public function afficherFormulaireReservation(){
+    $jours=array('Lundi','Mardi','Mercredi','Jeudi','Vendredi');
+    $heuresDeb=array(8,10,14,16);
+    $heuresFin=array(10,12,16,18);
+    $code=<<<END
+    <form id="reservation" method="post" action="validerReservation">
+    <label for="f1_jourdeb">Jour de départ</label>
+    <select id="f1_jourdeb" name="jourdeb" required>
+END;
+  $i=0;
+  while($i<5){
+    $y=$i+1;
+    $code.="<option value=\"".$y."\">".$jours[$i]."</option>";
+    $i=$i+1;
+  }
+  $code=$code."</select><br>";
+  $code.=<<<END
+  <label for="f1_heuredeb">Heure de départ</label>
+  <select id="f1_heuredeb" name="heuredeb" required>
+END;
+  $i=0;
+  while($i<4){
+    $code.="<option value=\"".$heuresDeb[$i]."\">".$heuresDeb[$i]."</option>";
+    $i=$i+1;
+  }
+  $code=$code."</select><br>";
+  $code.=<<<END
+  <label for="f1_jourfin">Jour de Fin</label>
+  <select id="f1_jourfin" name="jourfin" required>
+END;
+$i=0;
+while($i<5){
+  $y=$i+1;
+  $code.="<option value=\"".$y."\">".$jours[$i]."</option>";
+  $i=$i+1;
+}
+$code=$code."</select><br>";
+  $code.=<<<END
+  <label for="f1_heurefin">Heure de fin</label>
+  <select id="f1_heurefin" name="heurefin" required>
+END;
+  $i=0;
+  while($i<4){
+  $code.="<option value=\"".$heuresFin[$i]."\">".$heuresFin[$i]."</option>";
+  $i=$i+1;
+  }
+  $code=$code."</select><br>";
+  $code.="<button type=\"submit\" name=\"valider_reservation\" value=\"valid_reservation\">Valider</button></form>";
+  return $code;
+  }
+  /**
+  public function afficherPlanningGraphique(){
+    $code="<table><tr><th>Jour</th><th>8h-10h</th><th>10h-12h</th><th>12h-14h</th><th>14h-16h</th><th>16h-18h</th></tr>";
+    $tab=array();
+    tab[]='lundi';
+    tab[]='mardi';
+    tab[]='mercredi';
+    tab[]='jeudi';
+    tab[]='vendredi';
+    $i=0;
+    foreach($this->infos as $key=>$value){
+      $code=$code+"<tr><td>".$tab[i]."</td>";
+      $i++;
+    }
+    $code=$code+"</table>";
+  }
+  */
+
   public function render($int){
   switch($int){
     case 1:{
@@ -83,12 +149,16 @@ END;
 		$code.=$this->afficherItem();
       break;
     }
-
 	case 3:{
 		$code=VueGeneral::genererHeader("demarrage");
 		$code.=$this->afficherItemsCateg();
 		break;
 	}
+  case 4:{
+  		$code=VueGeneral::genererHeader("demarrage");
+  		$code.=$this->afficherFormulaireReservation();
+  		break;
+  	}
   }
 
   $code.=VueGeneral::genererFooter();
