@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 --
 -- Structure de la table `categorie`
 --
-
+DROP TABLE IF EXISTS `categorie`;
 CREATE TABLE IF NOT EXISTS `categorie` (
 `id` int(11) NOT NULL,
   `nom` varchar(30) CHARACTER SET utf8 NOT NULL,
@@ -45,7 +45,7 @@ INSERT INTO `categorie` (`id`, `nom`, `description`) VALUES
 --
 -- Structure de la table `item`
 --
-
+DROP TABLE IF EXISTS `item`;
 CREATE TABLE IF NOT EXISTS `item` (
 `id` int(11) NOT NULL,
   `nom` varchar(30) CHARACTER SET utf8 NOT NULL,
@@ -86,7 +86,7 @@ INSERT INTO `item` (`id`, `nom`, `description`, `id_categ`) VALUES
 --
 -- Structure de la table `user`
 --
-
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
 `id` int(11) NOT NULL,
   `nom` varchar(30) CHARACTER SET utf8 NOT NULL,
