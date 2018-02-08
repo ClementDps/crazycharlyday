@@ -3,7 +3,7 @@ composer.lock
 composer.phar
 /vendor/
 .lock
-
+.ini
 
 #fichier config
 /conf/
