@@ -63,20 +63,12 @@ $app->get('/afficher/categories',function(){
 	$control->afficherCategories();
 })->name("aff-categorie");
 
-<<<<<<< HEAD
-
-$app->get('/affichercreationreservation/:id',function($id){
-=======
 $app->get('/afficher/creation/reservation/:id',function($id){
->>>>>>> 8af4ab5a1e662ca3e2cfefc9c4b9549b6e7341a0
 	$control=new ControleurClient();
 	$control->afficherCreationReservation($id);
 })->name("creation-reservation");
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 8af4ab5a1e662ca3e2cfefc9c4b9549b6e7341a0
 //-----------------------------Formulaire-de-connexion-et-deconnexion-compte----------//
 $app->get('/connexion', function () {
   $c = new GestionCompte();
@@ -106,7 +98,6 @@ $app->post('/inscription', function () {
 
 });
 
-<<<<<<< HEAD
 $app->post('/validerreservation/:id', function($id) {
     $c = new ControleurClient();
     $c->validerReservation($_POST['jourdeb'],$_POST['jourfin'],$_POST['heuredeb'],$_POST['heurefin'],$id);
@@ -114,6 +105,4 @@ $app->post('/validerreservation/:id', function($id) {
 
 
 
-=======
->>>>>>> 8af4ab5a1e662ca3e2cfefc9c4b9549b6e7341a0
 $app->run();
