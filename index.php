@@ -6,6 +6,7 @@ use \Illuminate\Database\Capsule\Manager as DB;
 
 use \Slim\Slim;
 use garagesolidaire\controleur\GestionAccueil;
+use garagesolidaire\controleur\GestionCompte;
 
 
 $db=new DB();
@@ -58,10 +59,55 @@ $app->get('/affichercategories',function(){
 	$control->afficherCategories();
 });
 
+
 $app->get('/afficherlisteutilisateurs',function(){
 	$control=new ControleurClient();
 	$control->afficherListeUtilisateurs();
 });
+
+//-----------------------------Formulaire-de-connexion-et-deconnexion-compte----------//
+$app->get('/connexion', function () {
+  $c = new GestionCompte();
+  $c -> afficheConnexion();
+})->name("connexion");
+
+$app->post('/connexion', function () {
+    $c = new GestionCompte();
+    $c->etablirConnection($_POST);
+});
+
+$app->get('/deconnexion', function () {
+  $c = new GestionCompte();
+  $c -> deconnecter();
+})->name("deconnexion");
+
+//----------------------Formulaire-Inscription-Compte------//
+$app->get('/inscription', function () {
+  $c = new GestionCompte();
+  $c -> afficheInscription();
+})->name("inscription");
+
+$app->post('/inscription', function () {
+
+  if( isset($_POST['valider-insc']) && $_POST['valider-insc'] == 'S\'inscrire'){
+
+    $c = new GestionCompte();
+
+    $valueFiltred = $c->filtrerInscription($_POST);
+
+    if( !empty($valueFiltred) ){
+      $c->ajouterUtilisateur($valueFiltred);
+    }
+
+  }
+
+});
+
+$app->get('/afficherplanningreservationitem/:num',function($num){
+	$control=new ControleurClient();
+	$control->afficherPlanningReservationItem($num);
+})->name("reservationitem");
+
 
 
 $app->run();

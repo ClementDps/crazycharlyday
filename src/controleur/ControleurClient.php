@@ -5,6 +5,7 @@ use \garagesolidaire\models\Item;
 use \garagesolidaire\models\Categorie;
 use \garagesolidaire\vue\VueClient;
 use \garagesolidaire\models\User;
+use garagesolidaire\models\Reservation;
 
 class ControleurClient{
 
@@ -38,6 +39,12 @@ class ControleurClient{
 		$utilisateurs = User::all();
 		$vue = new VueClient($utilisateurs->toArray());
 		$vue->render(10);
+	}
+	
+	public function afficherPlanningReservationItem($num){
+		$tab = Reservation::where('idItem','=',$num)->orderBy("jourDeb")->get();
+		$vue = new VueClient($tab->toArray());
+		$vue->render(11);
 	}
 	
 	

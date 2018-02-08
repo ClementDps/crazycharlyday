@@ -2,6 +2,7 @@
 
 namespace garagesolidaire\vue;
 use \garagesolidaire\vue\VueGeneral;
+use \garagesolidaire\models\User;
 
 class VueClient{
 
@@ -28,7 +29,7 @@ class VueClient{
 </form>
 END;
 $buttonplanning=<<<END
-<form id="planninggraph" method="get" action ="afficherplanninggraph/$id">
+<form id="planninggraph" method="get" action ="reservationitem/$id">
 <button type="submit" name="valider_affichage_planning_graph" value="valid_affichage_planning_graph">Planning graphique</button>
 </form>
 END;
@@ -46,7 +47,7 @@ END;
   }
 
    public function afficherItemsCateg(){
-     $app=\Slim\Slim::getInstance();
+    $app=\Slim\Slim::getInstance();
     $code="";
     $c=$this->infos['c'];
     $i=$this->infos['i'];
@@ -80,12 +81,42 @@ END;
 
 		return $code;
 	}
+	
+	public function afficherPlanningReservationItem(){
+		$code ="";
+		foreach($this->infos as $key=>$value){
+			$reservateur  = User::find($value["idUser"])["nom"];
+			$date = "";
+			$heured = $value["heureDeb"];
+			$heuref = $value["heureFin"];
+			$jour="";
+			switch($value["jourDeb"]){
+				case 1 :{
+					$jour = "Lundi";
+					break;}
+				case 2 :{
+					$jour = "Mardi";
+					break;}
+				case 3 :{
+					$jour = "Mercredi";
+					break;}
+				case 4 :{
+					$jour = "Jeudi";
+					break;}
+				case 5 :{
+					$jour = "Vendredi";
+				}	
+			}
+			$code = $code."Reserver par ".$reservateur." le ".$jour." de ".$heured."h à ".$heuref."h.<br>";
+		}
+	return $code;
+	}
 
 	//mettre les bons css
   public function render($int){
   switch($int){
     case 1:{
-		 $code=VueGeneral::genererHeader("demarrage");
+		$code=VueGeneral::genererHeader("demarrage");
       $code.=$this->afficherCategories();
       break;
     }
@@ -104,10 +135,12 @@ END;
 		$code.=$this->afficherListeUtilisateurs();
 		break;
 	}
-	
-	
+	case 11:{
+		$code=VueGeneral::genererHeader("demarrage");
+		$code.=$this->afficherPlanningReservationItem();
+		break;
+	}
   }
-
   $code.=VueGeneral::genererFooter();
   echo $code;
 }
